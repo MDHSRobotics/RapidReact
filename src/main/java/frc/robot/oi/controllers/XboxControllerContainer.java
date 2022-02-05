@@ -1,7 +1,6 @@
 
 package frc.robot.oi.controllers;
 
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
@@ -61,10 +60,10 @@ public class XboxControllerContainer extends ControllerContainer implements Xbox
     public ThumbstickPosition getThumbstickPositions(boolean isYleftFlipped) {
         if (!isConnected()) return new ThumbstickPosition();
 
-        double yLeft = xbox.getY(Hand.kLeft); // Forward & backward, flipped
-        double xLeft = xbox.getX(Hand.kLeft); // Strafe
-        double yRight = xbox.getY(Hand.kRight); // Forward & backward, flipped
-        double xRight = xbox.getX(Hand.kRight); // Rotate
+        double yLeft = xbox.getLeftY(); // Forward & backward, flipped
+        double xLeft = xbox.getLeftX(); // Strafe
+        double yRight = xbox.getRightY(); // Forward & backward, flipped
+        double xRight = xbox.getRightX(); // Rotate
 
         ThumbstickPosition pos = new ThumbstickPosition(yLeft, xLeft, yRight, xRight);
         return pos;
@@ -74,8 +73,8 @@ public class XboxControllerContainer extends ControllerContainer implements Xbox
     public TriggerAxisPosition getTriggerAxisPositions() {
         if (!isConnected()) return new TriggerAxisPosition();
 
-        double leftTriggerAxis = xbox.getTriggerAxis(Hand.kLeft);
-        double rightTriggerAxis = xbox.getTriggerAxis(Hand.kRight);
+        double leftTriggerAxis = xbox.getLeftTriggerAxis();
+        double rightTriggerAxis = xbox.getRightTriggerAxis();
 
         TriggerAxisPosition pos = new TriggerAxisPosition(leftTriggerAxis, rightTriggerAxis);
         return pos;

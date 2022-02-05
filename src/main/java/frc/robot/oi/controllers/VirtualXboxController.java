@@ -36,22 +36,21 @@ public class VirtualXboxController extends GenericHID {
         triggerAxisRight = 0.0;
     }
 
-    @Override
-    public double getX(Hand hand) {
-        switch (hand) {
-            case kLeft: return xLeft;
-            case kRight: return xRight;
-            default: return xRight;
-        }
+    
+    public double getLeftX() {
+        return xLeft;
     }
 
-    @Override
-    public double getY(Hand hand) {
-        switch (hand) {
-            case kLeft: return yLeft;
-            case kRight: return yRight;
-            default: return yRight;
-        }
+    public double getLeftY() {
+        return yLeft;
+    }
+
+    public double getRightX() {
+        return xRight;
+    }
+
+    public double getRightY() {
+        return yRight;
     }
 
     @Override
@@ -60,12 +59,13 @@ public class VirtualXboxController extends GenericHID {
         return dpadDirection.degrees;
     }
 
-    public double getTriggerAxis(Hand hand) {
-        switch (hand) {
-            case kLeft: return triggerAxisLeft;
-            case kRight: return triggerAxisRight;
-            default: return triggerAxisRight;
-        }
+    public double getLeftTriggerAxis() {
+        return triggerAxisLeft;
+    }
+
+    public double getRightTriggerAxis() {
+        return triggerAxisRight;
+            
     }
 
 }

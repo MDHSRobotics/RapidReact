@@ -37,7 +37,7 @@ public class Pixy {
             Logger.problem("Pixy -> detectFieldMode -> No block count");
         }
 
-        ArrayList<Block> blocks = ccc.getBlocks();
+        ArrayList<Block> blocks = ccc.getBlockCache();
         Block largestBlock = null;
         if (blocks == null) {
             Logger.info("Pixy -> detectFieldMode -> No blocks");
