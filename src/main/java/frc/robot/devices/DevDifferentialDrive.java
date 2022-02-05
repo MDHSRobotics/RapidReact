@@ -2,7 +2,7 @@
 package frc.robot.devices;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 
 import static frc.robot.RobotManager.isSim;
 
@@ -25,7 +25,7 @@ public class DevDifferentialDrive extends DifferentialDrive {
     private Monitor m_monitor;
     public boolean isConnected = true;
 
-    public DevDifferentialDrive(String devName, SpeedController leftMotor, SpeedController rightMotor) {
+    public DevDifferentialDrive(String devName, MotorController leftMotor, MotorController rightMotor) {
         super(leftMotor, rightMotor);
 
         m_devName = devName;

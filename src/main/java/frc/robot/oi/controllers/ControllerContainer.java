@@ -15,7 +15,7 @@ public class ControllerContainer {
 
     // Determine if the controller is connected
     public boolean isConnected() {
-        int numberOfButtons = DriverStation.getInstance().getStickButtonCount(port);
+        int numberOfButtons = DriverStation.getStickButtonCount(port);
         return numberOfButtons > 0;
     }
 
