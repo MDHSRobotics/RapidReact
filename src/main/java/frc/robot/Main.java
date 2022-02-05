@@ -1,6 +1,9 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
 
 package frc.robot;
 
@@ -12,14 +15,27 @@ import edu.wpi.first.wpilibj.RobotBase;
  * call.
  */
 public final class Main {
-  private Main() {}
 
-  /**
-   * Main initialization function. Do not perform any initialization here.
-   *
-   * <p>If you change your main robot class, change the parameter type.
-   */
-  public static void main(String... args) {
-    RobotBase.startRobot(Robot::new);
-  }
+    private Main() {
+    }
+
+    /**
+     * Main initialization function. Do not perform any initialization here.
+     *
+     * <p>If you change your main robot class, change the parameter type.
+     */
+    public static void main(String... args) {
+
+        if (RobotBase.isSimulation()) {
+            // Simulation mode - not connected to RoboRio.
+            // Among potentially other things, the SimRobot has a longer loop cycle
+            // to minimize watchdog overruns
+            RobotBase.startRobot(SimRobot::new);
+        }
+
+        else {
+            // Normal execution connected to RoboRio
+            RobotBase.startRobot(Robot::new);
+        }
+    }
 }
