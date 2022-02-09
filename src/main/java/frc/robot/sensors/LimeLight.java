@@ -1,4 +1,3 @@
-
 package frc.robot.sensors;
 
 import edu.wpi.first.networktables.NetworkTable;
