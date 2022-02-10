@@ -20,7 +20,7 @@ public class Devices {
 
     // Pickup
     public static DevTalonSRX talonSrxPickup = new DevTalonSRX("talonSrxPickup", 6);
-    
+
     // Delivery
     public static DevTalonSRX talonSrxDeliveryRight = new DevTalonSRX("talonSrxDeliveryRight", 16);
     public static DevTalonSRX talonSrxDeliveryLeft = new DevTalonSRX("talonSrxDeliveryLeft", 7);
@@ -41,4 +41,9 @@ public class Devices {
     /////////////////////
     // Drive Instances //
     /////////////////////
+    //Swerve Modules
+    public static final DevSwerveModule frontLeftSwerveModule = new DevSwerveModule(talonFxSwerveDriveFL, talonFxSwerveTurnFL, true, true);
+    public static final DevSwerveModule frontRightSwerveModule = new DevSwerveModule(talonFxSwerveDriveFR, talonFxSwerveTurnFR, true, true);
+    public static final DevSwerveModule rearLeftSwerveModule = new DevSwerveModule(talonFxSwerveDriveRL, talonFxSwerveTurnRL, true, true);
+    public static final DevSwerveModule rearRightSwerveModule = new DevSwerveModule(talonFxSwerveDriveRR, talonFxSwerveTurnRR, true, true);
 }
