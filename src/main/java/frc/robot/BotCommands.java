@@ -35,6 +35,8 @@ public class BotCommands {
     public static Shoot shoot;
     public static StopShoot stopShoot;
     public static ResetShoot resetShoot;
+    public static StopSeeSaw stopSeeSaw;
+    public static ShootSeeSaw shootSeeSaw;
 
     // Limelight
     public static TurnOffLed turnOffLed;
@@ -68,7 +70,8 @@ public class BotCommands {
         shoot = new Shoot(BotSubsystems.shooter);
         stopShoot = new StopShoot(BotSubsystems.shooter);
         resetShoot = new ResetShoot(BotSubsystems.shooter);
-
+        shootSeeSaw = new ShootSeeSaw(BotSubsystems.seesawShooter);
+        stopSeeSaw = new StopSeeSaw(BotSubsystems.seesawShooter);
         // Limelight
         turnOnLed = new TurnOnLed();
         turnOffLed = new TurnOffLed();
