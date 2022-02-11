@@ -12,6 +12,11 @@ public class ButtonBindings {
         //Shoot
         BotControllers.xbox.btnA.whenPressed(BotCommands.rotateSwerveWheelsToStart);
         BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
+
+        //Climber
+        BotControllers.xbox.btnX.whileHeld(BotCommands.raiseArms);
+        BotControllers.xbox.btnY.whileHeld(BotCommands.lowerArms);
+
     }
 
 }

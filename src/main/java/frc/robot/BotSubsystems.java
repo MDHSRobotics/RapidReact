@@ -8,6 +8,7 @@ public class BotSubsystems {
 
     public static Pickup pickup;
     public static Delivery delivery;
+    public static Climber climber;
     public static Gate gate;
     public static Shooter shooter;
     public static SwerveDriver swerveDriver;
@@ -18,6 +19,7 @@ public class BotSubsystems {
 
         pickup = new Pickup();
         delivery = new Delivery();
+        climber = new Climber();
         gate = new Gate();
         shooter = new Shooter();
         swerveDriver = new SwerveDriver();
@@ -33,6 +35,10 @@ public class BotSubsystems {
         // Delivery
         Logger.setup("Delivery Teleop Default Command -> StopDelivery...");
         delivery.setDefaultCommand(BotCommands.stopDelivery);
+
+        //Climber
+        Logger.setup("Delivery Teleop Default Command -> StopClimber...");
+        delivery.setDefaultCommand(BotCommands.stopClimber);
 
         // Gate
         Logger.setup("Gate Teleop Default Command -> FeedGate...");
