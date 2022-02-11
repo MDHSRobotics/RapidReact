@@ -19,7 +19,8 @@ public class Devices {
     public static DevTalonSRX talonSrxShooterTopWheel = new DevTalonSRX("talonSrxShooterTopWheel", 10);
 
     // Pickup
-    public static DevTalonSRX talonSrxPickup = new DevTalonSRX("talonSrxPickup", 6);
+    public static DevTalonSRX talonPickup1 = new DevTalonSRX("talonSrxShooterTopWheel", 10);
+    public static DevTalonSRX talonPickup2 = new DevTalonSRX("talonSrxShooterBottomWheel", 4);
     
     // Delivery
     public static DevTalonSRX talonSrxDeliveryRight = new DevTalonSRX("talonSrxDeliveryRight", 16);

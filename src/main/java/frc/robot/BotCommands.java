@@ -3,12 +3,15 @@ package frc.robot;
 
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.gate.*;
-import frc.robot.commands.pickupper.*;
+import frc.robot.commands.PickUp.*;
 import frc.robot.commands.sensors.TurnOffLed;
 import frc.robot.commands.sensors.TurnOnLed;
 import frc.robot.commands.shooter.*;
 import frc.robot.consoles.Logger;
+import frc.robot.subsystems.PickerUpper;
 import frc.robot.commands.swervedriver.*;
+
+
 
 
 // Contains singleton instances of all the commands on the robot.
@@ -20,8 +23,14 @@ public class BotCommands {
     public static ResetModulePositions resetModulePositions;
 
     // Pickup
-    public static SpinPickup spinPickup;
-    public static StopPickup stopPickup;
+    public static PickerUpper PickUp;
+    public static ClawDown clawdown;
+    public static ClawUp clawup;
+    public static CloseClaw closeclaw;
+    public static OpenClaw openclaw;
+    public static StopHorizontalClaw stophorizontalclaw;
+    public static StopVerticalClaw stopverticalclaw;
+
 
     // Delivery
     public static SpinDelivery spinDelivery;
@@ -48,8 +57,12 @@ public class BotCommands {
         Logger.setup("Initializing BotCommands...");
 
         // Pickup
-        spinPickup = new SpinPickup(BotSubsystems.pickup);
-        stopPickup = new StopPickup(BotSubsystems.pickup);
+        clawdown = new ClawDown(BotSubsystems.pickerupper);
+        clawup = new ClawUp(BotSubsystems.pickerupper);
+        closeclaw = new CloseClaw(BotSubsystems.pickerupper);
+        openclaw = new OpenClaw(BotSubsystems.pickerupper);
+        stophorizontalclaw = new StopHorizontalClaw(BotSubsystems.pickerupper);
+        stopverticalclaw = new StopVerticalClaw(BotSubsystems.pickerupper);
 
         // SwerveDriver
         swerveDrive = new SwerveDrive(BotSubsystems.swerveDriver, BotControllers.xbox);

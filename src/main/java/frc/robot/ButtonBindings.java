@@ -12,6 +12,12 @@ public class ButtonBindings {
         //Shoot
         BotControllers.xbox.btnA.whenPressed(BotCommands.rotateSwerveWheelsToStart);
         BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
+
+        //pickup
+        BotControllers.xbox.btnDpadUp.whenPressed(BotCommands.clawup);
+        BotControllers.xbox.btnDpadDown.whenPressed(BotCommands.clawdown);
+        BotControllers.xbox.btnDpadLeft.whenPressed(BotCommands.closeclaw);
+        BotControllers.xbox.btnDpadRight.whenPressed(BotCommands.openclaw);
     }
 
 }

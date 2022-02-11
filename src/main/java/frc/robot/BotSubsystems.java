@@ -6,7 +6,7 @@ import frc.robot.subsystems.*;
 // Contains singleton instances of all the subsystems on the robot.
 public class BotSubsystems {
 
-    public static Pickup pickup;
+    public static PickerUpper pickerupper;
     public static Delivery delivery;
     public static Gate gate;
     public static Shooter shooter;
@@ -16,7 +16,7 @@ public class BotSubsystems {
     public static void initializeSubsystems() {
         Logger.setup("Initializing BotSubsystems...");
 
-        pickup = new Pickup();
+        pickerupper = new PickerUpper();
         delivery = new Delivery();
         gate = new Gate();
         shooter = new Shooter();
@@ -27,12 +27,11 @@ public class BotSubsystems {
     public static void setTeleopDefaultCommands() {
 
         // Pickup
-        Logger.setup("Pickup Teleop Default Command -> StopPickup...");
-        pickup.setDefaultCommand(BotCommands.stopPickup);
+        Logger.setup("PickerUpper Teleop Default Command -> stopverticalclaw...");
+        pickerupper.setDefaultCommand(BotCommands.stopverticalclaw);
 
-        // Delivery
-        Logger.setup("Delivery Teleop Default Command -> StopDelivery...");
-        delivery.setDefaultCommand(BotCommands.stopDelivery);
+        Logger.setup("PickerUpper Teleop Default Command -> stophorizontalclaw...");
+        pickerupper.setDefaultCommand(BotCommands.stophorizontalclaw);
 
         // Gate
         Logger.setup("Gate Teleop Default Command -> FeedGate...");

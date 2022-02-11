@@ -1,18 +1,17 @@
-
-package frc.robot.commands.lighter;
+package frc.robot.commands.PickUp;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.Timer;
 
 import frc.robot.consoles.Logger;
-import frc.robot.subsystems.Lighter;
-
+import frc.robot.subsystems.PickerUpper;
 
 public class OpenClaw extends CommandBase {
 
+    private PickerUpper m_pickup;
+
     // TODO: Make these constructor parameters. Use overloading for these default values.
 
-    public OpenClaw(PickerUpper pickUp) {
+    public OpenClaw(PickerUpper pickup) {
         Logger.setup("Constructing Command: OpenClaw...");
 
         // Add given subsystem requirements
@@ -35,7 +34,7 @@ public class OpenClaw extends CommandBase {
     // This command continues until it cycles through the set number of cycles
     @Override
     public boolean isFinished() {
-        
+        return false;
     }
 
     @Override
