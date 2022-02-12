@@ -41,7 +41,7 @@ public class BotSubsystems {
         // Gate
         Logger.setup("Gate Teleop Default Command -> FeedGate...");
         gate.setDefaultCommand(BotCommands.feedGate);
-        
+
         // Shoot
         Logger.setup("Shooter Teleop Default Command -> Shoot...");
         shooter.setDefaultCommand(BotCommands.stopShoot);
@@ -51,7 +51,7 @@ public class BotSubsystems {
         seesawShooter.setDefaultCommand(BotCommands.stopSeeSaw);
         //Piston Shooter
         Logger.setup("Piston shooter Teleop Default Command -> Shoot ...");
-        seesawShooter.setDefaultCommand(BotCommands.feedPistons);
+        pistonShooter.setDefaultCommand(BotCommands.feedPistons);
 
         //SwerveDriver
         Logger.setup("SwerveDriver Teleop Default Command -> SwerveDrive...");
