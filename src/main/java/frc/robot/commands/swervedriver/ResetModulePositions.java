@@ -43,7 +43,7 @@ public class ResetModulePositions extends CommandBase {
         } else {
             Logger.ending("Ending Command: ResetModulePositions...");
         }
-        m_swerveDriver.stop();
+        m_swerveDriver.stopModules();
     }
 
 }

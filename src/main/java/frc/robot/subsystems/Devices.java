@@ -37,13 +37,4 @@ public class Devices {
     public static DevTalonFX talonFxSwerveTurnFR = new DevTalonFX("talonFxSwerveTurnWheelFrontRight", 32);
     public static DevTalonFX talonFxSwerveTurnRL = new DevTalonFX("talonFxSwerveTurnWheelRearLeft", 27);
     public static DevTalonFX talonFxSwerveTurnRR = new DevTalonFX("talonFxSwerveTurnWheelRearRight", 29);
-
-    /////////////////////
-    // Drive Instances //
-    /////////////////////
-    //Swerve Modules
-    public static final DevSwerveModule frontLeftSwerveModule = new DevSwerveModule(talonFxSwerveDriveFL, talonFxSwerveTurnFL, true, true);
-    public static final DevSwerveModule frontRightSwerveModule = new DevSwerveModule(talonFxSwerveDriveFR, talonFxSwerveTurnFR, true, true);
-    public static final DevSwerveModule rearLeftSwerveModule = new DevSwerveModule(talonFxSwerveDriveRL, talonFxSwerveTurnRL, true, true);
-    public static final DevSwerveModule rearRightSwerveModule = new DevSwerveModule(talonFxSwerveDriveRR, talonFxSwerveTurnRR, true, true);
 }

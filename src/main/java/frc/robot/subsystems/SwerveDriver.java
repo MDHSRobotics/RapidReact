@@ -1,70 +1,109 @@
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import static frc.robot.subsystems.Devices.*;
-import com.ctre.phoenix.motorcontrol.ControlMode;
+import frc.robot.devices.DevSwerveModule;
+import frc.robot.subsystems.constants.SwerveConstants;
 
 public class SwerveDriver extends SubsystemBase {
+    private final DevSwerveModule frontLeft = new DevSwerveModule(
+        Devices.talonFxSwerveDriveFL,
+        Devices.talonFxSwerveTurnFL,
+        SwerveConstants.kFrontLeftDriveEncoderReversed,
+        SwerveConstants.kFrontLeftTurningEncoderReversed,
+        SwerveConstants.kFrontLeftDriveAbsoluteEncoderPort,
+        SwerveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
 
-    // Control whether you want the thumbstick axes to be flipped in the opposite direction.
-    public static final boolean isYFlipped = false;
-    public static final boolean isXFlipped = false;
-    public static final boolean isOmegaFlipped = false;
 
-    // Drive using a vertical, horizontal, and rotational velocity
-    public final double L = .47;
-    public final double W = .47;
-    public final double GEAR_RATIO = 12.8;
-    public final int ticksperrotation = 2048;
+    private final DevSwerveModule frontRight = new DevSwerveModule(
+        Devices.talonFxSwerveDriveFR,
+        Devices.talonFxSwerveTurnFR,
+        SwerveConstants.kFrontRightDriveEncoderReversed,
+        SwerveConstants.kFrontRightTurningEncoderReversed,
+        SwerveConstants.kFrontRightDriveAbsoluteEncoderPort,
+        SwerveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kFrontRightDriveAbsoluteEncoderReversed);
 
-    public void drive(double x1, double y1, double x2) {
-        double r = Math.sqrt((L * L) + (W * W));
-        y1 *= -1;
+    private final DevSwerveModule rearLeft = new DevSwerveModule(
+        Devices.talonFxSwerveDriveRL,
+        Devices.talonFxSwerveTurnRL,
+        SwerveConstants.kRearLeftDriveEncoderReversed,
+        SwerveConstants.kRearLeftTurningEncoderReversed,
+        SwerveConstants.kRearLeftDriveAbsoluteEncoderPort,
+        SwerveConstants.kRearLeftDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kRearLeftDriveAbsoluteEncoderReversed);
 
-        double a = x1 - x2 * (L / r);
-        double b = x1 + x2 * (L / r);
-        double c = y1 - x2 * (W / r);
-        double d = y1 + x2 * (W / r);
+    private final DevSwerveModule rearRight = new DevSwerveModule(
+            Devices.talonFxSwerveDriveRR,
+            Devices.talonFxSwerveTurnRR,
+            SwerveConstants.kRearRightDriveEncoderReversed,
+            SwerveConstants.kRearRightTurningEncoderReversed,
+            SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
+            SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
+            SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
 
-        double backRightSpeed = Math.sqrt((a * a) + (d * d));
-        double backLeftSpeed = Math.sqrt((a * a) + (c * c));
-        double frontRightSpeed = Math.sqrt((b * b) + (d * d));
-        double frontLeftSpeed = Math.sqrt((b * b) + (c * c));
+    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(SwerveConstants.kDriveKinematics,
+            new Rotation2d(0));
 
-        double backRightAngle = Math.atan2(a, d) / Math.PI;
-        double backLeftAngle = Math.atan2(a, c) / Math.PI;
-        double frontRightAngle = Math.atan2(b, d) / Math.PI;
-        double frontLeftAngle = Math.atan2(b, c) / Math.PI;
-
-        int tickBackRightAngle = (int) (backRightAngle * ticksperrotation * GEAR_RATIO);
-        int tickBackLeftAngle = (int) (backLeftAngle * ticksperrotation * GEAR_RATIO);
-        int tickFrontRightAngle = (int) (frontRightAngle * ticksperrotation * GEAR_RATIO);
-        int tickFrontLeftAngle = (int) (frontLeftAngle * ticksperrotation * GEAR_RATIO);
-
-        talonFxSwerveDriveRR.set(backRightSpeed);
-        talonFxSwerveDriveRL.set(backLeftSpeed);
-        talonFxSwerveDriveFR.set(frontRightSpeed);
-        talonFxSwerveDriveFL.set(frontLeftSpeed);
-
-        talonFxSwerveTurnFL.set(ControlMode.Position, tickFrontLeftAngle);
-        talonFxSwerveTurnFR.set(ControlMode.Position, tickFrontRightAngle);
-        talonFxSwerveTurnRL.set(ControlMode.Position, tickBackLeftAngle);
-        talonFxSwerveTurnRR.set(ControlMode.Position, tickBackRightAngle);
+    public SwerveDriver() {
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                zeroHeading();
+            } catch (Exception e) {
+            }
+        }).start();
     }
 
-    // Stop all the swerve modules
-    public void stop() {
-        Devices.frontLeftSwerveModule.stopModule();
-        Devices.frontRightSwerveModule.stopModule();
-        Devices.rearLeftSwerveModule.stopModule();
-        Devices.rearRightSwerveModule.stopModule();
+    public void zeroHeading() {
+        gyro.reset();
     }
 
-    public void testMotors() {
-        Devices.frontLeftSwerveModule.testModule();
-        Devices.frontRightSwerveModule.testModule();
-        Devices.rearLeftSwerveModule.testModule();
-        Devices.rearRightSwerveModule.testModule();
+    public double getHeading() {
+        return Math.IEEEremainder(gyro.getAngle(), 360);
+    }
+
+    public Rotation2d getRotation2d() {
+        return Rotation2d.fromDegrees(getHeading());
+    }
+
+    public Pose2d getPose() {
+        return odometer.getPoseMeters();
+    }
+
+    public void resetOdometry(Pose2d pose) {
+        odometer.resetPosition(pose, getRotation2d());
+    }
+
+    @Override
+    public void periodic() {
+        odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), rearLeft.getState(),
+                rearRight.getState());
+        SmartDashboard.putNumber("Robot Heading", getHeading());
+        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+    }
+
+    public void stopModules() {
+        frontLeft.stop();
+        frontRight.stop();
+        rearLeft.stop();
+        rearRight.stop();
+    }
+
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
+        rearLeft.setDesiredState(desiredStates[2]);
+        rearRight.setDesiredState(desiredStates[3]);
     }
 }
