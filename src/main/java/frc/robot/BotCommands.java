@@ -3,12 +3,11 @@ package frc.robot;
 
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.gate.*;
-import frc.robot.commands.PickUp.*;
+import frc.robot.commands.pickup.*;
 import frc.robot.commands.sensors.TurnOffLed;
 import frc.robot.commands.sensors.TurnOnLed;
 import frc.robot.commands.shooter.*;
 import frc.robot.consoles.Logger;
-import frc.robot.subsystems.PickerUpper;
 import frc.robot.commands.swervedriver.*;
 
 
@@ -22,14 +21,10 @@ public class BotCommands {
     public static RotateSwerveWheelsToStart rotateSwerveWheelsToStart;
     public static ResetModulePositions resetModulePositions;
 
-    // Pickup
-    public static PickerUpper PickUp;
-    public static ClawDown clawdown;
-    public static ClawUp clawup;
-    public static CloseClaw closeclaw;
-    public static OpenClaw openclaw;
-    public static StopHorizontalClaw stophorizontalclaw;
-    public static StopVerticalClaw stopverticalclaw;
+    // Pickup 
+    public static StopPickup stopPickup;
+    public static ToggleGrabber toggleGrabber;
+    public static ToggleArms toggleArms;
 
 
     // Delivery
@@ -57,12 +52,9 @@ public class BotCommands {
         Logger.setup("Initializing BotCommands...");
 
         // Pickup
-        clawdown = new ClawDown(BotSubsystems.pickerupper);
-        clawup = new ClawUp(BotSubsystems.pickerupper);
-        closeclaw = new CloseClaw(BotSubsystems.pickerupper);
-        openclaw = new OpenClaw(BotSubsystems.pickerupper);
-        stophorizontalclaw = new StopHorizontalClaw(BotSubsystems.pickerupper);
-        stopverticalclaw = new StopVerticalClaw(BotSubsystems.pickerupper);
+        stopPickup = new StopPickup(BotSubsystems.pickerupper);
+        toggleGrabber = new ToggleGrabber(BotSubsystems.pickerupper);
+        toggleArms = new ToggleArms(BotSubsystems.pickerupper);
 
         // SwerveDriver
         swerveDrive = new SwerveDrive(BotSubsystems.swerveDriver, BotControllers.xbox);

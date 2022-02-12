@@ -14,10 +14,8 @@ public class ButtonBindings {
         BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
 
         //pickup
-        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.clawup);
-        BotControllers.xbox.btnDpadDown.whileHeld(BotCommands.clawdown);
-        BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.closeclaw);
-        BotControllers.xbox.btnDpadRight.whileHeld(BotCommands.openclaw);
+        BotControllers.xbox.btnX.whileHeld(BotCommands.toggleGrabber);
+        BotControllers.xbox.btnY.whileHeld(BotCommands.toggleArms);
     }
 
 }

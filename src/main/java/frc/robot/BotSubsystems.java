@@ -27,11 +27,8 @@ public class BotSubsystems {
     public static void setTeleopDefaultCommands() {
 
         // Pickup
-        Logger.setup("PickerUpper Teleop Default Command -> stopverticalclaw...");
-        pickerupper.setDefaultCommand(BotCommands.stopverticalclaw);
-
-        Logger.setup("PickerUpper Teleop Default Command -> stophorizontalclaw...");
-        pickerupper.setDefaultCommand(BotCommands.stophorizontalclaw);
+        Logger.setup("PickerUpper Teleop Default Command -> StopPickup...");
+        pickerupper.setDefaultCommand(BotCommands.stopPickup);
 
         // Gate
         Logger.setup("Gate Teleop Default Command -> FeedGate...");

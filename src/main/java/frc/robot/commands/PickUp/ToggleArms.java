@@ -1,18 +1,18 @@
-package frc.robot.commands.PickUp;
+package frc.robot.commands.pickup;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.consoles.Logger;
+
 import frc.robot.subsystems.PickerUpper;
 
-public class OpenClaw extends CommandBase {
+
+public class ToggleArms extends CommandBase {
 
     private PickerUpper m_pickup;
 
-    // TODO: Make these constructor parameters. Use overloading for these default values.
-
-    public OpenClaw(PickerUpper pickup) {
-        Logger.setup("Constructing Command: OpenClaw...");
+    public ToggleArms(PickerUpper pickup) {
+        Logger.setup("Constructing Command: ToggleArms...");
 
         // Add given subsystem requirements
         m_pickup = pickup;
@@ -21,14 +21,14 @@ public class OpenClaw extends CommandBase {
 
     @Override
     public void initialize() {
-        Logger.action("Initializing Command: OpenClaw...");
+        Logger.action("Initializing Command: ToggleArms...");
 
     }
 
     //real code
     @Override
     public void execute() {
-       m_pickup.openHorizontal();
+       m_pickup.toggleArms();
     }
 
     // This command continues until it cycles through the set number of cycles
@@ -41,9 +41,9 @@ public class OpenClaw extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted) {
             System.out.println("--");
-            Logger.ending("Interrupting Command: OpenClaw...");
+            Logger.ending("Interrupting Command: ToggleArms...");
         } else {
-            Logger.ending("Ending Command: OpenClaw...");
+            Logger.ending("Ending Command: ToggleArms...");
         }
     }
 
