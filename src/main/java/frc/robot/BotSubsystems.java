@@ -12,6 +12,7 @@ public class BotSubsystems {
     public static Shooter shooter;
     public static SwerveDriver swerveDriver;
     public static SeesawShooter seesawShooter;
+    public static PistonShooter pistonShooter;
 
     // Initialize all robot subsystems
     public static void initializeSubsystems() {
@@ -23,6 +24,7 @@ public class BotSubsystems {
         shooter = new Shooter();
         swerveDriver = new SwerveDriver();
         seesawShooter = new SeesawShooter();
+        pistonShooter = new PistonShooter();
     }
 
     // Set all the subsystem "teleop" default commands
@@ -47,6 +49,9 @@ public class BotSubsystems {
         //SeeSaw Shooter
         Logger.setup("SeeSaw shooter Teleop Default Command -> Shoot ...");
         seesawShooter.setDefaultCommand(BotCommands.stopSeeSaw);
+        //Piston Shooter
+        Logger.setup("Piston shooter Teleop Default Command -> Shoot ...");
+        seesawShooter.setDefaultCommand(BotCommands.feedPistons);
 
         //SwerveDriver
         Logger.setup("SwerveDriver Teleop Default Command -> SwerveDrive...");
