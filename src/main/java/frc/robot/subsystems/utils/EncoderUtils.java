@@ -56,6 +56,18 @@ public class EncoderUtils {
         return TPHMS;
     }
 
+    /**
+     * Converts by taking the TPHMS and converting to meters per second
+     * @param TPHMS
+     * @param wheelDiameterInMeters
+     * @return
+     */
+    public static double translateTPHMSToMPS(double TPHMS, double wheelDiameterInMeters) {
+        double wheelCircumference = wheelDiameterInMeters * Math.PI;
+        double MPS = ((TPHMS * wheelCircumference) / ENCODER_TPR) * 10;
+        return MPS;
+    }
+
     /** Computes an encoder velocity tick count based on the desired velocity in feet per second for a given wheel diameter and gearbox ratio (MS : GS)
      * @param fps The velocity in feet per second
      * @param wheelDiameter The diameter of the wheel in inches
@@ -100,7 +112,7 @@ public class EncoderUtils {
      * @param ticks tick integer that is computed to radian value
      * @return Returns the desired radian value
     */
-    public static double translateTicksToRadians(int ticks) {
+    public static double translateTicksToRadians(double ticks) {
         double radians = ticks / 4096 * 2 * Math.PI;
         return radians;
     }
@@ -112,6 +124,15 @@ public class EncoderUtils {
     public static int translateRadiansToTicks(double radians) {
         int ticks = (int) (radians * 4096 / 2 / Math.PI);
         return ticks;
+    }
+
+    /**Computes ticks per hundred miliseconds to radians per second
+     * @param ticksPHMS tick per hundred milisecond
+     * @return radiansPerSecond Returns the desired radian per second
+    */
+    public static double translateTicksPHMSToRadPS(double ticksPHMS) {
+        double radiansPerSecond = (ticksPHMS * 1000 * 2 * Math.PI) / (4096 * 100) ;
+        return radiansPerSecond;
     }
 
 	public static int translateMPSToTicksPerDecisecond(double MPS, double wheelDiameter, double gearRatio) {

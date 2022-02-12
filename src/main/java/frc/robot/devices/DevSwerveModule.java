@@ -1,51 +1,102 @@
 package frc.robot.devices;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Encoder;
-import frc.robot.consoles.Logger;
-import frc.robot.subsystems.SwerveDriver;
 import frc.robot.subsystems.utils.EncoderUtils;
-import frc.robot.subsystems.utils.PIDValues;
-import frc.robot.subsystems.utils.TalonUtils;
+import edu.wpi.first.math.controller.PIDController;
+import frc.robot.subsystems.constants.SwerveConstants;
+import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 public class DevSwerveModule {
 
-    // Typical battery voltage
-    public static final double BATTERY_VOLTAGE = 12.0;
+    private final DevTalonFX driveMotor;
+    private final DevTalonFX turningMotor;
 
-    // Accessible module objects
-    private final DevTalonFX m_driveTalon;
-    private final DevTalonFX m_steerTalon;
+    private final PIDController turningPidController;
 
-    // PID initialization
-    private static final double kModuleMaxAngularVelocity = 0.5;//SwerveDriver.kMaxAngularSpeed;  // radians per second squared
-    private static final double kModuleMaxAngularAcceleration = 0.5;//2 * Math.PI;                // radians per second squared
+    private final AnalogInput absoluteEncoder;
+    private final boolean absoluteEncoderReversed;
+    private final double absoluteEncoderOffsetRad;
 
-    /**
-     * Constructs a SwerveModule device.
-     *
-     * @param driveTalon talonFX object of the drive motor
-     * @param steerTalon talonFX object of the steer motor
-     */
-    public DevSwerveModule(DevTalonFX driveTalon, DevTalonFX steerTalon, boolean SENSOR_PHASE, boolean MOTOR_INVERT) {
-        m_driveTalon = driveTalon;
-        m_steerTalon = steerTalon;
+    public DevSwerveModule(DevTalonFX driveTalon, DevTalonFX steerTalon, boolean driveMotorReversed, boolean turningMotorReversed,
+            int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
-        PIDValues pid = new PIDValues(0.0, 0.05, 0.0, 0.0);
-        TalonUtils.configureTalonWithEncoder(m_driveTalon, SENSOR_PHASE, MOTOR_INVERT, pid);
-        TalonUtils.configureTalonWithEncoder(m_steerTalon, SENSOR_PHASE, MOTOR_INVERT, pid);
+        this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
+        this.absoluteEncoderReversed = absoluteEncoderReversed;
+        absoluteEncoder = new AnalogInput(absoluteEncoderId);
+
+        driveMotor = driveTalon; 
+        turningMotor = steerTalon;
+
+        driveMotor.setInverted(driveMotorReversed);
+        turningMotor.setInverted(turningMotorReversed);
+
+
+        turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
+        turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+
+        resetEncoders();
     }
 
-    public void stopModule() {
-        m_driveTalon.stopMotor();
-        m_steerTalon.stopMotor();
+    /*
+    public double getDrivePosition() {
+        int driveMotor.
+        return driveEncoder.getPosition();
+    }
+    */
+
+    public double getTurningPosition() {
+        double turnTicks = turningMotor.getSelectedSensorPosition();
+        double turnRadians = EncoderUtils.translateTicksToRadians(turnTicks);
+        return turnRadians;
     }
 
-    public void testModule() {
-        m_driveTalon.set(0.3);
-        m_steerTalon.set(ControlMode.Velocity, 2048);
+    public double getDriveVelocity() {
+        double driveVelocityTPHMS = driveMotor.getSelectedSensorVelocity();
+        double driveVelocityMPS = EncoderUtils.translateTPHMSToMPS(driveVelocityTPHMS, SwerveConstants.kWheelDiameterMeters);
+        return driveVelocityMPS;
     }
 
+    public double getTurningVelocity() {
+        double turningVelocityTPHMS = turningMotor.getSelectedSensorVelocity();
+        double turningVelocityMPS = EncoderUtils.translateTicksPHMSToRadPS(turningVelocityTPHMS);
+        return turningVelocityMPS;
+    }
+
+    public double getAbsoluteEncoderRad() {
+        double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
+        angle *= 2.0 * Math.PI;
+        angle -= absoluteEncoderOffsetRad;
+        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+    }
+
+    public void resetEncoders() {
+        driveMotor.setSelectedSensorPosition(0.0);
+
+        // TODO get the actual absolute encoder position
+        double initialAbsoluteEncoderPosition = 0.0;
+        turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPosition);
+    }
+
+    public SwerveModuleState getState() {
+        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurningPosition()));
+    }
+
+    public void setDesiredState(SwerveModuleState state) {
+        if (Math.abs(state.speedMetersPerSecond) < 0.001) {
+            stop();
+            return;
+        }
+        state = SwerveModuleState.optimize(state, getState().angle);
+        driveMotor.set(state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
+        turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
+        SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+    }
+
+    public void stop() {
+        driveMotor.set(0);
+        turningMotor.set(0);
+    }
 }
