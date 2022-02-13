@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 
 public class DevSwerveModule {
 
+    private final String m_name;
     private final DevTalonFX driveMotor;
     private final DevTalonFX turningMotor;
 
@@ -20,12 +21,15 @@ public class DevSwerveModule {
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
 
-    public DevSwerveModule(DevTalonFX driveTalon, DevTalonFX steerTalon, boolean driveMotorReversed, boolean turningMotorReversed,
+    public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon,
+            boolean driveMotorReversed, boolean turningMotorReversed,
             int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
         this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
         this.absoluteEncoderReversed = absoluteEncoderReversed;
         absoluteEncoder = new AnalogInput(absoluteEncoderId);
+
+        m_name = moduleName;
 
         driveMotor = driveTalon; 
         turningMotor = steerTalon;
@@ -87,12 +91,22 @@ public class DevSwerveModule {
     public void setDesiredState(SwerveModuleState state) {
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             stop();
+
+            SmartDashboard.putString("Swerve State: " + m_name, "STOPPED");
+            SmartDashboard.putString("Swerve Power: " + m_name, "STOPPED");
+
             return;
         }
         state = SwerveModuleState.optimize(state, getState().angle);
-        driveMotor.set(state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
-        turningMotor.set(turningPidController.calculate(getTurningPosition(), state.angle.getRadians()));
-        SmartDashboard.putString("Swerve[" + absoluteEncoder.getChannel() + "] state", state.toString());
+        SmartDashboard.putString("Swerve State: " + m_name, state.toString());
+
+        double drivePower = state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond;
+        double turningPower = turningPidController.calculate(getTurningPosition(), state.angle.getRadians());
+
+        driveMotor.set(drivePower);
+        turningMotor.set(turningPower);
+        SmartDashboard.putString("Swerve Power: " + m_name,
+                                 String.format("Drive = %.2f; Turning = %.2f", drivePower, turningPower));
     }
 
     public void stop() {

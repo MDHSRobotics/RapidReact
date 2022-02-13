@@ -14,6 +14,7 @@ import frc.robot.subsystems.constants.SwerveConstants;
 
 public class SwerveDriver extends SubsystemBase {
     private final DevSwerveModule frontLeft = new DevSwerveModule(
+        "Front Left",
         Devices.talonFxSwerveDriveFL,
         Devices.talonFxSwerveTurnFL,
         SwerveConstants.kFrontLeftDriveEncoderReversed,
@@ -24,6 +25,7 @@ public class SwerveDriver extends SubsystemBase {
 
 
     private final DevSwerveModule frontRight = new DevSwerveModule(
+        "Front Right",
         Devices.talonFxSwerveDriveFR,
         Devices.talonFxSwerveTurnFR,
         SwerveConstants.kFrontRightDriveEncoderReversed,
@@ -33,6 +35,7 @@ public class SwerveDriver extends SubsystemBase {
         SwerveConstants.kFrontRightDriveAbsoluteEncoderReversed);
 
     private final DevSwerveModule rearLeft = new DevSwerveModule(
+        "Rear Left",
         Devices.talonFxSwerveDriveRL,
         Devices.talonFxSwerveTurnRL,
         SwerveConstants.kRearLeftDriveEncoderReversed,
@@ -42,13 +45,14 @@ public class SwerveDriver extends SubsystemBase {
         SwerveConstants.kRearLeftDriveAbsoluteEncoderReversed);
 
     private final DevSwerveModule rearRight = new DevSwerveModule(
-            Devices.talonFxSwerveDriveRR,
-            Devices.talonFxSwerveTurnRR,
-            SwerveConstants.kRearRightDriveEncoderReversed,
-            SwerveConstants.kRearRightTurningEncoderReversed,
-            SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
-            SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
-            SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
+        "Rear Rright",
+        Devices.talonFxSwerveDriveRR,
+        Devices.talonFxSwerveTurnRR,
+        SwerveConstants.kRearRightDriveEncoderReversed,
+        SwerveConstants.kRearRightTurningEncoderReversed,
+        SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
+        SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
 
     private final AHRS gyro = new AHRS(SPI.Port.kMXP);
     private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(SwerveConstants.kDriveKinematics,

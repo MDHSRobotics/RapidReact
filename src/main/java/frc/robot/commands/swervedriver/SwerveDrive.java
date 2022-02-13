@@ -10,6 +10,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.subsystems.constants.SwerveConstants;
 import frc.robot.subsystems.constants.SwerveConstants.OIConstants;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class SwerveDrive extends CommandBase {
@@ -36,32 +37,43 @@ public class SwerveDrive extends CommandBase {
     @Override
     public void execute() {
         // 1. Get real-time joystick inputs
-        SwerveMovement move = SwerveMovement.getMovement(controller, false);
-        double xSpeed = move.forwardBackwardSpeed;
-        double ySpeed = move.sideToSideSpeed;
-        double turningSpeed = move.rotationSpeed;
+        SwerveMovement joystickMovement = SwerveMovement.getMovement(controller, false);
+        double xSpeed1 = joystickMovement.forwardBackwardSpeed;
+        double ySpeed1 = joystickMovement.sideToSideSpeed;
+        double turningSpeed1 = joystickMovement.rotationSpeed;
+
+        SmartDashboard.putString("Swerve Cmd (1): Joystick input",
+                                 String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed1, ySpeed1, turningSpeed1));
 
         // 2. Apply deadband
-        xSpeed = Math.abs(xSpeed) > OIConstants.kDeadband ? xSpeed : 0.0;
-        ySpeed = Math.abs(ySpeed) > OIConstants.kDeadband ? ySpeed : 0.0;
-        turningSpeed = Math.abs(turningSpeed) > OIConstants.kDeadband ? turningSpeed : 0.0;
+        double xSpeed2 = Math.abs(xSpeed1) > OIConstants.kDeadband ? xSpeed1 : 0.0;
+        double ySpeed2 = Math.abs(ySpeed1) > OIConstants.kDeadband ? ySpeed1 : 0.0;
+        double turningSpeed2 = Math.abs(turningSpeed1) > OIConstants.kDeadband ? turningSpeed1 : 0.0;
+
+        SmartDashboard.putString("Swerve Cmd (2): Apply deadpan",
+                                 String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed2, ySpeed2, turningSpeed2));
 
         // 3. Make the driving smoother
-        xSpeed = xLimiter.calculate(xSpeed) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-        ySpeed = yLimiter.calculate(ySpeed) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-        turningSpeed = turningLimiter.calculate(turningSpeed)
+        double xSpeed3 = xLimiter.calculate(xSpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        double ySpeed3 = yLimiter.calculate(ySpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        double turningSpeed3 = turningLimiter.calculate(turningSpeed2)
                 * SwerveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+
+        SmartDashboard.putString("Swerve Cmd (3): Chassis velocity",
+                                 String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed3, ySpeed3, turningSpeed3));
 
         // 4. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
         if (fieldOrientedFunction) {
             // Relative to field
             chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    xSpeed, ySpeed, turningSpeed, swerveDriver.getRotation2d());
+                    xSpeed3, ySpeed3, turningSpeed3, swerveDriver.getRotation2d());
         } else {
             // Relative to robot
-            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+            chassisSpeeds = new ChassisSpeeds(xSpeed3, ySpeed3, turningSpeed3);
         }
+
+        SmartDashboard.putString("Swerve Cmd (4): Chassis Speeeds", chassisSpeeds.toString());
 
         // 5. Convert chassis speeds to individual module states
         SwerveModuleState[] moduleStates = SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
