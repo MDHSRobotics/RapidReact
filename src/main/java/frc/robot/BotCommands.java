@@ -3,7 +3,7 @@ package frc.robot;
 
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.gate.*;
-import frc.robot.commands.pickup.*;
+import frc.robot.commands.PickUp.*;
 import frc.robot.commands.sensors.TurnOffLed;
 import frc.robot.commands.sensors.TurnOnLed;
 import frc.robot.commands.shooter.*;
