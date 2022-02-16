@@ -1,7 +1,7 @@
 package frc.robot.devices;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import frc.robot.subsystems.utils.EncoderUtils;
+import frc.robot.subsystems.utils.EncoderTranslator;
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.subsystems.constants.SwerveConstants;
 import edu.wpi.first.wpilibj.RobotController;
@@ -21,6 +21,8 @@ public class DevSwerveModule {
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
 
+    private final EncoderTranslator m_encoderTranslate;
+
     public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon,
             boolean driveMotorReversed, boolean turningMotorReversed,
             int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
@@ -37,9 +39,10 @@ public class DevSwerveModule {
         driveMotor.setInverted(driveMotorReversed);
         turningMotor.setInverted(turningMotorReversed);
 
-
         turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+
+        m_encoderTranslate = new EncoderTranslator("TalonFX"); 
 
         resetEncoders();
     }
@@ -53,19 +56,19 @@ public class DevSwerveModule {
 
     public double getTurningPosition() {
         double turnTicks = turningMotor.getSelectedSensorPosition();
-        double turnRadians = EncoderUtils.translateTicksToRadians(turnTicks);
+        double turnRadians = m_encoderTranslate.ticks_to_radians(turnTicks);
         return turnRadians;
     }
 
     public double getDriveVelocity() {
         double driveVelocityTPHMS = driveMotor.getSelectedSensorVelocity();
-        double driveVelocityMPS = EncoderUtils.translateTPHMSToMPS(driveVelocityTPHMS, SwerveConstants.kWheelDiameterMeters);
+        double driveVelocityMPS = m_encoderTranslate.ticksPerDecisecond_to_metersPerSecond(driveVelocityTPHMS, SwerveConstants.kWheelDiameterMeters);
         return driveVelocityMPS;
     }
 
     public double getTurningVelocity() {
         double turningVelocityTPHMS = turningMotor.getSelectedSensorVelocity();
-        double turningVelocityMPS = EncoderUtils.translateTicksPHMSToRadPS(turningVelocityTPHMS);
+        double turningVelocityMPS = m_encoderTranslate.ticksPerDecisecond_to_RadiansPerSecond(turningVelocityTPHMS);
         return turningVelocityMPS;
     }
 
