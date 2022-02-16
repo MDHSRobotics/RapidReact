@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.sensors.Pixy;
-import frc.robot.brains.DiffDriverBrain;
 
 import frc.robot.consoles.Logger;
 
@@ -16,11 +15,6 @@ import frc.robot.consoles.Logger;
  * project.
  */
 public class Robot extends TimedRobot {
-
-    // Autonomous variables
-    private Command m_autonomousCommandRed;
-    private Command m_autonomousCommandBlue;
-    private Command m_autonomousCommandAutoNav;
 
     // Test variables
     private int m_numberOfTests;
@@ -98,28 +92,6 @@ public class Robot extends TimedRobot {
         Logger.setup("Initializing Autonomous Mode...");
 
         CommandScheduler.getInstance().cancelAll();
-
-        // Schedule the autonomous command
-    /*
-        if (DiffDriverBrain.getPathweaverGame().equals("none")) {
-            if (Pixy.detectFieldMode().equals("no blocks detected")) {
-                if (m_moveForwardAuto != null) {
-                    m_moveForwardAuto.schedule();
-                }
-                if (m_autonomousCommandBlue != null) {
-                    m_autonomousCommandBlue.schedule();
-                }
-            } else {
-                if (m_autonomousCommandRed != null) {
-                    m_autonomousCommandRed.schedule();
-                }
-            }
-        } else {
-            if (m_autonomousCommandAutoNav != null) {
-                m_autonomousCommandAutoNav.schedule();
-            }
-        }
-        */
     }
 
     /**
