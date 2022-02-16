@@ -14,7 +14,7 @@ public class ButtonBindings {
         BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
         BotControllers.xbox.btnX.whenPressed(BotCommands.shootSeeSaw);
         BotControllers.xbox.btnY.whenPressed(BotCommands.stopSeeSaw);
-        BotControllers.xbox.btnDpadUp.whenPressed(BotCommands.togglePistons);
+        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.togglePistons);
     }
 
 }

@@ -21,11 +21,13 @@ public class TogglePistons extends CommandBase {
     @Override
     public void initialize() {
         Logger.action("Initializing Command: TogglePistons...");
+
+        m_pistonShooter.togglePistons();
     }
 
     @Override
     public void execute() {
-        m_pistonShooter.togglePistons();
+
     }
 
     // This command continues until interrupted
