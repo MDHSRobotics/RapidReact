@@ -5,7 +5,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.brains.ShooterBrain;
 import frc.robot.consoles.Logger;
 import frc.robot.subsystems.utils.*;
-import static frc.robot.subsystems.Devices.talonSrxSeeSawShooter;;
+import static frc.robot.subsystems.Devices.talonSrxSeeSawShooter;
 
 //Shooter subsystem for shooting ball with single wheel through seesaw mechanic 
 public class SeesawShooter extends SubsystemBase{

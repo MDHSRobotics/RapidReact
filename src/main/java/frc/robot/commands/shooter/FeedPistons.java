@@ -25,7 +25,7 @@ public class FeedPistons extends CommandBase {
 
     @Override
     public void execute() {
-        m_pistonShooter.feedPistons();
+        
     }
 
     // This command continues until interrupted
