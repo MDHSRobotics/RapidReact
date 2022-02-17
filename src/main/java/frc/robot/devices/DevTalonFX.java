@@ -4,6 +4,9 @@ package frc.robot.devices;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 import static frc.robot.RobotManager.isSim;
+import static frc.robot.RobotManager.isReal;
+
+import java.util.Random;
 
 // This class is a wrapper around TalonFX in order to handle cases where the
 // Talon controller and associated motor are not physically connected.  This
@@ -23,6 +26,7 @@ public class DevTalonFX extends WPI_TalonFX {
     private String m_devDescription;
     private Monitor m_monitor;
     public boolean isConnected = true;
+    private double m_lastPower = 0.;
 
     public DevTalonFX(String devName, int deviceNumber) {
         super(deviceNumber);
@@ -54,6 +58,7 @@ public class DevTalonFX extends WPI_TalonFX {
             return;
         }
 
+        m_lastPower = power;
         String methodName = new Throwable().getStackTrace()[0].getMethodName();
         String arg = String.format("%.3f", power);
         m_monitor.log(methodName, arg);
@@ -65,8 +70,21 @@ public class DevTalonFX extends WPI_TalonFX {
             return;
         }
 
+        m_lastPower = 0.;
         String methodName = new Throwable().getStackTrace()[0].getMethodName();
         m_monitor.log(methodName);
+    }
+
+    public double getSelectedSensorPosition() {
+        if (isConnected) {
+            return super.getSelectedSensorPosition();
+        }
+
+        if (isReal) return 0.;
+
+        // Generate fictitious position numbers
+        double position = 4096.;
+        return position;
     }
 
 }

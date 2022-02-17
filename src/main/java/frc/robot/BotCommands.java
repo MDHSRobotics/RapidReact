@@ -17,6 +17,7 @@ public class BotCommands {
 	// SwerveDrive
     public static SwerveDrive swerveDrive;
     public static ResetModulePositions resetModulePositions;
+    public static SwerveRotateModule1 swerveRotateModule1;
 
     // Pickup
     public static SpinPickup spinPickup;
@@ -53,6 +54,7 @@ public class BotCommands {
         // SwerveDriver
         swerveDrive = new SwerveDrive(BotSubsystems.swerveDriver, BotControllers.xbox);
         resetModulePositions = new ResetModulePositions(BotSubsystems.swerveDriver);
+        swerveRotateModule1 = new SwerveRotateModule1(BotSubsystems.swerveDriver);
 
         // Delivery
         spinDelivery = new SpinDelivery(BotSubsystems.delivery);

@@ -38,14 +38,14 @@ public class EncoderTranslator {
     }
 
     /** Computes an encoder tick count based on the desired distance in inches for a given wheel diameter and gearbox ratio (MS : GS)
-     * @param distanceInches The desired distance in inches
-     * @param wheelDiameterInches The diameter of the wheel in inches
+     * @param distance The desired distance
+     * @param wheelDiameter The diameter of the wheel (in same units as distance)
      * @param gearRatio The gear ratio of the gearbox
      * @return Returns the amount of ticks to move a certain distance
     */
-    public int inches_to_ticks(double distanceInches, double wheelDiameterInches, double gearRatio) {
-        double wheelCircumferenceInches = Math.PI * wheelDiameterInches;
-        double rotationCountGS = distanceInches / wheelCircumferenceInches; // Amount of rotations on the gearbox shaft
+    public int distance_to_ticks(double distance, double wheelDiameter, double gearRatio) {
+        double wheelCircumference = Math.PI * wheelDiameter;
+        double rotationCountGS = distance / wheelCircumference; // Amount of rotations on the gearbox shaft
         double rotationCountMS = rotationCountGS * gearRatio; // Amount of rotations on the motor shaft
         double rotationTicks = rotationCountMS * m_TPR; // Amount of ticks to rotate
         return (int) rotationTicks;
@@ -53,69 +53,41 @@ public class EncoderTranslator {
     
     /** Converts ticks to inches ased on wheel diameter
      * @param rotationTicks The amount of ticks to rotate
-     * @param wheelDiameterInches The diameter of the wheel in inches
-     * @return Returns the distance in inches
+     * @param wheelDiameter The diameter of the wheel
+     * @return Returns the distance (in same units as wheel diameter)
     */
-    public double ticks_to_inches(double rotationTicks, double wheelDiameterInches){
-        double wheelCircumferenceInches = Math.PI * wheelDiameterInches;
-        double distanceInches = (rotationTicks/m_TPR)*wheelCircumferenceInches;
-        return distanceInches;
+    public double ticks_to_distance(double rotationTicks, double wheelDiameter){
+        double wheelCircumference = Math.PI * wheelDiameter;
+        double distance = (rotationTicks/m_TPR)*wheelCircumference;
+        return distance;
     }
 
     /**
-     * Converts MPS (meters per second) to TPHMS (ticks per hundred millisecondse)
-     * @param mps
-     * @param wheelDiameterMeters
+     * Converts velocity (units per second) to TPHMS (ticks per hundred millisecondse)
+     * @param velocity Velocity in feet/second, meters/second, etc.
+     * @param wheelDiameter Wheel diameter (in same units as velocity)
      * @return
      */
-    public double metersPerSecond_to_ticksPerDecisecond(double mps, double wheelDiameterMeters) {
+    public double velocity_to_ticksPerDecisecond(double velocity, double wheelDiameter) {
 
-        // Take the MPS and dividing it by the cirfcumference to find the ratio. 
+        // Take the velocity and divide it by the cirfcumference to find the ratio. 
         // After finding the ratio,  multiply by the ticks per rotation to get ticks per second. 
         // Convert to per hundred milliseconds
-        double wheelCircumferenceMeters = wheelDiameterMeters * Math.PI;
-        double tphms = ((mps / wheelCircumferenceMeters) * m_TPR) / 10;
+        double wheelCircumference = wheelDiameter * Math.PI;
+        double tphms = ((velocity / wheelCircumference) * m_TPR) / 10;
         return tphms;
     }
 
     /**
-     * Converts TPHMS (ticks per hundred milliseconds) to MPS (meters per second)
-     * @param tphms
-     * @param wheelDiameterMeters
-     * @return
+     * Converts TPHMS (ticks per hundred milliseconds) to velocity (units per second)
+     * @param tphms Ticks per hundrd milliseconds 
+     * @param wheelDiameter Wheel diameter (meters, feet, etc.)
+     * @return Velocity in units determined by the wheel diameter (m/s, ft/s, etc.)
      */
-    public double ticksPerDecisecond_to_metersPerSecond(double tphms, double wheelDiameterMeters) {
-        double wheelCircumferenceMeters = wheelDiameterMeters * Math.PI;
-        double mps = ((tphms * wheelCircumferenceMeters) / m_TPR) * 10;
-        return mps;
-    }
-
-    /** Computes an encoder velocity tick count based on the desired velocity in feet per second for a given wheel diameter and gearbox ratio (MS : GS)
-     * @param fps The velocity in feet per second
-     * @param wheelDiameterInches The diameter of the wheel in inches
-     * @param gearRatio The gear ratio of the gearbox
-     * @return Returns ticksPerDecisecond
-    */
-    public int feetPerSecond_to_ticksPerDecisecond(double fps, double wheelDiameterInches, double gearRatio) {
-        double wheelCircumferenceFeet = Math.PI * (wheelDiameterInches / 12.0);
-        double rotationsPerSecondGS = fps / wheelCircumferenceFeet; // Amount of rotations per second on the gearbox shaft
-        double rotationsPerSecondMS = rotationsPerSecondGS * gearRatio; // Amount of rotations per second on the motor shaft
-        double ticksPerDecisecond = rotationsPerSecondMS * m_TPR / 10.0; // Amount of ticks per decisecond on the motor shaft
-        return (int) ticksPerDecisecond;
-    }
-
-    /** Computes a velocity in feet per second based on the ticksPerDecisecond for a given wheelDiameter and gearboxration (MS: GS)
-     * @param ticksPerDecisecond Amount of ticks per decisecond to rotate
-     * @param wheelDiameterInches The diameter of the wheel in inches
-     * @param gearRatio The gear ratio of the gearbox
-     * @return Returns feet per second
-     */
-    public double ticksPerDecisecond_to_feetPerSecond(double ticksPerDecisecond, double wheelDiameterInches, double gearRatio){
-        double rotationsPerSecondMS = ticksPerDecisecond / m_TPR * 10.0;
-        double rotationsPerSecondGS = rotationsPerSecondMS / gearRatio;
-        double wheelCircumferenceFeet = Math.PI * (wheelDiameterInches / 12.0);
-        double fps = rotationsPerSecondGS * wheelCircumferenceFeet;
-        return fps;
+    public double ticksPerDecisecond_to_velocity(double tphms, double wheelDiameter) {
+        double wheelCircumference = wheelDiameter * Math.PI;
+        double velocity = ((tphms * wheelCircumference) / m_TPR) * 10;
+        return velocity;
     }
 
     /** Computes an encoder velocity tick count based on the desired rotations per second and the gearbox ratio (MS : GS)
@@ -157,16 +129,4 @@ public class EncoderTranslator {
         return radiansPerSecond;
     }
 
-    /**Computes MPS (meters per second) to radians per second
-     * @param MPS meters persecond
-     * @param wheelDiameterMeters
-     * @return ticksPerDecisecond Returns the desired ticks per hundred milliseconds
-    */
-	public int metersPerSecond_to_ticksPerDecisecond(double mps, double wheelDiameterMeters, double gearRatio) {
-        double wheelCircumferenceMeters = Math.PI * (wheelDiameterMeters);
-        double rotationsPerSecondGS = mps / wheelCircumferenceMeters; // Amount of rotations per second on the gearbox shaft
-        double rotationsPerSecondMS = rotationsPerSecondGS * gearRatio; // Amount of rotations per second on the motor shaft
-        double ticksPerDecisecond = rotationsPerSecondMS * m_TPR / 10.0; // Amount of ticks per decisecond on the motor shaft
-        return (int) ticksPerDecisecond;
-	}
 }

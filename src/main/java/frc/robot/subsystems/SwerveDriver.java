@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.devices.DevSwerveModule;
 import frc.robot.subsystems.constants.SwerveConstants;
+import frc.robot.brains.SwerveDriverBrain;
 
 public class SwerveDriver extends SubsystemBase {
     private final DevSwerveModule frontLeft = new DevSwerveModule(
@@ -45,7 +46,7 @@ public class SwerveDriver extends SubsystemBase {
         SwerveConstants.kRearLeftDriveAbsoluteEncoderReversed);
 
     private final DevSwerveModule rearRight = new DevSwerveModule(
-        "Rear Rright",
+        "Rear Right",
         Devices.talonFxSwerveDriveRR,
         Devices.talonFxSwerveTurnRR,
         SwerveConstants.kRearRightDriveEncoderReversed,
@@ -90,10 +91,22 @@ public class SwerveDriver extends SubsystemBase {
 
     @Override
     public void periodic() {
-        odometer.update(getRotation2d(), frontLeft.getState(), frontRight.getState(), rearLeft.getState(),
-                rearRight.getState());
+        SwerveModuleState moduleStateFL = frontLeft.getState();
+        SwerveModuleState moduleStateFR = frontRight.getState();
+        SwerveModuleState moduleStateRL = rearLeft.getState();
+        SwerveModuleState moduleStateRR = rearRight.getState();
+
+        odometer.update(getRotation2d(), moduleStateFL, moduleStateFR, moduleStateRL, moduleStateRR);
+
+        // Update SmartDashboard
         SmartDashboard.putNumber("Robot Heading", getHeading());
         SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+
+        // Update Shuffleboard
+        frontLeft.setShuffleboardBrain();
+        frontRight.setShuffleboardBrain();
+        rearLeft.setShuffleboardBrain();
+        rearRight.setShuffleboardBrain();
     }
 
     public void stopModules() {

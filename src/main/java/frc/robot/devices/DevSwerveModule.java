@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.util.sendable.SendableRegistry;
+import frc.robot.brains.SwerveDriverBrain;
 
 public class DevSwerveModule {
 
@@ -45,38 +47,57 @@ public class DevSwerveModule {
         m_encoderTranslate = new EncoderTranslator("TalonFX"); 
 
         resetEncoders();
+
+        // Group the contents of the module together in SmartDashboard
+        SendableRegistry.setName(driveMotor, "Module " + m_name, "Drive Motor");
+        SendableRegistry.setName(turningMotor, "Module " + m_name, "Turning Motor"); 
     }
 
-    /*
-    public double getDrivePosition() {
-        int driveMotor.
-        return driveEncoder.getPosition();
+    public double getDrivePositionMeters() {
+        double ticks = driveMotor.getSelectedSensorPosition();
+        double positionInMeters = m_encoderTranslate.ticks_to_distance(ticks, SwerveConstants.kWheelDiameterMeters);
+        return positionInMeters;
     }
-    */
 
-    public double getTurningPosition() {
+    public double getTurningPositionRadians() {
         double turnTicks = turningMotor.getSelectedSensorPosition();
         double turnRadians = m_encoderTranslate.ticks_to_radians(turnTicks);
         return turnRadians;
     }
 
-    public double getDriveVelocity() {
+    public double getDriveVelocityMPS() {
         double driveVelocityTPHMS = driveMotor.getSelectedSensorVelocity();
-        double driveVelocityMPS = m_encoderTranslate.ticksPerDecisecond_to_metersPerSecond(driveVelocityTPHMS, SwerveConstants.kWheelDiameterMeters);
+        double driveVelocityMPS = m_encoderTranslate.ticksPerDecisecond_to_velocity(driveVelocityTPHMS, SwerveConstants.kWheelDiameterMeters);
         return driveVelocityMPS;
     }
 
-    public double getTurningVelocity() {
+    public double getTurningVelocityRadiansPS() {
         double turningVelocityTPHMS = turningMotor.getSelectedSensorVelocity();
-        double turningVelocityMPS = m_encoderTranslate.ticksPerDecisecond_to_RadiansPerSecond(turningVelocityTPHMS);
-        return turningVelocityMPS;
+        double turningVelocityRPS = m_encoderTranslate.ticksPerDecisecond_to_RadiansPerSecond(turningVelocityTPHMS);
+        return turningVelocityRPS;
     }
 
-    public double getAbsoluteEncoderRad() {
+    public double getAbsoluteEncoderRadians() {
         double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
         angle *= 2.0 * Math.PI;
         angle -= absoluteEncoderOffsetRad;
         return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+    }
+
+    // Get array of encoder readings:
+    // [0] - drive motor (ticks)
+    // [1] - drive motor position (meters)
+    // [2] - turning motor (ticks)
+    // [3] - turning motor angle (degrees)
+    public double [] getEncoderReadings() {
+        double [] readings = new double[4];
+
+        readings[0] = driveMotor.getSelectedSensorPosition();
+        readings[1] = getDrivePositionMeters();
+        readings[2] = turningMotor.getSelectedSensorPosition();
+        readings[3] = getTurningPositionRadians() / Math.PI * 180.;
+
+        return readings;
     }
 
     public void resetEncoders() {
@@ -88,7 +109,7 @@ public class DevSwerveModule {
     }
 
     public SwerveModuleState getState() {
-        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurningPosition()));
+        return new SwerveModuleState(getDriveVelocityMPS(), new Rotation2d(getTurningPositionRadians()));
     }
 
     public void setDesiredState(SwerveModuleState state) {
@@ -104,16 +125,25 @@ public class DevSwerveModule {
         SmartDashboard.putString("Swerve State: " + m_name, state.toString());
 
         double drivePower = state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond;
-        double turningPower = turningPidController.calculate(getTurningPosition(), state.angle.getRadians());
+        double turningPower = turningPidController.calculate(getTurningPositionRadians(), state.angle.getRadians());
 
         driveMotor.set(drivePower);
         turningMotor.set(turningPower);
         SmartDashboard.putString("Swerve Power: " + m_name,
                                  String.format("Drive = %.2f; Turning = %.2f", drivePower, turningPower));
+        SwerveDriverBrain.setModuleDrivePower(m_name, drivePower);
+        SwerveDriverBrain.setModuleTurningPower(m_name, turningPower);
     }
 
     public void stop() {
         driveMotor.set(0);
         turningMotor.set(0);
+
+        SwerveDriverBrain.setModuleDrivePower(m_name, 0.);
+        SwerveDriverBrain.setModuleTurningPower(m_name, 0.);
+    }
+
+    public void setShuffleboardBrain() {
+        SwerveDriverBrain.setModuleEncoderReadings(m_name, getEncoderReadings());
     }
 }
