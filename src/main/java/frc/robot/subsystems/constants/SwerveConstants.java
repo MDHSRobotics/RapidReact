@@ -5,8 +5,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 
 public final class SwerveConstants {
+    public static final double kGearRatioTurning = 12.8;
+    public static final double kGearRatioDriving = 8.16;
     public static final double kPTurning = 0.5;
-    public static final double kWheelDiameterMeters = 0.1524;
+    public static final double kWheelDiameterMeters = Units.inchesToMeters(4.0);
     public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
 

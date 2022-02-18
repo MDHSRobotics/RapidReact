@@ -35,7 +35,7 @@ public class DevSwerveModule {
 
         m_name = moduleName;
 
-        driveMotor = driveTalon; 
+        driveMotor = driveTalon;
         turningMotor = steerTalon;
 
         driveMotor.setInverted(driveMotorReversed);
@@ -44,24 +44,25 @@ public class DevSwerveModule {
         turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-        m_encoderTranslate = new EncoderTranslator("TalonFX"); 
+        m_encoderTranslate = new EncoderTranslator("TalonFX");
 
         resetEncoders();
 
         // Group the contents of the module together in SmartDashboard
         SendableRegistry.setName(driveMotor, "Module " + m_name, "Drive Motor");
-        SendableRegistry.setName(turningMotor, "Module " + m_name, "Turning Motor"); 
+        SendableRegistry.setName(turningMotor, "Module " + m_name, "Turning Motor");
     }
 
     public double getDrivePositionMeters() {
         double ticks = driveMotor.getSelectedSensorPosition();
-        double positionInMeters = m_encoderTranslate.ticks_to_distance(ticks, SwerveConstants.kWheelDiameterMeters);
+        double positionInMeters = m_encoderTranslate.ticks_to_distance(ticks, SwerveConstants.kWheelDiameterMeters,
+                            SwerveConstants.kGearRatioDriving);
         return positionInMeters;
     }
 
     public double getTurningPositionRadians() {
         double turnTicks = turningMotor.getSelectedSensorPosition();
-        double turnRadians = m_encoderTranslate.ticks_to_radians(turnTicks);
+        double turnRadians = m_encoderTranslate.ticks_to_radians(turnTicks, SwerveConstants.kGearRatioTurning);
         return turnRadians;
     }
 

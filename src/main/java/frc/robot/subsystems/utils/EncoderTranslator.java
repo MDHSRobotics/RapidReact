@@ -15,7 +15,7 @@ public class EncoderTranslator {
         if (encoderType.equals("TalonFX")) {
             // TalonFX motors have build-in encoders
             m_TPR = 2048;
-        } 
+        }
         else if (encoderType.equals("TalonSRX")) {
             // TalonFX motors have build-in encoders
             m_TPR = 4096;
@@ -50,15 +50,16 @@ public class EncoderTranslator {
         double rotationTicks = rotationCountMS * m_TPR; // Amount of ticks to rotate
         return (int) rotationTicks;
     }
-    
+
     /** Converts ticks to inches ased on wheel diameter
      * @param rotationTicks The amount of ticks to rotate
      * @param wheelDiameter The diameter of the wheel
+     *  @param gearRatio The gear ratio of the gearbox
      * @return Returns the distance (in same units as wheel diameter)
     */
-    public double ticks_to_distance(double rotationTicks, double wheelDiameter){
+    public double ticks_to_distance(double rotationTicks, double wheelDiameter, double gearRatio){
         double wheelCircumference = Math.PI * wheelDiameter;
-        double distance = (rotationTicks/m_TPR)*wheelCircumference;
+        double distance = (rotationTicks/m_TPR)*wheelCircumference / gearRatio;
         return distance;
     }
 
@@ -70,8 +71,8 @@ public class EncoderTranslator {
      */
     public double velocity_to_ticksPerDecisecond(double velocity, double wheelDiameter) {
 
-        // Take the velocity and divide it by the cirfcumference to find the ratio. 
-        // After finding the ratio,  multiply by the ticks per rotation to get ticks per second. 
+        // Take the velocity and divide it by the cirfcumference to find the ratio.
+        // After finding the ratio,  multiply by the ticks per rotation to get ticks per second.
         // Convert to per hundred milliseconds
         double wheelCircumference = wheelDiameter * Math.PI;
         double tphms = ((velocity / wheelCircumference) * m_TPR) / 10;
@@ -80,7 +81,7 @@ public class EncoderTranslator {
 
     /**
      * Converts TPHMS (ticks per hundred milliseconds) to velocity (units per second)
-     * @param tphms Ticks per hundrd milliseconds 
+     * @param tphms Ticks per hundrd milliseconds
      * @param wheelDiameter Wheel diameter (meters, feet, etc.)
      * @return Velocity in units determined by the wheel diameter (m/s, ft/s, etc.)
      */
@@ -104,10 +105,11 @@ public class EncoderTranslator {
 
     /**Computes ticks to radians
      * @param ticks tick integer that is computed to radian value
+     * @param gearRatio The gear ratio of the gearbox
      * @return Returns the desired radian value
     */
-    public double ticks_to_radians(double ticks) {
-        double radians = ticks / m_TPR * 2 * Math.PI;
+    public double ticks_to_radians(double ticks, double gearRatio) {
+        double radians = ticks / m_TPR * 2 * Math.PI / gearRatio;
         return radians;
     }
 
