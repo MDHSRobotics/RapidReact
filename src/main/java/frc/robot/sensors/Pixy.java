@@ -56,7 +56,9 @@ public class Pixy {
             }
         }
         
+        if (isBallDetected) {
+            Logger.info("BALL IS DETECTED I THINK!");
+        }
         return largestBlock;
     }
-
 }

@@ -4,8 +4,7 @@ package frc.robot;
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.gate.*;
 import frc.robot.commands.pickupper.*;
-import frc.robot.commands.sensors.TurnOffLed;
-import frc.robot.commands.sensors.TurnOnLed;
+import frc.robot.commands.sensors.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.consoles.Logger;
 import frc.robot.commands.swervedriver.*;
@@ -40,8 +39,8 @@ public class BotCommands {
     public static TurnOffLed turnOffLed;
     public static TurnOnLed turnOnLed;
 
-    // Pathweaver
-
+    //Pixy
+    public static DetectNearestBall detectNearestBall;
 
     // Initialize all robot commands
     public static void initializeCommands() {
@@ -72,6 +71,9 @@ public class BotCommands {
         // Limelight
         turnOnLed = new TurnOnLed();
         turnOffLed = new TurnOffLed();
+
+        //Pixy
+        detectNearestBall = new DetectNearestBall();
     }
 
 }
