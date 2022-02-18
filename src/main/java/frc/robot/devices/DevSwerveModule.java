@@ -23,7 +23,8 @@ public class DevSwerveModule {
     private final boolean absoluteEncoderReversed;
     private final double absoluteEncoderOffsetRad;
 
-    private final EncoderTranslator m_encoderTranslate;
+    private final EncoderTranslator m_drivingEncoderTranslate;
+    private final EncoderTranslator m_turningEncoderTranslate;
 
     public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon,
             boolean driveMotorReversed, boolean turningMotorReversed,
@@ -44,7 +45,14 @@ public class DevSwerveModule {
         turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
         turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
-        m_encoderTranslate = new EncoderTranslator("TalonFX");
+        m_drivingEncoderTranslate = new EncoderTranslator("TalonFX",
+                                                   SwerveConstants.kWheelDiameterMeters,
+                                                   SwerveConstants.kGearRatioDriving);
+
+        m_turningEncoderTranslate = new EncoderTranslator("TalonFX",                                                 
+                                                   SwerveConstants.kWheelDiameterMeters,
+                                                   SwerveConstants.kGearRatioTurning);
+
 
         resetEncoders();
 
@@ -55,26 +63,25 @@ public class DevSwerveModule {
 
     public double getDrivePositionMeters() {
         double ticks = driveMotor.getSelectedSensorPosition();
-        double positionInMeters = m_encoderTranslate.ticks_to_distance(ticks, SwerveConstants.kWheelDiameterMeters,
-                            SwerveConstants.kGearRatioDriving);
+        double positionInMeters = m_drivingEncoderTranslate.ticks_to_distance(ticks);
         return positionInMeters;
     }
 
     public double getTurningPositionRadians() {
         double turnTicks = turningMotor.getSelectedSensorPosition();
-        double turnRadians = m_encoderTranslate.ticks_to_radians(turnTicks, SwerveConstants.kGearRatioTurning);
+        double turnRadians = m_turningEncoderTranslate.ticks_to_radians(turnTicks);
         return turnRadians;
     }
 
     public double getDriveVelocityMPS() {
         double driveVelocityTPHMS = driveMotor.getSelectedSensorVelocity();
-        double driveVelocityMPS = m_encoderTranslate.ticksPerDecisecond_to_velocity(driveVelocityTPHMS, SwerveConstants.kWheelDiameterMeters);
+        double driveVelocityMPS = m_drivingEncoderTranslate.ticksPerDecisecond_to_velocity(driveVelocityTPHMS);
         return driveVelocityMPS;
     }
 
     public double getTurningVelocityRadiansPS() {
         double turningVelocityTPHMS = turningMotor.getSelectedSensorVelocity();
-        double turningVelocityRPS = m_encoderTranslate.ticksPerDecisecond_to_RadiansPerSecond(turningVelocityTPHMS);
+        double turningVelocityRPS = m_turningEncoderTranslate.ticksPerDecisecond_to_RadiansPerSecond(turningVelocityTPHMS);
         return turningVelocityRPS;
     }
 
