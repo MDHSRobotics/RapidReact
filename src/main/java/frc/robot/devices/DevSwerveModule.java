@@ -14,14 +14,14 @@ import frc.robot.brains.SwerveDriverBrain;
 public class DevSwerveModule {
 
     private final String m_name;
-    private final DevTalonFX driveMotor;
-    private final DevTalonFX turningMotor;
+    private final DevTalonFX m_driveMotor;
+    private final DevTalonFX m_turningMotor;
 
-    private final PIDController turningPidController;
+    private final PIDController m_turningPidController;
 
-    private final AnalogInput absoluteEncoder;
-    private final boolean absoluteEncoderReversed;
-    private final double absoluteEncoderOffsetRad;
+    private final AnalogInput m_absoluteEncoder;
+    private final boolean m_absoluteEncoderReversed;
+    private final double m_absoluteEncoderOffsetRad;
 
     private final EncoderTranslator m_drivingEncoderTranslate;
     private final EncoderTranslator m_turningEncoderTranslate;
@@ -30,20 +30,20 @@ public class DevSwerveModule {
             boolean driveMotorReversed, boolean turningMotorReversed,
             int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
-        this.absoluteEncoderOffsetRad = absoluteEncoderOffset;
-        this.absoluteEncoderReversed = absoluteEncoderReversed;
-        absoluteEncoder = new AnalogInput(absoluteEncoderId);
+        this.m_absoluteEncoderOffsetRad = absoluteEncoderOffset;
+        this.m_absoluteEncoderReversed = absoluteEncoderReversed;
+        m_absoluteEncoder = new AnalogInput(absoluteEncoderId);
 
         m_name = moduleName;
 
-        driveMotor = driveTalon;
-        turningMotor = steerTalon;
+        m_driveMotor = driveTalon;
+        m_turningMotor = steerTalon;
 
-        driveMotor.setInverted(driveMotorReversed);
-        turningMotor.setInverted(turningMotorReversed);
+        m_driveMotor.setInverted(driveMotorReversed);
+        m_turningMotor.setInverted(turningMotorReversed);
 
-        turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
-        turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+        m_turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
+        m_turningPidController.enableContinuousInput(-Math.PI, Math.PI);
 
         m_drivingEncoderTranslate = new EncoderTranslator("TalonFX",
                                                    SwerveConstants.kWheelDiameterMeters,
@@ -57,39 +57,39 @@ public class DevSwerveModule {
         resetEncoders();
 
         // Group the contents of the module together in SmartDashboard
-        SendableRegistry.setName(driveMotor, "Module " + m_name, "Drive Motor");
-        SendableRegistry.setName(turningMotor, "Module " + m_name, "Turning Motor");
+        SendableRegistry.setName(m_driveMotor, "Module " + m_name, "Drive Motor");
+        SendableRegistry.setName(m_turningMotor, "Module " + m_name, "Turning Motor");
     }
 
     public double getDrivePositionMeters() {
-        double ticks = driveMotor.getSelectedSensorPosition();
+        double ticks = m_driveMotor.getSelectedSensorPosition();
         double positionInMeters = m_drivingEncoderTranslate.ticks_to_distance(ticks);
         return positionInMeters;
     }
 
     public double getTurningPositionRadians() {
-        double turnTicks = turningMotor.getSelectedSensorPosition();
+        double turnTicks = m_turningMotor.getSelectedSensorPosition();
         double turnRadians = m_turningEncoderTranslate.ticks_to_radians(turnTicks);
         return turnRadians;
     }
 
     public double getDriveVelocityMPS() {
-        double driveVelocityTPHMS = driveMotor.getSelectedSensorVelocity();
+        double driveVelocityTPHMS = m_driveMotor.getSelectedSensorVelocity();
         double driveVelocityMPS = m_drivingEncoderTranslate.ticksPerDecisecond_to_velocity(driveVelocityTPHMS);
         return driveVelocityMPS;
     }
 
     public double getTurningVelocityRadiansPS() {
-        double turningVelocityTPHMS = turningMotor.getSelectedSensorVelocity();
+        double turningVelocityTPHMS = m_turningMotor.getSelectedSensorVelocity();
         double turningVelocityRPS = m_turningEncoderTranslate.ticksPerDecisecond_to_RadiansPerSecond(turningVelocityTPHMS);
         return turningVelocityRPS;
     }
 
     public double getAbsoluteEncoderRadians() {
-        double angle = absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
+        double angle = m_absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
         angle *= 2.0 * Math.PI;
-        angle -= absoluteEncoderOffsetRad;
-        return angle * (absoluteEncoderReversed ? -1.0 : 1.0);
+        angle -= m_absoluteEncoderOffsetRad;
+        return angle * (m_absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
     // Get array of encoder readings:
@@ -100,20 +100,20 @@ public class DevSwerveModule {
     public double [] getEncoderReadings() {
         double [] readings = new double[4];
 
-        readings[0] = driveMotor.getSelectedSensorPosition();
+        readings[0] = m_driveMotor.getSelectedSensorPosition();
         readings[1] = getDrivePositionMeters();
-        readings[2] = turningMotor.getSelectedSensorPosition();
+        readings[2] = m_turningMotor.getSelectedSensorPosition();
         readings[3] = getTurningPositionRadians() / Math.PI * 180.;
 
         return readings;
     }
 
     public void resetEncoders() {
-        driveMotor.setSelectedSensorPosition(0.0);
+        m_driveMotor.setSelectedSensorPosition(0.0);
 
         // TODO get the actual absolute encoder position
         double initialAbsoluteEncoderPosition = 0.0;
-        turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPosition);
+        m_turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPosition);
     }
 
     public SwerveModuleState getState() {
@@ -133,10 +133,10 @@ public class DevSwerveModule {
         SmartDashboard.putString("Swerve State: " + m_name, state.toString());
 
         double drivePower = state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond;
-        double turningPower = turningPidController.calculate(getTurningPositionRadians(), state.angle.getRadians());
+        double turningPower = m_turningPidController.calculate(getTurningPositionRadians(), state.angle.getRadians());
 
-        driveMotor.set(drivePower);
-        turningMotor.set(turningPower);
+        m_driveMotor.set(drivePower);
+        m_turningMotor.set(turningPower);
         SmartDashboard.putString("Swerve Power: " + m_name,
                                  String.format("Drive = %.2f; Turning = %.2f", drivePower, turningPower));
         SwerveDriverBrain.setModuleDrivePower(m_name, drivePower);
@@ -144,8 +144,8 @@ public class DevSwerveModule {
     }
 
     public void stop() {
-        driveMotor.set(0);
-        turningMotor.set(0);
+        m_driveMotor.set(0);
+        m_turningMotor.set(0);
 
         SwerveDriverBrain.setModuleDrivePower(m_name, 0.);
         SwerveDriverBrain.setModuleTurningPower(m_name, 0.);
