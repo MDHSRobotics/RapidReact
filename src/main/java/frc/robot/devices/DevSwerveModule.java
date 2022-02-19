@@ -30,8 +30,8 @@ public class DevSwerveModule {
             boolean driveMotorReversed, boolean turningMotorReversed,
             int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
-        this.m_absoluteEncoderOffsetRad = absoluteEncoderOffset;
-        this.m_absoluteEncoderReversed = absoluteEncoderReversed;
+        m_absoluteEncoderOffsetRad = absoluteEncoderOffset;
+        m_absoluteEncoderReversed = absoluteEncoderReversed;
         m_absoluteEncoder = new AnalogInput(absoluteEncoderId);
 
         m_name = moduleName;
@@ -49,7 +49,7 @@ public class DevSwerveModule {
                                                    SwerveConstants.kWheelDiameterMeters,
                                                    SwerveConstants.kGearRatioDriving);
 
-        m_turningEncoderTranslate = new EncoderTranslator("TalonFX",                                                 
+        m_turningEncoderTranslate = new EncoderTranslator("TalonFX",
                                                    SwerveConstants.kWheelDiameterMeters,
                                                    SwerveConstants.kGearRatioTurning);
 

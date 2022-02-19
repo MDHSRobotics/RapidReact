@@ -9,10 +9,11 @@ public final class SwerveConstants {
     public static final double kGearRatioDriving = 8.16;
     public static final double kPTurning = 0.5;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4.0);
-    public static final double kPhysicalMaxSpeedMetersPerSecond = 5;
-    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2 * 2 * Math.PI;
+    public static final double kPhysicalMaxSpeedMetersPerSecond = 8.0;
+    public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2.0 * 2.0 * Math.PI;
 
-    public static final double kTrackWidth = Units.inchesToMeters(21);
+    // TODO check measurements
+    public static final double kTrackWidth = Units.inchesToMeters(21.0);
     // Distance between right and left wheels
     public static final double kWheelBase = Units.inchesToMeters(25.4);
     // Distance between front and back wheels
@@ -22,6 +23,7 @@ public final class SwerveConstants {
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
+    // TODO double check reverse booleans
     public static final boolean kFrontLeftTurningEncoderReversed = true;
     public static final boolean kRearLeftTurningEncoderReversed = true;
     public static final boolean kFrontRightTurningEncoderReversed = true;
@@ -32,6 +34,7 @@ public final class SwerveConstants {
     public static final boolean kFrontRightDriveEncoderReversed = false;
     public static final boolean kRearRightDriveEncoderReversed = false;
 
+    // TODO implement once we get the absolute encoders
     public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
     public static final int kRearLeftDriveAbsoluteEncoderPort = 2;
     public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
@@ -47,19 +50,13 @@ public final class SwerveConstants {
     public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
     public static final double kRearRightDriveAbsoluteEncoderOffsetRad = -4.811;
 
-    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4;
+    public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4.;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = //
-                kPhysicalMaxAngularSpeedRadiansPerSecond / 4;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3;
+                kPhysicalMaxAngularSpeedRadiansPerSecond / 4.;
+        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3.;
+        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3.;
 
     public static final class OIConstants {
-        public static final int kDriverControllerPort = 0;
-
-        public static final int kDriverYAxis = 1;
-        public static final int kDriverXAxis = 0;
-        public static final int kDriverRotAxis = 4;
-        public static final int kDriverFieldOrientedButtonIdx = 1;
 
         public static final double kDeadband = 0.05;
     }
