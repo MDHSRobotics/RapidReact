@@ -37,13 +37,13 @@ public class BotSubsystems {
         delivery.setDefaultCommand(BotCommands.stopDelivery);
 
         //Climber
-        Logger.setup("Delivery Teleop Default Command -> StopClimber...");
-        delivery.setDefaultCommand(BotCommands.stopClimber);
+        Logger.setup("Climber Teleop Default Command -> StopClimber...");
+        climber.setDefaultCommand(BotCommands.stopClimber);
 
         // Gate
         Logger.setup("Gate Teleop Default Command -> FeedGate...");
         gate.setDefaultCommand(BotCommands.feedGate);
-        
+
         // Shoot
         Logger.setup("Shooter Teleop Default Command -> Shoot...");
         shooter.setDefaultCommand(BotCommands.stopShoot);
