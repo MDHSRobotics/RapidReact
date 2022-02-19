@@ -53,7 +53,7 @@ public class MainTab {
     public void update() {
         // Match time
         DriverStation ds = DriverStation.getInstance();
-        double matchTime = ds.getMatchTime();
+        double matchTime =  ds.getMatchTime();
         ShufflerBrain.matchTimeEntry.setDouble(matchTime);
     }
 

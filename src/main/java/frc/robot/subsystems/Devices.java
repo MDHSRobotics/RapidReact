@@ -15,14 +15,14 @@ public class Devices {
     //////////////////////
 
     // Shooter
-    public static DevTalonSRX talonSrxShooterBottomWheel = new DevTalonSRX("talonSrxShooterBottomWheel", 4);
-    public static DevTalonSRX talonSrxShooterTopWheel = new DevTalonSRX("talonSrxShooterTopWheel", 10);
+    public static DevTalonSRX talonSrxShooterBottomWheel = new DevTalonSRX("talonSrxShooterBottomWheel", 99);
+    public static DevTalonSRX talonSrxShooterTopWheel = new DevTalonSRX("talonSrxShooterTopWheel", 99);
 
     // Pickup
     public static DevTalonSRX talonSrxPickupRight = new DevTalonSRX("talonSrxPickupRight", 10);
     public static DevTalonSRX talonSrxPickupLeft = new DevTalonSRX("talonSrxPickupLeft", 4);
     public static DevTalonSRX talonSrxPickupGrabber = new DevTalonSRX("talonSrxPickupGrabber", 0);
-    
+
     // Delivery
     public static DevTalonSRX talonSrxDeliveryRight = new DevTalonSRX("talonSrxDeliveryRight", 16);
     public static DevTalonSRX talonSrxDeliveryLeft = new DevTalonSRX("talonSrxDeliveryLeft", 7);
