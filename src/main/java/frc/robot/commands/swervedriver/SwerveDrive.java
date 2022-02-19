@@ -2,6 +2,7 @@
 package frc.robot.commands.swervedriver;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.consoles.Logger;
 import frc.robot.oi.controllers.XboxPositionAccessible;
 import frc.robot.oi.movements.SwerveMovement;
 import frc.robot.subsystems.SwerveDriver;
@@ -83,12 +84,19 @@ public class SwerveDrive extends CommandBase {
     }
 
     @Override
-    public void end(boolean interrupted) {
-        swerveDriver.stopModules();
-    }
-
-    @Override
     public boolean isFinished() {
         return false;
+    }
+
+
+    @Override
+    public void end(boolean interrupted) {
+        if (interrupted) {
+            System.out.println("--");
+            Logger.ending("Interrupting Command: ResetModulePositions...");
+        } else {
+            Logger.ending("Ending Command: ResetModulePositions...");
+        }
+        swerveDriver.stopModules();
     }
 }

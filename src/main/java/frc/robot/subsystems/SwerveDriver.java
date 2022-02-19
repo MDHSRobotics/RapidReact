@@ -24,6 +24,9 @@ public class SwerveDriver extends SubsystemBase {
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
 
 
+    // Switch between robot and field relative control
+    public boolean fieldRelative = false;
+    
     private final DevSwerveModule frontRight = new DevSwerveModule(
         "Front Right",
         Devices.talonFxSwerveDriveFR,
@@ -68,6 +71,14 @@ public class SwerveDriver extends SubsystemBase {
         }).start();
     }
 
+    public void ToggleOrientation() {
+        if (fieldRelative) {
+            fieldRelative = false;
+        } else {
+            fieldRelative = true;
+        }
+    }
+
     public void zeroHeading() {
         gyro.reset();
     }
@@ -76,6 +87,7 @@ public class SwerveDriver extends SubsystemBase {
         return Math.IEEEremainder(gyro.getAngle(), 360);
     }
 
+    // Returns the current rotation2D
     public Rotation2d getRotation2d() {
         return Rotation2d.fromDegrees(getHeading());
     }
