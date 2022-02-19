@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.devices.DevSwerveModule;
 import frc.robot.subsystems.constants.SwerveConstants;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class SwerveDriver extends SubsystemBase {
     private final DevSwerveModule frontLeft = new DevSwerveModule(
@@ -26,7 +27,7 @@ public class SwerveDriver extends SubsystemBase {
 
     // Switch between robot and field relative control
     public boolean fieldRelative = false;
-    
+
     private final DevSwerveModule frontRight = new DevSwerveModule(
         "Front Right",
         Devices.talonFxSwerveDriveFR,
@@ -127,11 +128,40 @@ public class SwerveDriver extends SubsystemBase {
         rearRight.stop();
     }
 
-    public void setModuleStates(SwerveModuleState[] desiredStates) {
+    private void setModuleStates(SwerveModuleState[] desiredStates) {
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
         frontLeft.setDesiredState(desiredStates[0]);
         frontRight.setDesiredState(desiredStates[1]);
         rearLeft.setDesiredState(desiredStates[2]);
         rearRight.setDesiredState(desiredStates[3]);
     }
+
+    //Set chassis speed based on current toggle of field orientation
+    public void setChassisSpeed(double xSpeed, double ySpeed, double turningSpeed) {
+        setChassisSpeed(xSpeed, ySpeed, turningSpeed, fieldRelative);
+    }
+
+    //Set chassis speeds
+    public void setChassisSpeed(double xSpeed, double ySpeed, double turningSpeed, boolean fieldOriented) {
+
+        // Construct desired chassis speeds
+        ChassisSpeeds chassisSpeeds;
+
+        if (fieldOriented) {
+            // Relative to field
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                    xSpeed, ySpeed, turningSpeed, getRotation2d());
+        } else {
+            // Relative to robot
+            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+        }
+
+        SmartDashboard.putString("Swerve Cmd (4): Chassis Speeeds", chassisSpeeds.toString());
+        // Convert chassis speeds to individual module states
+        SwerveModuleState[] moduleStates = SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
+
+        // Output each module states to wheels
+        setModuleStates(moduleStates);
+    }
+
 }

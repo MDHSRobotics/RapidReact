@@ -19,6 +19,7 @@ public class BotCommands {
     public static ResetModulePositions resetModulePositions;
     public static SwerveRotateModule1 swerveRotateModule1;
     public static ToggleDriverOrientation toggleDriverOrientation;
+    public static DriveBox driveBox;
 
     // Pickup
     public static SpinPickup spinPickup;
@@ -57,6 +58,7 @@ public class BotCommands {
         resetModulePositions = new ResetModulePositions(BotSubsystems.swerveDriver);
         swerveRotateModule1 = new SwerveRotateModule1(BotSubsystems.swerveDriver);
         toggleDriverOrientation = new ToggleDriverOrientation(BotSubsystems.swerveDriver);
+        driveBox = new DriveBox();
 
         // Delivery
         spinDelivery = new SpinDelivery(BotSubsystems.delivery);

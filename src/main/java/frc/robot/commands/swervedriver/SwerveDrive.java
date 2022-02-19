@@ -21,7 +21,7 @@ public class SwerveDrive extends CommandBase {
     private final boolean fieldOrientedFunction = false;
     private final SlewRateLimiter xLimiter, yLimiter, turningLimiter;
 
-    public SwerveDrive (SwerveDriver swerveDriver, 
+    public SwerveDrive (SwerveDriver swerveDriver,
         XboxPositionAccessible controller) {
         this.swerveDriver = swerveDriver;
         this.controller = controller;
@@ -63,24 +63,8 @@ public class SwerveDrive extends CommandBase {
         SmartDashboard.putString("Swerve Cmd (3): Chassis velocity",
                                  String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed3, ySpeed3, turningSpeed3));
 
-        // 4. Construct desired chassis speeds
-        ChassisSpeeds chassisSpeeds;
-        if (fieldOrientedFunction) {
-            // Relative to field
-            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
-                    xSpeed3, ySpeed3, turningSpeed3, swerveDriver.getRotation2d());
-        } else {
-            // Relative to robot
-            chassisSpeeds = new ChassisSpeeds(xSpeed3, ySpeed3, turningSpeed3);
-        }
-
-        SmartDashboard.putString("Swerve Cmd (4): Chassis Speeeds", chassisSpeeds.toString());
-
-        // 5. Convert chassis speeds to individual module states
-        SwerveModuleState[] moduleStates = SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
-
-        // 6. Output each module states to wheels
-        swerveDriver.setModuleStates(moduleStates);
+        // 5. Output each module states to wheels
+        swerveDriver.setChassisSpeed(xSpeed3, ySpeed3, turningSpeed3);
     }
 
     @Override
