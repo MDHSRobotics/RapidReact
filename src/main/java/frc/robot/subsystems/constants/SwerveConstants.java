@@ -9,13 +9,13 @@ public final class SwerveConstants {
     public static final double kGearRatioDriving = 8.16;
     public static final double kPTurning = 0.5;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4.0);
-    public static final double kPhysicalMaxSpeedMetersPerSecond = 8.0;
+    public static final double kPhysicalMaxSpeedMetersPerSecond = 16.0;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2.0 * 2.0 * Math.PI;
 
     // TODO check measurements
-    public static final double kTrackWidth = Units.inchesToMeters(21.0);
+    public static final double kTrackWidth = Units.inchesToMeters(25.0);
     // Distance between right and left wheels
-    public static final double kWheelBase = Units.inchesToMeters(25.4);
+    public static final double kWheelBase = Units.inchesToMeters(25.0);
     // Distance between front and back wheels
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
