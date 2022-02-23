@@ -4,7 +4,6 @@ package frc.robot.subsystems;
 import java.util.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.brains.LimelightBrain;
@@ -25,6 +24,9 @@ public class Shooter extends SubsystemBase {
 
     private static final boolean SENSOR_PHASE_TOP = true;
     private static final boolean MOTOR_INVERT_TOP = false;
+
+    private static final double GRAVITY_CONSTANT = 9.80665;
+    private static final double SHOOTER_ANGLE = Math.PI / 4;
 
     // Position constants
     private static final double GEAR_RATIO = 4.0; // Gear ratio bewteen Input Shaft : Output Shaft of a gearbox
@@ -54,10 +56,12 @@ public class Shooter extends SubsystemBase {
         if (isReal) {
             // Configure devices
             PIDValues pidTop = new PIDValues(0.00835, 0.0, 0.0, 0.0);
-            TalonUtils.configureTalonWithEncoder(talonSrxShooterBottomWheel, SENSOR_PHASE_TOP, MOTOR_INVERT_TOP, pidTop);
+            TalonUtils.configureTalonWithEncoder(talonSrxShooterBottomWheel, SENSOR_PHASE_TOP, MOTOR_INVERT_TOP,
+                    pidTop);
 
             PIDValues pidBottom = new PIDValues(0.00835, 0.0, 0.0, 0.0); // Calibrated for 20,000: TpHMS 0.00835
-            TalonUtils.configureTalonWithEncoder(talonSrxShooterTopWheel, SENSOR_PHASE_BOTTOM, MOTOR_INVERT_BOTTOM, pidBottom);
+            TalonUtils.configureTalonWithEncoder(talonSrxShooterTopWheel, SENSOR_PHASE_BOTTOM, MOTOR_INVERT_BOTTOM,
+                    pidBottom);
         }
     }
 
@@ -78,10 +82,14 @@ public class Shooter extends SubsystemBase {
         ShooterBrain.setBottomWheelCurrentVelocity(bottomVelocity);
 
         // Capture min and max recorded flywheel velocity
-        if (topVelocity < minTopVelocity) minTopVelocity = topVelocity;
-        if (topVelocity > maxTopVelocity) maxTopVelocity = topVelocity;
-        if (bottomVelocity < minBottomVelocity) minBottomVelocity = bottomVelocity;
-        if (bottomVelocity > maxBottomVelocity) maxBottomVelocity = bottomVelocity;
+        if (topVelocity < minTopVelocity)
+            minTopVelocity = topVelocity;
+        if (topVelocity > maxTopVelocity)
+            maxTopVelocity = topVelocity;
+        if (bottomVelocity < minBottomVelocity)
+            minBottomVelocity = bottomVelocity;
+        if (bottomVelocity > maxBottomVelocity)
+            maxBottomVelocity = bottomVelocity;
 
         ShooterBrain.setBottomWheelMinVelocity(minBottomVelocity);
         ShooterBrain.setBottomWheelMaxVelocity(maxBottomVelocity);
@@ -89,7 +97,7 @@ public class Shooter extends SubsystemBase {
         ShooterBrain.setTopWheelMaxVelocity(maxTopVelocity);
 
         // Calculate average velocities
-        for (int i = sampleSize - 2; i > 0; i--){
+        for (int i = sampleSize - 2; i > 0; i--) {
             topVelocitySamples[i] = topVelocitySamples[i - 1];
             bottomVelocitySamples[i] = bottomVelocitySamples[i - 1];
         }
@@ -117,6 +125,21 @@ public class Shooter extends SubsystemBase {
     public void stop() {
         talonSrxShooterTopWheel.stopMotor();
         talonSrxShooterBottomWheel.stopMotor();
+    }
+
+    public void shootBasedOffEquation() {
+        double shootDistance = LimelightBrain.getDistanceEntry();
+        ShooterBrain.setShootDistance(shootDistance);
+
+        double velocityTPHMS = translateDistanceToVelocityUsingEquation(shootDistance) * GEAR_RATIO;
+        ShooterBrain.setShootVelocity(velocityTPHMS);
+
+        double ballSpinVelocity = 0;
+
+        talonSrxShooterTopWheel.set(ControlMode.Velocity, velocityTPHMS + ballSpinVelocity);
+        talonSrxShooterBottomWheel.set(ControlMode.Velocity, velocityTPHMS - ballSpinVelocity);
+
+        ShooterBrain.setShootVelocity(velocityTPHMS);
     }
 
     /**
@@ -151,16 +174,17 @@ public class Shooter extends SubsystemBase {
         talonSrxShooterBottomWheel.set(ControlMode.Velocity, 15000 + ballSpinVelocity);
     }
 
-    public void testEncoders(){
+    public void testEncoders() {
         talonSrxShooterTopWheel.set(ControlMode.Position, 10000);
         talonSrxShooterBottomWheel.set(ControlMode.Position, 10000);
     }
+
     /**
      * Translate a desired target shoot distance (ft) to a motor velocity in Ticks per 100 ms.
      * The translation is done via a lookup table with values based on shooting experiments.
      * Each entry in the table is the result of testing a particular motor speed (Ticks per 100ms) and
-     * then measuring the range that the ball is shot. The lookup table correlates the ball velocity 
-     * and motor speed for each test. We can deduce target shoot distances for other ball velocities by 
+     * then measuring the range that the ball is shot. The lookup table correlates the ball velocity
+     * and motor speed for each test. We can deduce target shoot distances for other ball velocities by
      * interpolating (or extrapolating) using the values in the lookup table.
      * @param targetDistance
      * @return targetTPHMS
@@ -197,10 +221,9 @@ public class Shooter extends SubsystemBase {
             // Skip over the first value because we can't compute a slope until we have read at least 2 values
             if (firstPass) {
                 firstPass = false;
-            }
-            else {
-                double slope = (t2-t1) / (f2-f1);
-                targetTPHMS = t1 + (targetDistance-f1) * slope;
+            } else {
+                double slope = (t2 - t1) / (f2 - f1);
+                targetTPHMS = t1 + (targetDistance - f1) * slope;
 
                 if (targetDistance <= f2)
                     break;
@@ -213,6 +236,18 @@ public class Shooter extends SubsystemBase {
         return targetTPHMS;
     }
 
+    /**
+     * Translate distance (in feet) to velocity (in feet per second) using the trajectory equation:
+     * https://drive.google.com/file/d/1RsTcZpr_us819Lp69hV6c1U1hN50P7Dw/view?usp=drivesdk
+     * Assume gravity, shooter angle, and ball spin is constant
+     * @param distanceInFeet
+     * @return
+     */
+    public static double translateDistanceToVelocityUsingEquation(double distanceInFeet) {
+        double velocity = Math.sqrt((GRAVITY_CONSTANT * Math.pow(distanceInFeet + 2, 2))
+                / (distanceInFeet + 2 - (2 * 8.667 * Math.pow(Math.cos(SHOOTER_ANGLE), 2))));
+        return velocity;
+    }
     //---------//
     // Getters //
     //---------//
@@ -222,7 +257,7 @@ public class Shooter extends SubsystemBase {
      * @return velocity
      */
     public int getTopWheelVelocity() {
-        int velocity = (int)(talonSrxShooterTopWheel.getSelectedSensorVelocity() / GEAR_RATIO);
+        int velocity = (int) (talonSrxShooterTopWheel.getSelectedSensorVelocity() / GEAR_RATIO);
         return velocity;
     }
 
@@ -231,12 +266,12 @@ public class Shooter extends SubsystemBase {
      * @return velocity
      */
     public int getBottomWheelVelocity() {
-        int velocity = (int)(talonSrxShooterBottomWheel.getSelectedSensorVelocity() / GEAR_RATIO);
+        int velocity = (int) (talonSrxShooterBottomWheel.getSelectedSensorVelocity() / GEAR_RATIO);
         return velocity;
     }
 
     public void getTurnWheelPosition() {
-        int position = (int)(talonSrxShooterBottomWheel.getSelectedSensorPosition() / GEAR_RATIO);
+        int position = (int) (talonSrxShooterBottomWheel.getSelectedSensorPosition() / GEAR_RATIO);
         Logger.info("Cureent wheel position: " + position);
     }
 
