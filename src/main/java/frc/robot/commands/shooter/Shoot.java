@@ -23,13 +23,12 @@ public class Shoot extends CommandBase {
     public void initialize() {
         Logger.action("Initializing Command: Shoot...");
 
-        
+
     }
 
     @Override
     public void execute() {
-
-        m_shooter.getTurnWheelPosition();
+        m_shooter.shootBasedOffEquation();
     }
 
     // This command continues until interrupted
