@@ -130,21 +130,16 @@ public class SwerveDriver extends SubsystemBase {
     }
 
     private void setModuleStates(SwerveModuleState[] desiredStates) {
-        Logger.info("Setting Module States...");
-        Logger.debug("Front Left State: " + desiredStates[0].toString());
-        Logger.debug("Front Right State: " + desiredStates[1].toString());
-        Logger.debug("Rear Left State: " + desiredStates[2].toString());
-        Logger.debug("Rear Right State: " + desiredStates[3].toString());
+        SmartDashboard.putString("05: Front Left Desired State", desiredStates[0].toString());
+        SmartDashboard.putString("05: Front Right Desired State", desiredStates[1].toString());
+        SmartDashboard.putString("05: Rear Left Desired State", desiredStates[2].toString());
+        SmartDashboard.putString("05: Rear Right Desired State", desiredStates[3].toString());
 
         SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
 
-        Logger.debug("Desaturated Front Left State: " + desiredStates[0].toString());
         frontLeft.setDesiredState(desiredStates[0]);
-        Logger.debug("Desaturated Front Right State: " + desiredStates[0].toString());
         frontRight.setDesiredState(desiredStates[1]);
-        Logger.debug("Desaturated Rear Left State: " + desiredStates[0].toString());
         rearLeft.setDesiredState(desiredStates[2]);
-        Logger.debug("Desaturated Rear Right State: " + desiredStates[0].toString());
         rearRight.setDesiredState(desiredStates[3]);
     }
 
@@ -155,12 +150,10 @@ public class SwerveDriver extends SubsystemBase {
 
     //Set chassis speeds
     public void setChassisSpeed(double xSpeed, double ySpeed, double turningSpeed, boolean fieldOriented) {
-        Logger.info("Setting Chassis Speeds...");
-        Logger.debug("xSpeed: " + xSpeed);
-        Logger.debug("ySpeed: " + ySpeed);
-        Logger.debug("turningSpeed: " + turningSpeed);
-        Logger.debug("fieldOriented: " + fieldOriented);
-
+        SmartDashboard.putString("07: xSpeed", "" + xSpeed);
+        SmartDashboard.putString("07: ySpeed", "" + ySpeed);
+        SmartDashboard.putString("07: turningSpeed", "" + turningSpeed);
+        SmartDashboard.putString("07: fieldOriented", "" + fieldOriented);
         // Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
 
@@ -172,9 +165,8 @@ public class SwerveDriver extends SubsystemBase {
             // Relative to robot
             chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
         }
-        Logger.debug("chassisSpeeds: " + chassisSpeeds.toString());
 
-        SmartDashboard.putString("Swerve Cmd (4): Chassis Speeeds", chassisSpeeds.toString());
+        SmartDashboard.putString("06: Chassis Speeeds", chassisSpeeds.toString());
         // Convert chassis speeds to individual module states
         SwerveModuleState[] moduleStates = SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 

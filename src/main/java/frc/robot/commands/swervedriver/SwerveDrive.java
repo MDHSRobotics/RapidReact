@@ -43,16 +43,14 @@ public class SwerveDrive extends CommandBase {
         double ySpeed1 = joystickMovement.sideToSideSpeed;
         double turningSpeed1 = joystickMovement.rotationSpeed;
 
-        SmartDashboard.putString("Swerve Cmd (1): Joystick input",
-                                 String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed1, ySpeed1, turningSpeed1));
+        SmartDashboard.putString("10: Joystick input", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed1, ySpeed1, turningSpeed1));
 
         // 2. Apply deadband
         double xSpeed2 = Math.abs(xSpeed1) > OIConstants.kDeadband ? xSpeed1 : 0.0;
         double ySpeed2 = Math.abs(ySpeed1) > OIConstants.kDeadband ? ySpeed1 : 0.0;
         double turningSpeed2 = Math.abs(turningSpeed1) > OIConstants.kDeadband ? turningSpeed1 : 0.0;
 
-        SmartDashboard.putString("Swerve Cmd (2): Apply deadpan",
-                                 String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed2, ySpeed2, turningSpeed2));
+        SmartDashboard.putString("09: Apply deadpan", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed2, ySpeed2, turningSpeed2));
 
         // 3. Make the driving smoother
         double xSpeed3 = xLimiter.calculate(xSpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
@@ -60,8 +58,7 @@ public class SwerveDrive extends CommandBase {
         double turningSpeed3 = turningLimiter.calculate(turningSpeed2)
                 * SwerveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
-        SmartDashboard.putString("Swerve Cmd (3): Chassis velocity",
-                                 String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed3, ySpeed3, turningSpeed3));
+        SmartDashboard.putString("08: Chassis velocity", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed3, ySpeed3, turningSpeed3));
 
         // 5. Output each module states to wheels
         swerveDriver.setChassisSpeed(xSpeed3, ySpeed3, turningSpeed3);

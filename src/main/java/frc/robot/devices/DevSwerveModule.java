@@ -122,34 +122,30 @@ public class DevSwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState state) {
-        Logger.info("Setting Desired State...");
-        Logger.debug("Desired State: " + state.toString());
-
+        SmartDashboard.putString("04: Desaturated Desired State: " + m_name, state.toString());
+        
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
             Logger.info("Desired State Speed less than .001 -> Stopping...");
             stop();
 
-            SmartDashboard.putString("Swerve State: " + m_name, "STOPPED");
-            SmartDashboard.putString("Swerve Power: " + m_name, "STOPPED");
+            SmartDashboard.putString("03: Swerve State: " + m_name, "STOPPED");
+            SmartDashboard.putString("03: Swerve Power: " + m_name, "STOPPED");
 
             return;
         }
         state = SwerveModuleState.optimize(state, getState().angle);
-        Logger.debug("Optimized State: " + state.toString());
-        SmartDashboard.putString("Swerve State: " + m_name, state.toString());
+        SmartDashboard.putString("02: Swerve Optimized State: " + m_name, state.toString());
 
         double drivePower = state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond;
         double turningPower = m_turningPidController.calculate(getTurningPositionRadians(), state.angle.getRadians());
 
-        Logger.info("Drive Power: " + drivePower);
-        Logger.info("Turning Power: " + turningPower);
+        SmartDashboard.putString("01: Swerve Power: " + m_name, String.format("Drive = %.2f; Turning = %.2f", drivePower, turningPower));
+
+        SwerveDriverBrain.setModuleDrivePower(m_name, drivePower);
+        SwerveDriverBrain.setModuleTurningPower(m_name, turningPower);
 
         m_driveMotor.set(drivePower);
         m_turningMotor.set(turningPower);
-        SmartDashboard.putString("Swerve Power: " + m_name,
-                                 String.format("Drive = %.2f; Turning = %.2f", drivePower, turningPower));
-        SwerveDriverBrain.setModuleDrivePower(m_name, drivePower);
-        SwerveDriverBrain.setModuleTurningPower(m_name, turningPower);
     }
 
     public void stop() {
