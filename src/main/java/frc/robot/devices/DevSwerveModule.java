@@ -131,8 +131,16 @@ public class DevSwerveModule {
             SmartDashboard.putString("03: Swerve State: " + m_name, "STOPPED");
             SmartDashboard.putString("03: Swerve Power: " + m_name, "STOPPED");
 
+            SmartDashboard.delete("02: Swerve Optimized State: " + m_name);
+            SmartDashboard.delete("01: Swerve Power: " + m_name);
+
             return;
         }
+        else {
+            SmartDashboard.delete("03: Swerve State: " + m_name);
+            SmartDashboard.delete("03: Swerve Power: " + m_name);
+        }
+
         state = SwerveModuleState.optimize(state, getState().angle);
         SmartDashboard.putString("02: Swerve Optimized State: " + m_name, state.toString());
 
