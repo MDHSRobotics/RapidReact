@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.SendableRegistry;
 import frc.robot.brains.SwerveDriverBrain;
+import frc.robot.consoles.Logger;
 
 public class DevSwerveModule {
 
@@ -121,7 +122,11 @@ public class DevSwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState state) {
+        Logger.info("Setting Desired State...");
+        Logger.debug("Desired State: " + state.toString());
+
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
+            Logger.info("Desired State Speed less than .001 -> Stopping...");
             stop();
 
             SmartDashboard.putString("Swerve State: " + m_name, "STOPPED");
@@ -130,10 +135,14 @@ public class DevSwerveModule {
             return;
         }
         state = SwerveModuleState.optimize(state, getState().angle);
+        Logger.debug("Optimized State: " + state.toString());
         SmartDashboard.putString("Swerve State: " + m_name, state.toString());
 
         double drivePower = state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond;
         double turningPower = m_turningPidController.calculate(getTurningPositionRadians(), state.angle.getRadians());
+
+        Logger.info("Drive Power: " + drivePower);
+        Logger.info("Turning Power: " + turningPower);
 
         m_driveMotor.set(drivePower);
         m_turningMotor.set(turningPower);
