@@ -15,10 +15,10 @@ public class XboxBrain {
     public static double xLeftDeadZoneDefault = .02;
     public static double yRightDeadZoneDefault = .02;
     public static double xRightDeadZoneDefault = .02;
-    public static double yLeftSensitivityDefault = .6;
-    public static double xLeftSensitivityDefault = .6;
-    public static double yRightSensitivityDefault = .6;
-    public static double xRightSensitivityDefault = .6;
+    public static double yLeftSensitivityDefault = 1;
+    public static double xLeftSensitivityDefault = 1;
+    public static double yRightSensitivityDefault = 1;
+    public static double xRightSensitivityDefault = 1;
 
     //---------------------//
     // NetworkTableEntries //

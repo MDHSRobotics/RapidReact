@@ -9,7 +9,7 @@ public final class SwerveConstants {
     public static final double kGearRatioDriving = 8.16;
     public static final double kPTurning = 0.5;
     public static final double kWheelDiameterMeters = Units.inchesToMeters(4.0);
-    public static final double kPhysicalMaxSpeedMetersPerSecond = 16.0;
+    public static final double kPhysicalMaxSpeedMetersPerSecond = 8.0;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2.0 * 2.0 * Math.PI;
 
     // TODO check measurements
@@ -31,8 +31,8 @@ public final class SwerveConstants {
 
     public static final boolean kFrontLeftDriveEncoderReversed = true;
     public static final boolean kRearLeftDriveEncoderReversed = true;
-    public static final boolean kFrontRightDriveEncoderReversed = false;
-    public static final boolean kRearRightDriveEncoderReversed = false;
+    public static final boolean kFrontRightDriveEncoderReversed = true;
+    public static final boolean kRearRightDriveEncoderReversed = true;
 
     // TODO implement once we get the absolute encoders
     public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
@@ -41,9 +41,9 @@ public final class SwerveConstants {
     public static final int kRearRightDriveAbsoluteEncoderPort = 3;
 
     public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
-    public static final boolean kRearLeftDriveAbsoluteEncoderReversed = false;
+    public static final boolean kRearLeftDriveAbsoluteEncoderReversed = true;
     public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
-    public static final boolean kRearRightDriveAbsoluteEncoderReversed = false;
+    public static final boolean kRearRightDriveAbsoluteEncoderReversed = true;
 
     public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
     public static final double kRearLeftDriveAbsoluteEncoderOffsetRad = -1.252;

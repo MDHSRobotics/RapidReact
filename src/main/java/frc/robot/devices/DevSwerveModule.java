@@ -2,6 +2,10 @@ package frc.robot.devices;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.subsystems.utils.EncoderTranslator;
+
+import com.ctre.phoenix.sensors.AbsoluteSensorRange;
+import com.ctre.phoenix.sensors.CANCoder;
+
 import edu.wpi.first.math.controller.PIDController;
 import frc.robot.subsystems.constants.SwerveConstants;
 import edu.wpi.first.wpilibj.RobotController;
@@ -24,10 +28,11 @@ public class DevSwerveModule {
     private final boolean m_absoluteEncoderReversed;
     private final double m_absoluteEncoderOffsetRad;
 
+    private final CANCoder m_canCoder;
     private final EncoderTranslator m_drivingEncoderTranslate;
     private final EncoderTranslator m_turningEncoderTranslate;
 
-    public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon,
+    public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon, CANCoder canCoder,
             boolean driveMotorReversed, boolean turningMotorReversed,
             int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
@@ -45,6 +50,10 @@ public class DevSwerveModule {
 
         m_turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
         m_turningPidController.enableContinuousInput(-Math.PI, Math.PI);
+
+        m_canCoder = canCoder;
+        m_canCoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+        m_canCoder.setPositionToAbsolute();
 
         m_drivingEncoderTranslate = new EncoderTranslator("TalonFX",
                                                    SwerveConstants.kWheelDiameterMeters,
@@ -112,9 +121,10 @@ public class DevSwerveModule {
     public void resetEncoders() {
         m_driveMotor.setSelectedSensorPosition(0.0);
 
-        // TODO get the actual absolute encoder position
-        double initialAbsoluteEncoderPosition = 0.0;
+        double initialAbsoluteEncoderPosition = m_canCoder.getAbsolutePosition();
         m_turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPosition);
+
+        SmartDashboard.putNumber("Absolute Encoder Position: " + m_name, initialAbsoluteEncoderPosition);
     }
 
     public SwerveModuleState getState() {
@@ -123,9 +133,8 @@ public class DevSwerveModule {
 
     public void setDesiredState(SwerveModuleState state) {
         SmartDashboard.putString("04: Desaturated Desired State: " + m_name, state.toString());
-        
+
         if (Math.abs(state.speedMetersPerSecond) < 0.001) {
-            Logger.info("Desired State Speed less than .001 -> Stopping...");
             stop();
 
             SmartDashboard.putString("03: Swerve State: " + m_name, "STOPPED");
@@ -144,7 +153,7 @@ public class DevSwerveModule {
         state = SwerveModuleState.optimize(state, getState().angle);
         SmartDashboard.putString("02: Swerve Optimized State: " + m_name, state.toString());
 
-        double drivePower = state.speedMetersPerSecond / SwerveConstants.kPhysicalMaxSpeedMetersPerSecond;
+        double drivePower = state.speedMetersPerSecond;
         double turningPower = m_turningPidController.calculate(getTurningPositionRadians(), state.angle.getRadians());
 
         SmartDashboard.putString("01: Swerve Power: " + m_name, String.format("Drive = %.2f; Turning = %.2f", drivePower, turningPower));

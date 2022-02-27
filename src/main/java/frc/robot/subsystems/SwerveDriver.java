@@ -19,6 +19,7 @@ public class SwerveDriver extends SubsystemBase {
         "Front Left",
         Devices.talonFxSwerveDriveFL,
         Devices.talonFxSwerveTurnFL,
+        Devices.canCoderFL,
         SwerveConstants.kFrontLeftDriveEncoderReversed,
         SwerveConstants.kFrontLeftTurningEncoderReversed,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderPort,
@@ -33,6 +34,7 @@ public class SwerveDriver extends SubsystemBase {
         "Front Right",
         Devices.talonFxSwerveDriveFR,
         Devices.talonFxSwerveTurnFR,
+        Devices.canCoderFR,
         SwerveConstants.kFrontRightDriveEncoderReversed,
         SwerveConstants.kFrontRightTurningEncoderReversed,
         SwerveConstants.kFrontRightDriveAbsoluteEncoderPort,
@@ -43,6 +45,7 @@ public class SwerveDriver extends SubsystemBase {
         "Rear Left",
         Devices.talonFxSwerveDriveRL,
         Devices.talonFxSwerveTurnRL,
+        Devices.canCoderRL,
         SwerveConstants.kRearLeftDriveEncoderReversed,
         SwerveConstants.kRearLeftTurningEncoderReversed,
         SwerveConstants.kRearLeftDriveAbsoluteEncoderPort,
@@ -53,6 +56,7 @@ public class SwerveDriver extends SubsystemBase {
         "Rear Right",
         Devices.talonFxSwerveDriveRR,
         Devices.talonFxSwerveTurnRR,
+        Devices.canCoderRR,
         SwerveConstants.kRearRightDriveEncoderReversed,
         SwerveConstants.kRearRightTurningEncoderReversed,
         SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
@@ -64,6 +68,11 @@ public class SwerveDriver extends SubsystemBase {
             new Rotation2d(0));
 
     public SwerveDriver() {
+        frontLeft.resetEncoders();
+        frontRight.resetEncoders();
+        rearLeft.resetEncoders();
+        rearRight.resetEncoders();
+
         new Thread(() -> {
             try {
                 Thread.sleep(1000);
