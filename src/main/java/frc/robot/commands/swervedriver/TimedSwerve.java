@@ -39,13 +39,13 @@ public class TimedSwerve extends CommandBase {
         Logger.action("Initializing Command: TimedSwerve...");
         m_timer.reset();
         m_timer.start();
-
-        //Moves relative to the current state of the field orientation toggle
-        m_swerveDriver.setChassisSpeed(m_xSpeed, m_ySpeed, m_turningSpeed);
     }
 
     @Override
     public void execute() {
+        
+        //Moves relative to the current state of the field orientation toggle
+        m_swerveDriver.setChassisSpeed(m_xSpeed, m_ySpeed, m_turningSpeed);
 
     }
 

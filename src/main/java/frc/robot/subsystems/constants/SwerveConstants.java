@@ -12,7 +12,6 @@ public final class SwerveConstants {
     public static final double kPhysicalMaxSpeedMetersPerSecond = 8.0;
     public static final double kPhysicalMaxAngularSpeedRadiansPerSecond = 2.0 * 2.0 * Math.PI;
 
-    // TODO check measurements
     public static final double kTrackWidth = Units.inchesToMeters(25.0);
     // Distance between right and left wheels
     public static final double kWheelBase = Units.inchesToMeters(25.0);
@@ -23,32 +22,61 @@ public final class SwerveConstants {
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
-    // TODO double check reverse booleans
-    public static final boolean kFrontLeftTurningEncoderReversed = true;
-    public static final boolean kRearLeftTurningEncoderReversed = true;
-    public static final boolean kFrontRightTurningEncoderReversed = true;
-    public static final boolean kRearRightTurningEncoderReversed = true;
+    // The turning motors should probably all have the same "reversed" state
+    // since they are all mounted in the same way
+    public static final boolean kFrontLeftTurningMotorReversed = true;
+    public static final boolean kRearLeftTurningMotorReversed = true;
+    public static final boolean kFrontRightTurningMotorReversed = true;
+    public static final boolean kRearRightTurningMotorReversed = true;
 
-    public static final boolean kFrontLeftDriveEncoderReversed = true;
-    public static final boolean kRearLeftDriveEncoderReversed = true;
-    public static final boolean kFrontRightDriveEncoderReversed = true;
-    public static final boolean kRearRightDriveEncoderReversed = true;
+    /* The drive motor's "reversed" state needs to take into account how the module
+       is expected to be oriented when driving forward. The driving wheel on each
+       module can be aligned with the robot in two different ways: with the gears
+       pointing to the inside or outside. By convention, we assume that the gears
+       are pointing to the inside, which means that the motors on the left and
+       right sides will have opposite "reversed" states.
+    */ 
+    public static final boolean kFrontLeftDriveMotorReversed = true;
+    public static final boolean kRearLeftDriveMotorReversed = true;
+    public static final boolean kFrontRightDriveMotorReversed = false;
+    public static final boolean kRearRightDriveMotorReversed = false;
 
-    // TODO implement once we get the absolute encoders
+    // ID's of the absolute encoder for each module
+    // TODO Double check these ID's
     public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
     public static final int kRearLeftDriveAbsoluteEncoderPort = 2;
     public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
     public static final int kRearRightDriveAbsoluteEncoderPort = 3;
 
+    // TODO Double check these values and document how to interpret them
     public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
     public static final boolean kRearLeftDriveAbsoluteEncoderReversed = true;
     public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
     public static final boolean kRearRightDriveAbsoluteEncoderReversed = true;
 
-    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = -0.254;
-    public static final double kRearLeftDriveAbsoluteEncoderOffsetRad = -1.252;
-    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = -1.816;
-    public static final double kRearRightDriveAbsoluteEncoderOffsetRad = -4.811;
+    /* The absolute encoder retains its value even after the robot has been
+       powered off. Note that this behavior must be configured using the Phoenix Tuner
+       by setting the "Sensor Boot-Initialization Strategy" so that it does not
+       reset to 0 on re-boot. See the CTRE documentation for more information
+       about how to bring up the CANcoder absolute encoder.
+       https://docs.ctre-phoenix.com/en/stable/ch12a_BringUpCANCoder.html 
+
+       The absolute encoder will normally report a non-zero value for its
+       position when the module's wheel is aligned with the robot.  This value
+       is referred to as the "absolute encoder offset", which is used by the
+       swerve module to detect the true position of the module's wheel. The 
+       procedure for determining the offset is as follows:
+       1) Align the module's wheel with the robot and orient it as described
+          above for the drive motor's reversed state - that is, ensure that 
+          the gears are facing the inside of the robot.
+       2) Using the Phoenix Tuner, run the Self Test Snapshot to find the
+          current absolute position in degrees. That number is the offset
+          for this module.  Convert that value from degrees to radians below.
+    */
+    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(205.928);
+    public static final double kRearLeftDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(130.781);
+    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(126.826);
+    public static final double kRearRightDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(324.580);
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4.;
         public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = //

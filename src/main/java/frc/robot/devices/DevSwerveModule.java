@@ -10,6 +10,7 @@ import edu.wpi.first.math.controller.PIDController;
 import frc.robot.subsystems.constants.SwerveConstants;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.SendableRegistry;
@@ -24,7 +25,6 @@ public class DevSwerveModule {
 
     private final PIDController m_turningPidController;
 
-    private final AnalogInput m_absoluteEncoder;
     private final boolean m_absoluteEncoderReversed;
     private final double m_absoluteEncoderOffsetRad;
 
@@ -38,7 +38,6 @@ public class DevSwerveModule {
 
         m_absoluteEncoderOffsetRad = absoluteEncoderOffset;
         m_absoluteEncoderReversed = absoluteEncoderReversed;
-        m_absoluteEncoder = new AnalogInput(absoluteEncoderId);
 
         m_name = moduleName;
 
@@ -96,10 +95,17 @@ public class DevSwerveModule {
     }
 
     public double getAbsoluteEncoderRadians() {
-        double angle = m_absoluteEncoder.getVoltage() / RobotController.getVoltage5V();
-        angle *= 2.0 * Math.PI;
-        angle -= m_absoluteEncoderOffsetRad;
-        return angle * (m_absoluteEncoderReversed ? -1.0 : 1.0);
+        // Get the angle in degrees of the current position recorded by the absolute encoder
+        // Note that this will be -180 to +180, as configured in the constructor above
+        double absEncoderPositionDegrees = m_canCoder.getAbsolutePosition();
+
+        double absEncoderPositionRad = Units.degreesToRadians(absEncoderPositionDegrees);
+
+        // Apply the offset of the absolute encoder
+        absEncoderPositionRad -= m_absoluteEncoderOffsetRad;
+
+        // Negate the angle if needed
+        return absEncoderPositionRad * (m_absoluteEncoderReversed ? -1.0 : 1.0);
     }
 
     // Get array of encoder readings:
@@ -119,12 +125,22 @@ public class DevSwerveModule {
     }
 
     public void resetEncoders() {
+
+        // Set drive motor encoder to Zero
         m_driveMotor.setSelectedSensorPosition(0.0);
 
-        double initialAbsoluteEncoderPosition = m_canCoder.getAbsolutePosition();
-        m_turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPosition);
+        // Get the initial angle of the absolute encoder in radians
+        double initialAbsoluteEncoderPositionRad = getAbsoluteEncoderRadians();
 
-        SmartDashboard.putNumber("Absolute Encoder Position: " + m_name, initialAbsoluteEncoderPosition);
+        // Convert angle to raw units (ticks)
+        double initialAbsoluteEncoderPositionTicks = m_turningEncoderTranslate.radians_to_ticks(initialAbsoluteEncoderPositionRad);
+
+        // Set the current position of the turning motor based on absolute encoder
+        m_turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPositionTicks);
+
+        // Report absolute encoder info to SmartDashboard
+        SmartDashboard.putNumber("Absolute Encoder Angle (Radians): " + m_name, initialAbsoluteEncoderPositionRad);
+        SmartDashboard.putNumber("Absolute Encoder Angle (Ticks): " + m_name, initialAbsoluteEncoderPositionTicks);
     }
 
     public SwerveModuleState getState() {

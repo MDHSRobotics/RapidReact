@@ -20,8 +20,8 @@ public class SwerveDriver extends SubsystemBase {
         Devices.talonFxSwerveDriveFL,
         Devices.talonFxSwerveTurnFL,
         Devices.canCoderFL,
-        SwerveConstants.kFrontLeftDriveEncoderReversed,
-        SwerveConstants.kFrontLeftTurningEncoderReversed,
+        SwerveConstants.kFrontLeftDriveMotorReversed,
+        SwerveConstants.kFrontLeftTurningMotorReversed,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderPort,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
@@ -35,8 +35,8 @@ public class SwerveDriver extends SubsystemBase {
         Devices.talonFxSwerveDriveFR,
         Devices.talonFxSwerveTurnFR,
         Devices.canCoderFR,
-        SwerveConstants.kFrontRightDriveEncoderReversed,
-        SwerveConstants.kFrontRightTurningEncoderReversed,
+        SwerveConstants.kFrontRightDriveMotorReversed,
+        SwerveConstants.kFrontRightTurningMotorReversed,
         SwerveConstants.kFrontRightDriveAbsoluteEncoderPort,
         SwerveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kFrontRightDriveAbsoluteEncoderReversed);
@@ -46,8 +46,8 @@ public class SwerveDriver extends SubsystemBase {
         Devices.talonFxSwerveDriveRL,
         Devices.talonFxSwerveTurnRL,
         Devices.canCoderRL,
-        SwerveConstants.kRearLeftDriveEncoderReversed,
-        SwerveConstants.kRearLeftTurningEncoderReversed,
+        SwerveConstants.kRearLeftDriveMotorReversed,
+        SwerveConstants.kRearLeftTurningMotorReversed,
         SwerveConstants.kRearLeftDriveAbsoluteEncoderPort,
         SwerveConstants.kRearLeftDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kRearLeftDriveAbsoluteEncoderReversed);
@@ -57,8 +57,8 @@ public class SwerveDriver extends SubsystemBase {
         Devices.talonFxSwerveDriveRR,
         Devices.talonFxSwerveTurnRR,
         Devices.canCoderRR,
-        SwerveConstants.kRearRightDriveEncoderReversed,
-        SwerveConstants.kRearRightTurningEncoderReversed,
+        SwerveConstants.kRearRightDriveMotorReversed,
+        SwerveConstants.kRearRightTurningMotorReversed,
         SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
         SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
