@@ -8,10 +8,13 @@ public class ButtonBindings {
     // Configure xbox buttons
     public static void configureXbox() {
         Logger.setup("Configure Buttons -> Xbox Controller...");
-        
+
         //Shoot
-        BotControllers.xbox.btnA.whenPressed(BotCommands.rotateSwerveWheelsToStart);
         BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
+
+        //SwerveDrive
+        BotControllers.xbox.btnStart.whenPressed(BotCommands.toggleDriverOrientation);
+        BotControllers.xbox.btnA.whenPressed(BotCommands.driveBox);
     }
 
 }

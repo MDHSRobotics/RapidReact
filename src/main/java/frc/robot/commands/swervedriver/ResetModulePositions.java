@@ -26,7 +26,7 @@ public class ResetModulePositions extends CommandBase {
 
     @Override
     public void execute() {
-        m_swerveDriver.resetModulePosition();
+        // m_swerveDriver.resetModulePosition();
     }
 
     // This command continues until interrupted
@@ -43,7 +43,7 @@ public class ResetModulePositions extends CommandBase {
         } else {
             Logger.ending("Ending Command: ResetModulePositions...");
         }
-        m_swerveDriver.stop();
+        m_swerveDriver.stopModules();
     }
 
 }

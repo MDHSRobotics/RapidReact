@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.consoles.Logger;
 import frc.robot.subsystems.SwerveDriver;
 
-// This command stops the SwerveDriver.
-public class RotateSwerveWheelsToStart extends CommandBase {
+// This command switches the orientation of the robot.
+public class ToggleDriverOrientation extends CommandBase {
 
     private SwerveDriver m_swerveDriver;
 
-    public RotateSwerveWheelsToStart(SwerveDriver swerveDriver) {
-        Logger.setup("Constructing Command: StopSwerveDrive...");
+    public ToggleDriverOrientation(SwerveDriver swerveDriver) {
+        Logger.setup("Constructing Command: ToggleDriverOrientation...");
 
         // Add given subsystem requirements
         m_swerveDriver = swerveDriver;
@@ -21,12 +21,12 @@ public class RotateSwerveWheelsToStart extends CommandBase {
 
     @Override
     public void initialize() {
-        Logger.action("Initializing Command: RotateSwerveWheelsToStart...");
+        Logger.setup("Initializing Command: ToggleDriverOrientation...");
     }
 
     @Override
     public void execute() {
-        m_swerveDriver.testMotors();
+        m_swerveDriver.ToggleOrientation();
     }
 
     // This command continues until interrupted
@@ -39,11 +39,11 @@ public class RotateSwerveWheelsToStart extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted) {
             System.out.println("--");
-            Logger.ending("Interrupting Command: StopSwerveDrive...");
+            Logger.ending("Interrupting Command: ToggleDriverOrientation...");
         } else {
-            Logger.ending("Ending Command: StopSwerveDrive...");
+            Logger.ending("Ending Command: ToggleDriverOrientation...");
         }
-        m_swerveDriver.stop();
+        m_swerveDriver.stopModules();
     }
 
 }

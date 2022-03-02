@@ -26,7 +26,7 @@ public class StopSwerveDrive extends CommandBase {
 
     @Override
     public void execute() {
-        m_swerveDriver.stop();
+        m_swerveDriver.stopModules();;
     }
 
     // This command continues until interrupted
@@ -43,7 +43,7 @@ public class StopSwerveDrive extends CommandBase {
         } else {
             Logger.ending("Ending Command: StopSwerveDrive...");
         }
-        m_swerveDriver.stop();
+        m_swerveDriver.stopModules();
     }
 
 }

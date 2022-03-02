@@ -1,132 +1,186 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import frc.robot.BotSensors;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.consoles.Logger;
 import frc.robot.devices.DevSwerveModule;
-import static frc.robot.subsystems.Devices.*;
+import frc.robot.subsystems.constants.SwerveConstants;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 
 public class SwerveDriver extends SubsystemBase {
+    private final DevSwerveModule frontLeft = new DevSwerveModule(
+        "Front Left",
+        Devices.talonFxSwerveDriveFL,
+        Devices.talonFxSwerveTurnFL,
+        Devices.canCoderFL,
+        SwerveConstants.kFrontLeftDriveMotorReversed,
+        SwerveConstants.kFrontLeftTurningMotorReversed,
+        SwerveConstants.kFrontLeftDriveAbsoluteEncoderPort,
+        SwerveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
 
-    // Constants for PID setpoint algorithm
-    public static final double kMaxSpeed = 1.0; // meters per second
-    public static final double kMaxAngularSpeed = Math.PI; // radians per second
 
     // Switch between robot and field relative control
-    public static final boolean fieldRelative = false;
-    
-    // Thumbstick axis inversions
-    public static boolean isYFlipped = false;
-    private boolean isXFlipped = false;
-    private boolean isOmegaFlipped = false;
+    public boolean fieldRelative = false;
 
-    // Subsystem calculation objects
-    private final SwerveDriveKinematics m_kinematics;
-    private final SwerveDriveOdometry m_odometry;
+    private final DevSwerveModule frontRight = new DevSwerveModule(
+        "Front Right",
+        Devices.talonFxSwerveDriveFR,
+        Devices.talonFxSwerveTurnFR,
+        Devices.canCoderFR,
+        SwerveConstants.kFrontRightDriveMotorReversed,
+        SwerveConstants.kFrontRightTurningMotorReversed,
+        SwerveConstants.kFrontRightDriveAbsoluteEncoderPort,
+        SwerveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kFrontRightDriveAbsoluteEncoderReversed);
 
-    // Subsystem SwerveModule objects
-    private DevSwerveModule m_swerveModuleFL;
-    private DevSwerveModule m_swerveModuleFR;
-    private DevSwerveModule m_swerveModuleRL;
-    private DevSwerveModule m_swerveModuleRR;
+    private final DevSwerveModule rearLeft = new DevSwerveModule(
+        "Rear Left",
+        Devices.talonFxSwerveDriveRL,
+        Devices.talonFxSwerveTurnRL,
+        Devices.canCoderRL,
+        SwerveConstants.kRearLeftDriveMotorReversed,
+        SwerveConstants.kRearLeftTurningMotorReversed,
+        SwerveConstants.kRearLeftDriveAbsoluteEncoderPort,
+        SwerveConstants.kRearLeftDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kRearLeftDriveAbsoluteEncoderReversed);
+
+    private final DevSwerveModule rearRight = new DevSwerveModule(
+        "Rear Right",
+        Devices.talonFxSwerveDriveRR,
+        Devices.talonFxSwerveTurnRR,
+        Devices.canCoderRR,
+        SwerveConstants.kRearRightDriveMotorReversed,
+        SwerveConstants.kRearRightTurningMotorReversed,
+        SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
+        SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
+        SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
+
+    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
+    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(SwerveConstants.kDriveKinematics,
+            new Rotation2d(0));
 
     public SwerveDriver() {
-        // SwerveModule objects are initialized with their respective talons and positions
-        m_swerveModuleFL = new DevSwerveModule(talonFxSwerveDriveFL, talonFxSwerveTurnFL, 0.24, 0.24);
-        m_swerveModuleFR = new DevSwerveModule(talonFxSwerveDriveFR, talonFxSwerveTurnFR, 0.24, -0.24);
-        m_swerveModuleRL = new DevSwerveModule(talonFxSwerveDriveRL, talonFxSwerveTurnRL, -0.24, 0.24);
-        m_swerveModuleRR = new DevSwerveModule(talonFxSwerveDriveRR, talonFxSwerveTurnRR, -0.24, -0.24);
+        frontLeft.resetEncoders();
+        frontRight.resetEncoders();
+        rearLeft.resetEncoders();
+        rearRight.resetEncoders();
 
-        // A kinematics object is created from the locations of the swerve modules
-        m_kinematics = new SwerveDriveKinematics(m_swerveModuleFL.getLocation(), 
-                                                 m_swerveModuleFR.getLocation(), 
-                                                 m_swerveModuleRL.getLocation(), 
-                                                 m_swerveModuleRR.getLocation());
-
-        // An odometry object takes the kinematics object and the current angle of the robot (the odometry should be updated)
-        m_odometry = new SwerveDriveOdometry(m_kinematics, getAngle());
+        new Thread(() -> {
+            try {
+                Thread.sleep(1000);
+                zeroHeading();
+            } catch (Exception e) {
+            }
+        }).start();
     }
 
-    // Returns the current gyro angle
-    public Rotation2d getAngle() {
-        return Rotation2d.fromDegrees(-BotSensors.gyro.getAngle()); // Flipping the angle because WPILib gyros are CW positive.
-    }
-
-    /**
-     * Operates each module to achieve robot motion given three joystick inputs
-     * 
-     * @param xVel
-     * @param yVel
-     * @param omega
-     */
-    public void drive(double xVel, double yVel, double omega) {
-        double m_xVel = xVel;
-        double m_yVel = yVel;
-        double m_omega = omega;
-        ChassisSpeeds speeds = ChassisSpeeds.fromFieldRelativeSpeeds(0, 1, 0, Rotation2d.fromDegrees(0));
-        SwerveModuleState[] swerveModuleStates = m_kinematics.toSwerveModuleStates(speeds);
-
-        // Flip axis directions 
-        if (isXFlipped) m_xVel = -xVel;
-        if (isOmegaFlipped) m_omega = -omega;
-
-        // Choose between robot or field relative driving
+    public void ToggleOrientation() {
         if (fieldRelative) {
-            swerveModuleStates = m_kinematics.toSwerveModuleStates(ChassisSpeeds.fromFieldRelativeSpeeds(m_xVel, m_yVel, m_omega, getAngle()));
-        } 
-        else {
-            swerveModuleStates = m_kinematics.toSwerveModuleStates(new ChassisSpeeds(m_xVel, m_yVel, m_omega));
+            fieldRelative = false;
+        } else {
+            fieldRelative = true;
+        }
+    }
+
+    public void zeroHeading() {
+        gyro.reset();
+    }
+
+    public double getHeading() {
+        return Math.IEEEremainder(gyro.getAngle(), 360);
+    }
+
+    // Returns the current rotation2D
+    public Rotation2d getRotation2d() {
+        return Rotation2d.fromDegrees(getHeading());
+    }
+
+    public Pose2d getPose() {
+        return odometer.getPoseMeters();
+    }
+
+    public void resetOdometry(Pose2d pose) {
+        odometer.resetPosition(pose, getRotation2d());
+    }
+
+    @Override
+    public void periodic() {
+        SwerveModuleState moduleStateFL = frontLeft.getState();
+        SwerveModuleState moduleStateFR = frontRight.getState();
+        SwerveModuleState moduleStateRL = rearLeft.getState();
+        SwerveModuleState moduleStateRR = rearRight.getState();
+
+        odometer.update(getRotation2d(), moduleStateFL, moduleStateFR, moduleStateRL, moduleStateRR);
+
+        // Update SmartDashboard
+        SmartDashboard.putNumber("Robot Heading", getHeading());
+        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+
+        // Update Shuffleboard
+        frontLeft.setShuffleboardBrain();
+        frontRight.setShuffleboardBrain();
+        rearLeft.setShuffleboardBrain();
+        rearRight.setShuffleboardBrain();
+    }
+
+    public void stopModules() {
+        frontLeft.stop();
+        frontRight.stop();
+        rearLeft.stop();
+        rearRight.stop();
+    }
+
+    private void setModuleStates(SwerveModuleState[] desiredStates) {
+        SmartDashboard.putString("05: Front Left Desired State", desiredStates[0].toString());
+        SmartDashboard.putString("05: Front Right Desired State", desiredStates[1].toString());
+        SmartDashboard.putString("05: Rear Left Desired State", desiredStates[2].toString());
+        SmartDashboard.putString("05: Rear Right Desired State", desiredStates[3].toString());
+
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, SwerveConstants.kPhysicalMaxSpeedMetersPerSecond);
+
+        frontLeft.setDesiredState(desiredStates[0]);
+        frontRight.setDesiredState(desiredStates[1]);
+        rearLeft.setDesiredState(desiredStates[2]);
+        rearRight.setDesiredState(desiredStates[3]);
+    }
+
+    //Set chassis speed based on current toggle of field orientation
+    public void setChassisSpeed(double xSpeed, double ySpeed, double turningSpeed) {
+        setChassisSpeed(xSpeed, ySpeed, turningSpeed, fieldRelative);
+    }
+
+    //Set chassis speeds
+    public void setChassisSpeed(double xSpeed, double ySpeed, double turningSpeed, boolean fieldOriented) {
+        SmartDashboard.putString("07: xSpeed", "" + xSpeed);
+        SmartDashboard.putString("07: ySpeed", "" + ySpeed);
+        SmartDashboard.putString("07: turningSpeed", "" + turningSpeed);
+        SmartDashboard.putString("07: fieldOriented", "" + fieldOriented);
+        // Construct desired chassis speeds
+        ChassisSpeeds chassisSpeeds;
+
+        if (fieldOriented) {
+            // Relative to field
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+                    xSpeed, ySpeed, turningSpeed, getRotation2d());
+        } else {
+            // Relative to robot
+            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
         }
 
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, kMaxSpeed);
+        SmartDashboard.putString("06: Chassis Speeeds", chassisSpeeds.toString());
+        // Convert chassis speeds to individual module states
+        SwerveModuleState[] moduleStates = SwerveConstants.kDriveKinematics.toSwerveModuleStates(chassisSpeeds);
 
-        // Set the state of each swerve module in order to achieve the specified drive velocities
-        m_swerveModuleFL.setDesiredState(swerveModuleStates[0]);
-        m_swerveModuleFR.setDesiredState(swerveModuleStates[1]);
-        m_swerveModuleRL.setDesiredState(swerveModuleStates[2]);
-        m_swerveModuleRR.setDesiredState(swerveModuleStates[3]);
-    }
-
-    // The odometry object updates its position given a current gyro angle and current module states
-    public void updateOdometry() {
-        Pose2d pose = m_odometry.update(getAngle(), m_swerveModuleFL.getCurrentState(), m_swerveModuleFR.getCurrentState(), m_swerveModuleRL.getCurrentState(), m_swerveModuleRR.getCurrentState());
+        // Output each module states to wheels
+        setModuleStates(moduleStates);
     }
 
-    public void resetGyro(){
-        BotSensors.gyro.reset();
-    }
-    
-    public void stop() {
-        m_swerveModuleFL.stopModule();
-        m_swerveModuleFR.stopModule();
-        m_swerveModuleRL.stopModule();
-        m_swerveModuleRR.stopModule();
-    }
-
-    public void testMotors() {
-        m_swerveModuleFL.testModule();
-        m_swerveModuleFR.testModule();
-        m_swerveModuleRL.testModule();
-        m_swerveModuleRR.testModule();
-    }
-
-    public void resetModulePosition() {
-        m_swerveModuleFL.zeroOutModulePositions();
-        m_swerveModuleFR.zeroOutModulePositions();
-        m_swerveModuleRL.zeroOutModulePositions();
-        m_swerveModuleRR.zeroOutModulePositions();
-    }
-
-    public void getTurnPositions(){
-        Logger.info("Encoder returned ticks: " + talonFxSwerveTurnFL.getSelectedSensorPosition(0));
-        Logger.info("Encoder returned ticks: " + talonFxSwerveTurnFR.getSelectedSensorPosition(0));
-        Logger.info("Encoder returned ticks: " + talonFxSwerveTurnRL.getSelectedSensorPosition(0));
-        Logger.info("Encoder returned ticks: " + talonFxSwerveTurnRR.getSelectedSensorPosition(0));
-    }
 }

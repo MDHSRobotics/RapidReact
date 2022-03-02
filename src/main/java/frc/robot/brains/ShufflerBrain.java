@@ -22,6 +22,7 @@ public class ShufflerBrain {
 
     // Main Tab
     public static NetworkTableEntry matchTimeEntry;
+    public static NetworkTableEntry entryDriveEncoderTicks;
 
 
     //---------//
@@ -30,8 +31,7 @@ public class ShufflerBrain {
 
     // Main Tab
     public static void setMatchTime() {
-        DriverStation ds = DriverStation.getInstance();
-        double matchTime = ds.getMatchTime();
+        double matchTime = DriverStation.getMatchTime();
         matchTimeEntry.setDouble(matchTime);
     }
 

@@ -2,6 +2,8 @@ package frc.robot.subsystems;
 
 import frc.robot.devices.*;
 
+import com.ctre.phoenix.sensors.CANCoder;
+
 import edu.wpi.first.wpilibj.Servo;
 
 // This class contains singleton (static) instances of id mapped subsystem components.
@@ -20,7 +22,7 @@ public class Devices {
 
     // Pickup
     public static DevTalonSRX talonSrxPickup = new DevTalonSRX("talonSrxPickup", 6);
-    
+
     // Delivery
     public static DevTalonSRX talonSrxDeliveryRight = new DevTalonSRX("talonSrxDeliveryRight", 16);
     public static DevTalonSRX talonSrxDeliveryLeft = new DevTalonSRX("talonSrxDeliveryLeft", 7);
@@ -38,7 +40,8 @@ public class Devices {
     public static DevTalonFX talonFxSwerveTurnRL = new DevTalonFX("talonFxSwerveTurnWheelRearLeft", 27);
     public static DevTalonFX talonFxSwerveTurnRR = new DevTalonFX("talonFxSwerveTurnWheelRearRight", 29);
 
-    /////////////////////
-    // Drive Instances //
-    /////////////////////
+    public static CANCoder canCoderFR = new CANCoder(4);
+    public static CANCoder canCoderFL = new CANCoder(2);
+    public static CANCoder canCoderRR = new CANCoder(3);
+    public static CANCoder canCoderRL = new CANCoder(1);
 }
