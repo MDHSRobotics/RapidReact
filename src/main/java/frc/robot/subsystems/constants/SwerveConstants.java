@@ -41,13 +41,6 @@ public final class SwerveConstants {
     public static final boolean kFrontRightDriveMotorReversed = false;
     public static final boolean kRearRightDriveMotorReversed = false;
 
-    // ID's of the absolute encoder for each module
-    // TODO Double check these ID's
-    public static final int kFrontLeftDriveAbsoluteEncoderPort = 0;
-    public static final int kRearLeftDriveAbsoluteEncoderPort = 2;
-    public static final int kFrontRightDriveAbsoluteEncoderPort = 1;
-    public static final int kRearRightDriveAbsoluteEncoderPort = 3;
-
     // TODO Double check these values and document how to interpret them
     public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
     public static final boolean kRearLeftDriveAbsoluteEncoderReversed = true;
@@ -73,16 +66,17 @@ public final class SwerveConstants {
           current absolute position in degrees. That number is the offset
           for this module.  Convert that value from degrees to radians below.
     */
-    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(205.928);
-    public static final double kRearLeftDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(130.781);
-    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(126.826);
-    public static final double kRearRightDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(324.580);
+    public static final double kFrontLeftDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(0);
+    public static final double kRearLeftDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(0);
+    public static final double kFrontRightDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(0);
+    public static final double kRearRightDriveAbsoluteEncoderOffsetRad = Units.degreesToRadians(0);
 
     public static final double kTeleDriveMaxSpeedMetersPerSecond = kPhysicalMaxSpeedMetersPerSecond / 4.;
-        public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = //
-                kPhysicalMaxAngularSpeedRadiansPerSecond / 4.;
-        public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3.;
-        public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3.;
+    public static final double kTeleDriveMaxAngularSpeedRadiansPerSecond = kPhysicalMaxAngularSpeedRadiansPerSecond / 4.;
+    public static final double kTeleDriveMaxAccelerationUnitsPerSecond = 3.;
+    public static final double kTeleDriveMaxAngularAccelerationUnitsPerSecond = 3.;
+
+    public static final double kDriveRampTime = 0.5; // units are tphms
 
     public static final class OIConstants {
 

@@ -22,7 +22,6 @@ public class SwerveDriver extends SubsystemBase {
         Devices.canCoderFL,
         SwerveConstants.kFrontLeftDriveMotorReversed,
         SwerveConstants.kFrontLeftTurningMotorReversed,
-        SwerveConstants.kFrontLeftDriveAbsoluteEncoderPort,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
 
@@ -37,7 +36,6 @@ public class SwerveDriver extends SubsystemBase {
         Devices.canCoderFR,
         SwerveConstants.kFrontRightDriveMotorReversed,
         SwerveConstants.kFrontRightTurningMotorReversed,
-        SwerveConstants.kFrontRightDriveAbsoluteEncoderPort,
         SwerveConstants.kFrontRightDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kFrontRightDriveAbsoluteEncoderReversed);
 
@@ -48,7 +46,6 @@ public class SwerveDriver extends SubsystemBase {
         Devices.canCoderRL,
         SwerveConstants.kRearLeftDriveMotorReversed,
         SwerveConstants.kRearLeftTurningMotorReversed,
-        SwerveConstants.kRearLeftDriveAbsoluteEncoderPort,
         SwerveConstants.kRearLeftDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kRearLeftDriveAbsoluteEncoderReversed);
 
@@ -59,7 +56,6 @@ public class SwerveDriver extends SubsystemBase {
         Devices.canCoderRR,
         SwerveConstants.kRearRightDriveMotorReversed,
         SwerveConstants.kRearRightTurningMotorReversed,
-        SwerveConstants.kRearRightDriveAbsoluteEncoderPort,
         SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
 

@@ -33,8 +33,7 @@ public class DevSwerveModule {
     private final EncoderTranslator m_turningEncoderTranslate;
 
     public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon, CANCoder canCoder,
-            boolean driveMotorReversed, boolean turningMotorReversed,
-            int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
+            boolean driveMotorReversed, boolean turningMotorReversed, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
         m_absoluteEncoderOffsetRad = absoluteEncoderOffset;
         m_absoluteEncoderReversed = absoluteEncoderReversed;
@@ -46,6 +45,8 @@ public class DevSwerveModule {
 
         m_driveMotor.setInverted(driveMotorReversed);
         m_turningMotor.setInverted(turningMotorReversed);
+
+        m_driveMotor.configOpenloopRamp(SwerveConstants.kDriveRampTime);
 
         m_turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
         m_turningPidController.enableContinuousInput(-Math.PI, Math.PI);
@@ -134,8 +135,9 @@ public class DevSwerveModule {
 
         // Convert angle to raw units (ticks)
         double initialAbsoluteEncoderPositionTicks = m_turningEncoderTranslate.radians_to_ticks(initialAbsoluteEncoderPositionRad);
-
-        // Set the current position of the turning motor based on absolute encoder
+        // TODO remove the following line once absolute encoder is working
+        initialAbsoluteEncoderPositionTicks = 0.0;
+        // Set the current position of the turning motor based on absolute encoder 
         m_turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPositionTicks);
 
         // Report absolute encoder info to SmartDashboard
