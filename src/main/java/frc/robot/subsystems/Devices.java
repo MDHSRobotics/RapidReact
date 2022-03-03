@@ -26,8 +26,8 @@ public class Devices {
     public static DevTalonSRX talonSrxDeliveryLeft = new DevTalonSRX("talonSrxDeliveryLeft", 7);
 
     //Climb
-    public static DevTalonFX talonFxClimberRight = new DevTalonFX("talonFxClimberRight", 0);
-    public static DevTalonFX talonFxClimberLeft = new DevTalonFX("talonFxClimberLeft", 0);
+    public static DevTalonSRX talonSrxClimberRight = new DevTalonSRX("talonSrxClimberRight", 5);
+    public static DevTalonSRX talonSrxClimberLeft = new DevTalonSRX("talonSrxClimberLeft", 0);
 
 
     // Sensors
