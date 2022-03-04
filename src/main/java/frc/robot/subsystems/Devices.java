@@ -6,6 +6,10 @@ import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.wpilibj.Servo;
 
+import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.Solenoid;
+
 // This class contains singleton (static) instances of id mapped subsystem components.
 // If a device is not connected at initialization, it should be set to null.
 // IMPORTANT: Only ONE subsystem should control any given device.
@@ -36,6 +40,11 @@ public class Devices {
 
     // Sensors
     public static Servo servoGate = new Servo(1);
+
+    // Pneumatics
+    public static Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
+    public static Solenoid solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
+    public static Solenoid solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
 
     // SwerveModule
     public static DevTalonFX talonFxSwerveDriveFL = new DevTalonFX("talonFxSwerveDriveWheelFrontLeft", 28);

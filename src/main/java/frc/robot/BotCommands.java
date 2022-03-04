@@ -11,8 +11,6 @@ import frc.robot.consoles.Logger;
 import frc.robot.commands.swervedriver.*;
 
 
-
-
 // Contains singleton instances of all the commands on the robot.
 public class BotCommands {
 
@@ -46,6 +44,10 @@ public class BotCommands {
     public static Shoot shoot;
     public static StopShoot stopShoot;
     public static ResetShoot resetShoot;
+    public static StopSeeSaw stopSeeSaw;
+    public static ShootSeeSaw shootSeeSaw;
+    public static FeedPistons feedPistons;
+    public static TogglePistons togglePistons;
 
     // Limelight
     public static TurnOffLed turnOffLed;
@@ -87,6 +89,10 @@ public class BotCommands {
         shoot = new Shoot(BotSubsystems.shooter);
         stopShoot = new StopShoot(BotSubsystems.shooter);
         resetShoot = new ResetShoot(BotSubsystems.shooter);
+        shootSeeSaw = new ShootSeeSaw(BotSubsystems.seesawShooter);
+        stopSeeSaw = new StopSeeSaw(BotSubsystems.seesawShooter);
+        feedPistons = new FeedPistons(BotSubsystems.pistonShooter);
+        togglePistons = new TogglePistons(BotSubsystems.pistonShooter);
 
         // Limelight
         turnOnLed = new TurnOnLed();

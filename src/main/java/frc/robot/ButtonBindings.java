@@ -11,6 +11,7 @@ public class ButtonBindings {
 
         //Shoot
         BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
+        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.togglePistons);
 
         //SwerveDrive
         BotControllers.xbox.btnStart.whenPressed(BotCommands.toggleDriverOrientation);
