@@ -1,9 +1,9 @@
-
 package frc.robot;
 
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.gate.*;
 import frc.robot.commands.pickupper.*;
+import frc.robot.commands.climber.*;
 import frc.robot.commands.sensors.TurnOffLed;
 import frc.robot.commands.sensors.TurnOnLed;
 import frc.robot.commands.shooter.*;
@@ -28,6 +28,11 @@ public class BotCommands {
     // Delivery
     public static SpinDelivery spinDelivery;
     public static StopDelivery stopDelivery;
+
+    //Climber
+    public static StopClimber stopClimber;
+    public static RaiseArms raiseArms;
+    public static LowerArms lowerArms;
 
     // Gate
     public static ToggleGate toggleGate;
@@ -63,6 +68,11 @@ public class BotCommands {
         // Delivery
         spinDelivery = new SpinDelivery(BotSubsystems.delivery);
         stopDelivery = new StopDelivery(BotSubsystems.delivery);
+
+        //climber
+        stopClimber = new StopClimber(BotSubsystems.climber);
+        raiseArms = new RaiseArms(BotSubsystems.climber);
+        lowerArms = new LowerArms(BotSubsystems.climber);
 
         // Gate
         toggleGate = new ToggleGate(BotSubsystems.gate);

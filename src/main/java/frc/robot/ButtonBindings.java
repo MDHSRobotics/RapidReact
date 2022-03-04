@@ -15,6 +15,11 @@ public class ButtonBindings {
         //SwerveDrive
         BotControllers.xbox.btnStart.whenPressed(BotCommands.toggleDriverOrientation);
         BotControllers.xbox.btnA.whenPressed(BotCommands.driveBox);
+
+        //Climber
+        BotControllers.xbox.btnX.whileHeld(BotCommands.raiseArms);
+        BotControllers.xbox.btnY.whileHeld(BotCommands.lowerArms);
+
     }
 
 }

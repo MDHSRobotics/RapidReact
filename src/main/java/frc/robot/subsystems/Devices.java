@@ -27,6 +27,11 @@ public class Devices {
     public static DevTalonSRX talonSrxDeliveryRight = new DevTalonSRX("talonSrxDeliveryRight", 16);
     public static DevTalonSRX talonSrxDeliveryLeft = new DevTalonSRX("talonSrxDeliveryLeft", 7);
 
+    //Climb
+    public static DevTalonSRX talonSrxClimberRight = new DevTalonSRX("talonSrxClimberRight", 5);
+    public static DevTalonSRX talonSrxClimberLeft = new DevTalonSRX("talonSrxClimberLeft", 0);
+
+
     // Sensors
     public static Servo servoGate = new Servo(1);
 
