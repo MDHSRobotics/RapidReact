@@ -2,7 +2,7 @@ package frc.robot;
 
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.gate.*;
-import frc.robot.commands.pickupper.*;
+import frc.robot.commands.pickerupper.*;
 import frc.robot.commands.climber.*;
 import frc.robot.commands.sensors.TurnOffLed;
 import frc.robot.commands.sensors.TurnOnLed;
@@ -21,7 +21,7 @@ public class BotCommands {
     public static ToggleDriverOrientation toggleDriverOrientation;
     public static DriveBox driveBox;
 
-    // Pickup 
+    // Pickup
     public static StopPickup stopPickup;
     public static ToggleGrabber toggleGrabber;
     public static ToggleArms toggleArms;
@@ -44,8 +44,6 @@ public class BotCommands {
     public static Shoot shoot;
     public static StopShoot stopShoot;
     public static ResetShoot resetShoot;
-    public static StopSeeSaw stopSeeSaw;
-    public static ShootSeeSaw shootSeeSaw;
     public static FeedPistons feedPistons;
     public static TogglePistons togglePistons;
 
@@ -89,8 +87,6 @@ public class BotCommands {
         shoot = new Shoot(BotSubsystems.shooter);
         stopShoot = new StopShoot(BotSubsystems.shooter);
         resetShoot = new ResetShoot(BotSubsystems.shooter);
-        shootSeeSaw = new ShootSeeSaw(BotSubsystems.seesawShooter);
-        stopSeeSaw = new StopSeeSaw(BotSubsystems.seesawShooter);
         feedPistons = new FeedPistons(BotSubsystems.pistonShooter);
         togglePistons = new TogglePistons(BotSubsystems.pistonShooter);
 

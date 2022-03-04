@@ -1,4 +1,4 @@
-package frc.robot.commands.PickUp;
+package frc.robot.commands.pickerupper;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -7,12 +7,12 @@ import frc.robot.consoles.Logger;
 import frc.robot.subsystems.PickerUpper;
 
 
-public class ToggleGrabber extends CommandBase {
+public class StopPickup extends CommandBase {
 
     private PickerUpper m_pickup;
 
-    public ToggleGrabber(PickerUpper pickup) {
-        Logger.setup("Constructing Command: ToggleGrabber...");
+    public StopPickup(PickerUpper pickup) {
+        Logger.setup("Constructing Command: StopPickup...");
 
         // Add given subsystem requirements
         m_pickup = pickup;
@@ -21,14 +21,14 @@ public class ToggleGrabber extends CommandBase {
 
     @Override
     public void initialize() {
-        Logger.action("Initializing Command: ToggleGrabber...");
+        Logger.action("Initializing Command: StopPickup...");
 
     }
 
     //real code
     @Override
     public void execute() {
-       m_pickup.toggleGrabber();
+       m_pickup.stopPickup();
     }
 
     // This command continues until it cycles through the set number of cycles
@@ -41,9 +41,9 @@ public class ToggleGrabber extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted) {
             System.out.println("--");
-            Logger.ending("Interrupting Command: ToggleGrabber...");
+            Logger.ending("Interrupting Command: StopPickup...");
         } else {
-            Logger.ending("Ending Command: ToggleGrabber...");
+            Logger.ending("Ending Command: StopPickup...");
         }
     }
 
