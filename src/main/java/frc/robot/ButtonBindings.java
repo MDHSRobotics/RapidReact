@@ -20,6 +20,9 @@ public class ButtonBindings {
         BotControllers.xbox.btnX.whileHeld(BotCommands.raiseArms);
         BotControllers.xbox.btnY.whileHeld(BotCommands.lowerArms);
 
+        //pickup
+        BotControllers.xbox.btnX.whileHeld(BotCommands.toggleGrabber);
+        BotControllers.xbox.btnY.whileHeld(BotCommands.toggleArms);
     }
 
 }

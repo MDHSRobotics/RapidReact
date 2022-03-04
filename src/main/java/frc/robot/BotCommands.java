@@ -11,6 +11,8 @@ import frc.robot.consoles.Logger;
 import frc.robot.commands.swervedriver.*;
 
 
+
+
 // Contains singleton instances of all the commands on the robot.
 public class BotCommands {
 
@@ -21,9 +23,11 @@ public class BotCommands {
     public static ToggleDriverOrientation toggleDriverOrientation;
     public static DriveBox driveBox;
 
-    // Pickup
-    public static SpinPickup spinPickup;
+    // Pickup 
     public static StopPickup stopPickup;
+    public static ToggleGrabber toggleGrabber;
+    public static ToggleArms toggleArms;
+
 
     // Delivery
     public static SpinDelivery spinDelivery;
@@ -55,8 +59,9 @@ public class BotCommands {
         Logger.setup("Initializing BotCommands...");
 
         // Pickup
-        spinPickup = new SpinPickup(BotSubsystems.pickup);
-        stopPickup = new StopPickup(BotSubsystems.pickup);
+        stopPickup = new StopPickup(BotSubsystems.pickerupper);
+        toggleGrabber = new ToggleGrabber(BotSubsystems.pickerupper);
+        toggleArms = new ToggleArms(BotSubsystems.pickerupper);
 
         // SwerveDriver
         swerveDrive = new SwerveDrive(BotSubsystems.swerveDriver, BotControllers.xbox);
