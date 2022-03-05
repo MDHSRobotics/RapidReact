@@ -15,10 +15,6 @@ import frc.robot.consoles.Logger;
  * project.
  */
 public class Robot extends TimedRobot {
-
-    // Autonomous variables
-    private Command m_AutoCommand;
-
     // Test variables
     private int m_numberOfTests;
     // private int m_currentTestNumber;
@@ -86,19 +82,21 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
     }
 
+    public Command getAutonomousCommand() {
+        return RobotManager.autoCommandChooser.getSelected();
+    }
+
     /**
      * This autonomous runs the autonomous command selected by your {@link BotCommands} class.
      */
     @Override
     public void autonomousInit() {
-        System.out.println("--");
-        Logger.setup("Initializing Autonomous Mode...");
+        Command autonomousCommand = getAutonomousCommand();
 
-        CommandScheduler.getInstance().cancelAll();
-
-        // Schedule the autonomous command
-        m_AutoCommand = BotCommands.autoCommandOne;
-        m_AutoCommand.schedule();
+        // schedule the autonomous command (example)
+        if (autonomousCommand != null) {
+            autonomousCommand.schedule();
+        }
     }
 
     /**

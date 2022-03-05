@@ -67,6 +67,12 @@ public class RobotManager {
     private static void setupSmartDashboard() {
         Logger.setup("Adding AutoModes to SmartDashboard...");
         autoCommandChooser = new SendableChooser<>();
+        // Add commands to the autonomous command chooser
+        autoCommandChooser.setDefaultOption("Auto Command One", BotCommands.autoCommandOne);
+        autoCommandChooser.addOption("Auto Command Two", BotCommands.autoCommandTwo);
+        autoCommandChooser.addOption("Auto Command Three", BotCommands.autoCommandThree);
+
+        // Put the chooser on the dashboard
         SmartDashboard.putData("AutoMode", autoCommandChooser);
     }
 
