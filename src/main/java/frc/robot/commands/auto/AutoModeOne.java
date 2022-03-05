@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.BotSubsystems;
 import frc.robot.commands.pickerupper.*;
 import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.shooter.TogglePistons;
 import frc.robot.commands.swervedriver.TimedSwerve;
 import frc.robot.subsystems.constants.AutoConstants;
 import edu.wpi.first.math.util.*;
@@ -18,7 +19,7 @@ public class AutoModeOne extends SequentialCommandGroup {
         double extraMoveDistance = Units.feetToMeters(2) / (AutoConstants.timePerCommand - 0.5);
             addCommands(
                 // shoot pre-loaded ball
-                new Shoot(BotSubsystems.shooter),
+                new TogglePistons(BotSubsystems.pistonShooter),
 
                 // lower pickup arms
 
@@ -35,7 +36,7 @@ public class AutoModeOne extends SequentialCommandGroup {
                 new TimedSwerve(BotSubsystems.swerveDriver, extraMoveDistance + driveSpeedMPS, 0.0, 0.0, AutoConstants.timePerCommand),
 
                 // shoot
-                new Shoot(BotSubsystems.shooter)
+                new TogglePistons(BotSubsystems.pistonShooter)
             );
     }
 

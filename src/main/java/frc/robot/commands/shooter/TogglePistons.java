@@ -33,7 +33,7 @@ public class TogglePistons extends CommandBase {
     // This command continues until interrupted
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
