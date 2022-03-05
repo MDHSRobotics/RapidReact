@@ -37,9 +37,11 @@ public class Devices {
     public static DevTalonSRX talonSrxClimberRight = new DevTalonSRX("talonSrxClimberRight", 5);
     public static DevTalonSRX talonSrxClimberLeft = new DevTalonSRX("talonSrxClimberLeft", 0);
 
-
-    // Sensors
+    // Servos
     public static Servo servoGate = new Servo(1);
+
+    // Relays
+    static DevRelay relayLighter = new DevRelay("relayLighter", 1);
 
     // Pneumatics
     public static Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);

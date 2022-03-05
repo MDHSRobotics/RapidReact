@@ -9,21 +9,16 @@ public class ButtonBindings {
     public static void configureXbox() {
         Logger.setup("Configure Buttons -> Xbox Controller...");
 
-        //Shoot
-        BotControllers.xbox.btnB.whenPressed(BotCommands.resetModulePositions);
-        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.togglePistons);
-
-        //SwerveDrive
+        // SwerveDrive
         BotControllers.xbox.btnStart.whenPressed(BotCommands.toggleDriverOrientation);
         BotControllers.xbox.btnA.whenPressed(BotCommands.driveBox);
 
-        //Climber
-        BotControllers.xbox.btnX.whileHeld(BotCommands.raiseArms);
-        BotControllers.xbox.btnY.whileHeld(BotCommands.lowerArms);
-
-        //pickup
+        // Pickup
         BotControllers.xbox.btnX.whileHeld(BotCommands.toggleGrabber);
         BotControllers.xbox.btnY.whileHeld(BotCommands.toggleArms);
+
+        // Shoot
+        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.togglePistons);
     }
 
 }

@@ -8,15 +8,15 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.controller.PIDController;
-import frc.robot.subsystems.constants.SwerveConstants;
-import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.util.sendable.SendableRegistry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import frc.robot.brains.SwerveDriverBrain;
-import frc.robot.consoles.Logger;
+import frc.robot.subsystems.constants.SwerveConstants;
+import frc.robot.subsystems.utils.EncoderTranslator;
 
 public class DevSwerveModule {
 

@@ -2,13 +2,11 @@
 package frc.robot.consoles.tabs;
 
 import edu.wpi.first.wpilibj.shuffleboard.*;
-
 import java.util.Map;
+
+import frc.robot.BotSubsystems;
 import frc.robot.brains.SwerveDriverBrain;
 import frc.robot.consoles.ShuffleLogger;
-import frc.robot.subsystems.Devices;
-import frc.robot.BotCommands;
-import frc.robot.BotSubsystems;
 
 // The Shuffleboard Drive tab.
 public class DriveTab {
@@ -29,8 +27,6 @@ public class DriveTab {
     private SimpleWidget m_widgetTurningEncoderTicksFL;
     private SimpleWidget m_widgetTurningEncoderMpsFL;
 
-    private ComplexWidget m_widgetSwerveCommand1;
-
     // Create Brain Widgets
     public DriveTab() {
         ShuffleLogger.logCritical("Constructing DriveTab...");
@@ -42,7 +38,6 @@ public class DriveTab {
 
     // Create Brain Widgets
     public void preInitialize() {
-
         // Top Left Module Layout
 
         // Drive Power
@@ -56,42 +51,33 @@ public class DriveTab {
         m_widgetTurningPowerFL.withWidget(BuiltInWidgets.kTextView);
 
         // Drive Encoder (ticks)
-        m_widgetDriveEncoderTicksFL = m_layoutModuleFL.add("Encoders/Drive Ticks",
-            SwerveDriverBrain.defaultTicks);
+        m_widgetDriveEncoderTicksFL = m_layoutModuleFL.add("Encoders/Drive Ticks", SwerveDriverBrain.defaultTicks);
         SwerveDriverBrain.entryDriveEncoderTicksFL = m_widgetDriveEncoderTicksFL.getEntry();
         m_widgetDriveEncoderTicksFL.withWidget(BuiltInWidgets.kTextView);
 
         // Drive Encoder (Meters per Second)
-        m_widgetDriveEncoderMpsFL = m_layoutModuleFL.add("Encoders/Drive Meters",
-            SwerveDriverBrain.defaultVelocity);
+        m_widgetDriveEncoderMpsFL = m_layoutModuleFL.add("Encoders/Drive Meters", SwerveDriverBrain.defaultVelocity);
         SwerveDriverBrain.entryDriveEncoderMpsFL = m_widgetDriveEncoderMpsFL.getEntry();
         m_widgetDriveEncoderMpsFL.withWidget(BuiltInWidgets.kTextView);
 
         // Turning Encoder (ticks)
-        m_widgetTurningEncoderTicksFL = m_layoutModuleFL.add("Encoders/Turning Ticks",
-            SwerveDriverBrain.defaultTicks);
+        m_widgetTurningEncoderTicksFL = m_layoutModuleFL.add("Encoders/Turning Ticks", SwerveDriverBrain.defaultTicks);
         SwerveDriverBrain.entryTurningEncoderTicksFL = m_widgetTurningEncoderTicksFL.getEntry();
         m_widgetTurningEncoderTicksFL.withWidget(BuiltInWidgets.kTextView);
 
         // Turning Encoder (Meters per Second)
-        m_widgetTurningEncoderMpsFL = m_layoutModuleFL.add("Encoders/Turning Degrees",
-            SwerveDriverBrain.defaultVelocity);
+        m_widgetTurningEncoderMpsFL = m_layoutModuleFL.add("Encoders/Turning Degrees", SwerveDriverBrain.defaultVelocity);
         SwerveDriverBrain.entryTurningEncoderMpsFL = m_widgetTurningEncoderMpsFL.getEntry();
         m_widgetTurningEncoderMpsFL.withWidget(BuiltInWidgets.kTextView);
-
     }
 
     // Create all other Widgets
     public void initialize() {
-        m_widgetSwerveCommand1 = m_layoutCommands.add("Rotate Module 1", BotCommands.swerveRotateModule1);
-        m_widgetSwerveCommand1.withWidget(BuiltInWidgets.kCommand);
-
         m_widgetSwerveDrive = m_tab.add("Swerve Drive", BotSubsystems.swerveDriver);
     }
 
     // Configure all Widgets
     public void configure() {
-
         m_layoutModuleFL.withPosition(0, 0);
         m_layoutModuleFL.withSize(2, 4);
         m_layoutModuleFL.withProperties(Map.of("Number of columns", 2));
@@ -102,7 +88,7 @@ public class DriveTab {
         m_layoutCommands.withSize(2, 2);
         m_layoutCommands.withProperties(Map.of("Number of columns", 2));
         m_layoutCommands.withProperties(Map.of("Number of rows", 2));
-        m_layoutCommands.withProperties(Map.of("Label position", "TOP"));   
+        m_layoutCommands.withProperties(Map.of("Label position", "TOP"));
 
         m_widgetSwerveDrive.withPosition(3, 3);
         m_widgetSwerveDrive.withSize(3, 1);

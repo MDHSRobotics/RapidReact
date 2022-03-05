@@ -3,8 +3,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.sensors.Pixy;
-import frc.robot.brains.DiffDriverBrain;
 
 import frc.robot.consoles.Logger;
 
@@ -15,6 +13,7 @@ import frc.robot.consoles.Logger;
  * project.
  */
 public class Robot extends TimedRobot {
+
     // Test variables
     private int m_numberOfTests;
     // private int m_currentTestNumber;
@@ -91,9 +90,13 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        Command autonomousCommand = getAutonomousCommand();
+        System.out.println("--");
+        Logger.setup("Initializing Autonomous Mode...");
 
-        // schedule the autonomous command (example)
+        CommandScheduler.getInstance().cancelAll();
+
+        // Schedule the autonomous command
+        Command autonomousCommand = getAutonomousCommand();
         if (autonomousCommand != null) {
             autonomousCommand.schedule();
         }
@@ -134,7 +137,6 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
         // Re-enable the scheduler
         CommandScheduler.getInstance().enable();
-
 
         // Reset the test variables
         Logger.info("Number of tests registered: " + m_numberOfTests);
