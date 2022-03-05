@@ -7,52 +7,39 @@ import frc.robot.subsystems.*;
 public class BotSubsystems {
 
     public static PickerUpper pickerupper;
-    public static Delivery delivery;
-    public static Climber climber;
-    public static Gate gate;
-    public static Shooter shooter;
     public static SwerveDriver swerveDriver;
     public static PistonShooter pistonShooter;
+    public static Lighter lighter;
 
     // Initialize all robot subsystems
     public static void initializeSubsystems() {
         Logger.setup("Initializing BotSubsystems...");
 
-        pickerupper = new PickerUpper();
-        delivery = new Delivery();
-        climber = new Climber();
-        gate = new Gate();
-        shooter = new Shooter();
         swerveDriver = new SwerveDriver();
+        pickerupper = new PickerUpper();
         pistonShooter = new PistonShooter();
+        lighter = new Lighter();
     }
 
     // Set all the subsystem "teleop" default commands
     public static void setTeleopDefaultCommands() {
 
+        // SwerveDriver
+        Logger.setup("SwerveDriver Teleop Default Command -> SwerveDrive...");
+        swerveDriver.setDefaultCommand(BotCommands.swerveDrive);
+
         // Pickup
         Logger.setup("PickerUpper Teleop Default Command -> StopPickup...");
         pickerupper.setDefaultCommand(BotCommands.stopPickup);
 
-        //Climber
-        Logger.setup("Climber Teleop Default Command -> StopClimber...");
-        climber.setDefaultCommand(BotCommands.stopClimber);
-
-        // Gate
-        Logger.setup("Gate Teleop Default Command -> FeedGate...");
-        gate.setDefaultCommand(BotCommands.feedGate);
-
-        // Shoot
-        Logger.setup("Shooter Teleop Default Command -> Shoot...");
-        shooter.setDefaultCommand(BotCommands.stopShoot);
-
-        //Piston Shooter
-        Logger.setup("Piston shooter Teleop Default Command -> Shoot ...");
+        // Piston Shooter
+        Logger.setup("PistonShooter Teleop Default Command -> FeedPistons ...");
         pistonShooter.setDefaultCommand(BotCommands.feedPistons);
 
-        //SwerveDriver
-        Logger.setup("SwerveDriver Teleop Default Command -> SwerveDrive...");
-        swerveDriver.setDefaultCommand(BotCommands.swerveDrive);
+        // Lighter
+        Logger.setup("Lighter Teleop Default Command -> LightByDistance ...");
+        lighter.setDefaultCommand(BotCommands.lightByDistance);
+
     }
 
 }

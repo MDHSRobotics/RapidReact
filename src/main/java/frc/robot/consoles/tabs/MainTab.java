@@ -52,8 +52,7 @@ public class MainTab {
     // This will be called in the robotPeriodic
     public void update() {
         // Match time
-        DriverStation ds = DriverStation.getInstance();
-        double matchTime =  ds.getMatchTime();
+        double matchTime =  DriverStation.getMatchTime();
         ShufflerBrain.matchTimeEntry.setDouble(matchTime);
     }
 

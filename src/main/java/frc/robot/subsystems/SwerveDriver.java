@@ -1,18 +1,17 @@
 package frc.robot.subsystems;
 
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.consoles.Logger;
+import frc.robot.BotSensors;
 import frc.robot.devices.DevSwerveModule;
 import frc.robot.subsystems.constants.SwerveConstants;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+
 
 public class SwerveDriver extends SubsystemBase {
     private final DevSwerveModule frontLeft = new DevSwerveModule(
@@ -24,10 +23,6 @@ public class SwerveDriver extends SubsystemBase {
         SwerveConstants.kFrontLeftTurningMotorReversed,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kFrontLeftDriveAbsoluteEncoderReversed);
-
-
-    // Switch between robot and field relative control
-    public boolean fieldRelative = false;
 
     private final DevSwerveModule frontRight = new DevSwerveModule(
         "Front Right",
@@ -59,9 +54,10 @@ public class SwerveDriver extends SubsystemBase {
         SwerveConstants.kRearRightDriveAbsoluteEncoderOffsetRad,
         SwerveConstants.kRearRightDriveAbsoluteEncoderReversed);
 
-    private final AHRS gyro = new AHRS(SPI.Port.kMXP);
-    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(SwerveConstants.kDriveKinematics,
-            new Rotation2d(0));
+    // Switch between robot and field relative control
+    public boolean fieldRelative = false;
+
+    private final SwerveDriveOdometry odometer = new SwerveDriveOdometry(SwerveConstants.kDriveKinematics, new Rotation2d(0));
 
     public SwerveDriver() {
         frontLeft.resetEncoders();
@@ -87,11 +83,11 @@ public class SwerveDriver extends SubsystemBase {
     }
 
     public void zeroHeading() {
-        gyro.reset();
+        BotSensors.gyro.reset();
     }
 
     public double getHeading() {
-        return Math.IEEEremainder(gyro.getAngle(), 360);
+        return Math.IEEEremainder(BotSensors.gyro.getAngle(), 360);
     }
 
     // Returns the current rotation2D

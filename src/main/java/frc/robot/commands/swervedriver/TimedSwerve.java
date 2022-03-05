@@ -1,14 +1,11 @@
 
 package frc.robot.commands.swervedriver;
 
-import java.util.Currency;
-
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.consoles.Logger;
 import frc.robot.subsystems.SwerveDriver;
-import edu.wpi.first.wpilibj.Timer;
 
 // This command stops the SwerveDriver.
 public class TimedSwerve extends CommandBase {
@@ -43,7 +40,7 @@ public class TimedSwerve extends CommandBase {
 
     @Override
     public void execute() {
-        
+
         //Moves relative to the current state of the field orientation toggle
         m_swerveDriver.setChassisSpeed(m_xSpeed, m_ySpeed, m_turningSpeed);
 
