@@ -1,25 +1,18 @@
-package frc.robot.commands.swervedriver;
+package frc.robot.commands.auto;
 
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.BotSubsystems;
-import frc.robot.commands.pickupper.SpinPickup;
 import frc.robot.commands.shooter.Shoot;
-import frc.robot.subsystems.Pickup;
+import frc.robot.commands.swervedriver.TimedSwerve;
+import frc.robot.subsystems.PickerUpper;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveDriver;
 
-public class AutoShootModeTwo extends SequentialCommandGroup {
-    private static final SwerveDriver m_SwerveDriver = BotSubsystems.swerveDriver;
-    private static final Shooter m_shooter = BotSubsystems.shooter;
-    private static final Pickup m_pickup = BotSubsystems.pickup;
-
-    /**
-     * @param osd The optimized desired shooting distance
-     * @param timePerCommand time in seconds for each movement command to set its velocity
-    **/
-    public AutoShootModeTwo(double osd, double timePerCommand) {
-        double radiusOfBalltoCenterMeters = Units.feetToMeters(12.75);
+public class AutoModeTwo extends SequentialCommandGroup {
+    
+    public AutoModeTwo() {
+        /* double radiusOfBalltoCenterMeters = Units.feetToMeters(12.75);
         double osdMeters = Units.feetToMeters(osd);
         double driveSpeedMPS = (radiusOfBalltoCenterMeters - osdMeters) / (timePerCommand - 0.5);
         double extraMoveDistance = Units.feetToMeters(2) / (timePerCommand - 0.5);
@@ -34,7 +27,7 @@ public class AutoShootModeTwo extends SequentialCommandGroup {
                 new TimedSwerve(m_SwerveDriver, -extraMoveDistance, 0.0, 0.0, timePerCommand),
                 new TimedSwerve(m_SwerveDriver, extraMoveDistance + driveSpeedMPS, 0.0, 0.0, timePerCommand),
                 new Shoot(m_shooter)
-            );
+            ); */
     }
 
 }

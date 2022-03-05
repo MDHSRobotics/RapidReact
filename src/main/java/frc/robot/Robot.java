@@ -17,9 +17,7 @@ import frc.robot.consoles.Logger;
 public class Robot extends TimedRobot {
 
     // Autonomous variables
-    private Command m_autonomousCommandRed;
-    private Command m_autonomousCommandBlue;
-    private Command m_autonomousCommandAutoNav;
+    private Command m_AutoCommand;
 
     // Test variables
     private int m_numberOfTests;
@@ -99,26 +97,8 @@ public class Robot extends TimedRobot {
         CommandScheduler.getInstance().cancelAll();
 
         // Schedule the autonomous command
-    /*
-        if (DiffDriverBrain.getPathweaverGame().equals("none")) {
-            if (Pixy.detectFieldMode().equals("no blocks detected")) {
-                if (m_moveForwardAuto != null) {
-                    m_moveForwardAuto.schedule();
-                }
-                if (m_autonomousCommandBlue != null) {
-                    m_autonomousCommandBlue.schedule();
-                }
-            } else {
-                if (m_autonomousCommandRed != null) {
-                    m_autonomousCommandRed.schedule();
-                }
-            }
-        } else {
-            if (m_autonomousCommandAutoNav != null) {
-                m_autonomousCommandAutoNav.schedule();
-            }
-        }
-        */
+        m_AutoCommand = BotCommands.autoCommandOne;
+        m_AutoCommand.schedule();
     }
 
     /**
