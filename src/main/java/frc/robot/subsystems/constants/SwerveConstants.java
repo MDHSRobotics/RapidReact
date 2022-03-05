@@ -42,9 +42,9 @@ public final class SwerveConstants {
     public static final boolean kRearRightDriveMotorReversed = false;
 
     // TODO Double check these values and document how to interpret them
-    public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = false;
+    public static final boolean kFrontLeftDriveAbsoluteEncoderReversed = true;
     public static final boolean kRearLeftDriveAbsoluteEncoderReversed = true;
-    public static final boolean kFrontRightDriveAbsoluteEncoderReversed = false;
+    public static final boolean kFrontRightDriveAbsoluteEncoderReversed = true;
     public static final boolean kRearRightDriveAbsoluteEncoderReversed = true;
 
     /* The absolute encoder retains its value even after the robot has been
