@@ -15,12 +15,6 @@ import frc.robot.consoles.Logger;
  * project.
  */
 public class Robot extends TimedRobot {
-
-    // Autonomous variables
-    private Command m_autonomousCommandRed;
-    private Command m_autonomousCommandBlue;
-    private Command m_autonomousCommandAutoNav;
-
     // Test variables
     private int m_numberOfTests;
     // private int m_currentTestNumber;
@@ -88,37 +82,21 @@ public class Robot extends TimedRobot {
     public void disabledPeriodic() {
     }
 
+    public Command getAutonomousCommand() {
+        return RobotManager.autoCommandChooser.getSelected();
+    }
+
     /**
      * This autonomous runs the autonomous command selected by your {@link BotCommands} class.
      */
     @Override
     public void autonomousInit() {
-        System.out.println("--");
-        Logger.setup("Initializing Autonomous Mode...");
+        Command autonomousCommand = getAutonomousCommand();
 
-        CommandScheduler.getInstance().cancelAll();
-
-        // Schedule the autonomous command
-    /*
-        if (DiffDriverBrain.getPathweaverGame().equals("none")) {
-            if (Pixy.detectFieldMode().equals("no blocks detected")) {
-                if (m_moveForwardAuto != null) {
-                    m_moveForwardAuto.schedule();
-                }
-                if (m_autonomousCommandBlue != null) {
-                    m_autonomousCommandBlue.schedule();
-                }
-            } else {
-                if (m_autonomousCommandRed != null) {
-                    m_autonomousCommandRed.schedule();
-                }
-            }
-        } else {
-            if (m_autonomousCommandAutoNav != null) {
-                m_autonomousCommandAutoNav.schedule();
-            }
+        // schedule the autonomous command (example)
+        if (autonomousCommand != null) {
+            autonomousCommand.schedule();
         }
-        */
     }
 
     /**

@@ -9,6 +9,7 @@ import frc.robot.commands.sensors.TurnOnLed;
 import frc.robot.commands.shooter.*;
 import frc.robot.consoles.Logger;
 import frc.robot.commands.swervedriver.*;
+import frc.robot.commands.auto.*;
 
 
 // Contains singleton instances of all the commands on the robot.
@@ -51,7 +52,10 @@ public class BotCommands {
     public static TurnOffLed turnOffLed;
     public static TurnOnLed turnOnLed;
 
-    // Pathweaver
+    // Autonomous
+    public static AutoModeOne autoCommandOne;
+    public static AutoModeTwo autoCommandTwo;
+    public static AutoModeThree autoCommandThree;
 
 
     // Initialize all robot commands
@@ -93,6 +97,11 @@ public class BotCommands {
         // Limelight
         turnOnLed = new TurnOnLed();
         turnOffLed = new TurnOffLed();
+
+        // Autonomous
+        autoCommandOne = new AutoModeOne();
+        autoCommandTwo = new AutoModeTwo();
+        autoCommandThree = new AutoModeThree();
     }
 
 }
