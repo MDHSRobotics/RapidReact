@@ -3,6 +3,7 @@ package frc.robot.devices;
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.subsystems.utils.EncoderTranslator;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
@@ -33,8 +34,7 @@ public class DevSwerveModule {
     private final EncoderTranslator m_turningEncoderTranslate;
 
     public DevSwerveModule(String moduleName, DevTalonFX driveTalon, DevTalonFX steerTalon, CANCoder canCoder,
-            boolean driveMotorReversed, boolean turningMotorReversed,
-            int absoluteEncoderId, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
+            boolean driveMotorReversed, boolean turningMotorReversed, double absoluteEncoderOffset, boolean absoluteEncoderReversed) {
 
         m_absoluteEncoderOffsetRad = absoluteEncoderOffset;
         m_absoluteEncoderReversed = absoluteEncoderReversed;
@@ -46,6 +46,9 @@ public class DevSwerveModule {
 
         m_driveMotor.setInverted(driveMotorReversed);
         m_turningMotor.setInverted(turningMotorReversed);
+        m_driveMotor.setNeutralMode(NeutralMode.Brake);
+
+        m_driveMotor.configOpenloopRamp(SwerveConstants.kDriveRampTime);
 
         m_turningPidController = new PIDController(SwerveConstants.kPTurning, 0, 0);
         m_turningPidController.enableContinuousInput(-Math.PI, Math.PI);
@@ -98,12 +101,20 @@ public class DevSwerveModule {
         // Get the angle in degrees of the current position recorded by the absolute encoder
         // Note that this will be -180 to +180, as configured in the constructor above
         double absEncoderPositionDegrees = m_canCoder.getAbsolutePosition();
+       
+        SmartDashboard.putNumber("Absolute Encoder Raw Angle (Degrees): " + m_name, absEncoderPositionDegrees);
+        
 
         double absEncoderPositionRad = Units.degreesToRadians(absEncoderPositionDegrees);
+
+        SmartDashboard.putNumber("Absolute Encoder Raw Angle (Radians): " + m_name, absEncoderPositionRad);
+
 
         // Apply the offset of the absolute encoder
         absEncoderPositionRad -= m_absoluteEncoderOffsetRad;
 
+        SmartDashboard.putNumber("Absolute Encoder Angle Without Offset (Radians): " + m_name, absEncoderPositionRad);
+        
         // Negate the angle if needed
         return absEncoderPositionRad * (m_absoluteEncoderReversed ? -1.0 : 1.0);
     }
@@ -134,8 +145,9 @@ public class DevSwerveModule {
 
         // Convert angle to raw units (ticks)
         double initialAbsoluteEncoderPositionTicks = m_turningEncoderTranslate.radians_to_ticks(initialAbsoluteEncoderPositionRad);
-
-        // Set the current position of the turning motor based on absolute encoder
+        // TODO remove the following line once absolute encoder is working
+        // initialAbsoluteEncoderPositionTicks = 0.0;
+        // Set the current position of the turning motor based on absolute encoder 
         m_turningMotor.setSelectedSensorPosition(initialAbsoluteEncoderPositionTicks);
 
         // Report absolute encoder info to SmartDashboard
