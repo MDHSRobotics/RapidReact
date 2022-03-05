@@ -5,16 +5,16 @@ import frc.robot.BotSubsystems;
 import frc.robot.subsystems.constants.SwerveConstants;
 
 public class DriveBox extends SequentialCommandGroup {
-    static final double driveSpeed = SwerveConstants.kPhysicalMaxSpeedMetersPerSecond * 0.75;
+    static final double driveSpeed = SwerveConstants.kPhysicalMaxSpeedMetersPerSecond * 0.25;
 
-    static final double duration = 1.0;
+    static final double duration = 0.5;
 
     public DriveBox() {
             addCommands(
-                new TimedSwerve(BotSubsystems.swerveDriver, driveSpeed, 0.0, 0.0, duration),
-                new TimedSwerve(BotSubsystems.swerveDriver, 0.0, driveSpeed, 0.0, duration),
-                new TimedSwerve(BotSubsystems.swerveDriver, -driveSpeed, 0.0, 0.0, duration),
-                new TimedSwerve(BotSubsystems.swerveDriver, 0.0, -driveSpeed, 0.0, duration)
+                new TimedSwerve(BotSubsystems.swerveDriver, driveSpeed, 0.0, 0.0, duration)//,
+                //new TimedSwerve(BotSubsystems.swerveDriver, 0.0, driveSpeed, 0.0, duration),
+                //new TimedSwerve(BotSubsystems.swerveDriver, -driveSpeed, 0.0, 0.0, duration),
+                //new TimedSwerve(BotSubsystems.swerveDriver, 0.0, -driveSpeed, 0.0, duration)
             );
     }
 
