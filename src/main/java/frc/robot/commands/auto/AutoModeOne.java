@@ -13,8 +13,14 @@ public class AutoModeOne extends SequentialCommandGroup {
                 // shoot pre-loaded ball
                 new TogglePistons(BotSubsystems.pistonShooter),
 
+                // retract pistons
+                new TogglePistons(BotSubsystems.pistonShooter),
+
+                // turn around to face ball
+                new TurnAround(),
+
                 // lower pickup arms
-                 new ToggleArms(BotSubsystems.pickerupper),
+                new ToggleArms(BotSubsystems.pickerupper),
 
                 // drive back to ball
                 new MoveAwayFromStart(),
@@ -27,11 +33,20 @@ public class AutoModeOne extends SequentialCommandGroup {
 
                 // drop ball
                 new ToggleGrabber(BotSubsystems.pickerupper),
+
+                // lower arms
+                new ToggleArms(BotSubsystems.pickerupper),
+
+                // turn around to face goal
+                new TurnAround(),
       
                 // move back to shoot
                 new MoveToStart(),
 
                 // shoot
+                new TogglePistons(BotSubsystems.pistonShooter),
+
+                // retract pistons
                 new TogglePistons(BotSubsystems.pistonShooter)
             );
     }
