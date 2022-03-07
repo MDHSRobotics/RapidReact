@@ -16,9 +16,6 @@ import static frc.robot.RobotManager.isReal;
 public class PickerUpper extends SubsystemBase {
 
     //Encoder Constants
-    private boolean isGrabberToggled = false;
-    private boolean isArmsToggled = false;
-
     private EncoderTranslator m_encoderTranslator = new EncoderTranslator("TalonSRX", 0, PickerUpperConstants.GEAR_RATIO);
     private final int GRABBER_ANGLE_IN_TICKS;
     private final int ARM_ANGLE_IN_TICKS;
@@ -28,9 +25,9 @@ public class PickerUpper extends SubsystemBase {
 
         if (isReal) {
             //TODO: Get PID values.
-            TalonUtils.configureTalonWithEncoder(talonSrxPickupGrabber, true, true, PickerUpperConstants.PID_GRABBER_VALUES);
-            TalonUtils.configureTalonWithEncoder(talonSrxPickupLeft, true, true, PickerUpperConstants.PID_ARM_VALUES);
-            TalonUtils.configureTalonWithEncoder(talonSrxPickupRight, true, true, PickerUpperConstants.PID_ARM_VALUES);
+            TalonUtils.configureTalonWithEncoder(talonSrxPickupGrabber, false, false, PickerUpperConstants.PID_GRABBER_VALUES);
+            TalonUtils.configureTalonWithEncoder(talonSrxPickupLeft, false, true, PickerUpperConstants.PID_ARM_VALUES);
+            talonSrxPickupRight.follow(talonSrxPickupLeft);
         }
 
         GRABBER_ANGLE_IN_TICKS = m_encoderTranslator.degrees_to_ticks(PickerUpperConstants.GRABBER_ANGLE);
@@ -43,29 +40,21 @@ public class PickerUpper extends SubsystemBase {
     }
 
     //moves the arms horizontally
-    public void toggleGrabber() {
+    public void grabBall() {
+        talonSrxPickupGrabber.set(ControlMode.Position, GRABBER_ANGLE_IN_TICKS);
+    }
 
-        if (!isGrabberToggled) {
-            isGrabberToggled = true;
-            talonSrxPickupGrabber.set(ControlMode.Position, GRABBER_ANGLE_IN_TICKS);
-        } else {
-            isGrabberToggled = false;
-            talonSrxPickupGrabber.set(ControlMode.Position, -GRABBER_ANGLE_IN_TICKS);
-        }
+    public void dropBall() {
+        talonSrxPickupGrabber.set(ControlMode.Position, -GRABBER_ANGLE_IN_TICKS);
     }
 
     //moves the arms vertically
-    public void toggleArms() {
+    public void raiseArms() {
+        talonSrxPickupLeft.set(ControlMode.Position, -ARM_ANGLE_IN_TICKS);
+    }
 
-        if (!isArmsToggled) {
-            isArmsToggled = true;
-            talonSrxPickupLeft.set(ControlMode.Position, ARM_ANGLE_IN_TICKS);
-            talonSrxPickupRight.set(ControlMode.Position, ARM_ANGLE_IN_TICKS);
-        } else {
-            isArmsToggled = false;
-            talonSrxPickupLeft.set(ControlMode.Position, -ARM_ANGLE_IN_TICKS);
-            talonSrxPickupRight.set(ControlMode.Position, -ARM_ANGLE_IN_TICKS);
-        }
+    public void lowerArms() {
+        talonSrxPickupLeft.set(ControlMode.Position, ARM_ANGLE_IN_TICKS);
     }
 
     public void stopPickup() {

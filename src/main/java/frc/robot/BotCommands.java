@@ -17,8 +17,10 @@ public class BotCommands {
 
     // PickerUpper
     public static StopPickup stopPickup;
-    public static ToggleGrabber toggleGrabber;
-    public static ToggleArms toggleArms;
+    public static GrabBall grabBall;
+    public static DropBall dropBall;
+    public static RaiseArms raiseArms;
+    public static LowerArms lowerArms;
 
     // Shooter
     public static FeedPistons feedPistons;
@@ -44,8 +46,10 @@ public class BotCommands {
 
         // Pickup
         stopPickup = new StopPickup(BotSubsystems.pickerupper);
-        toggleGrabber = new ToggleGrabber(BotSubsystems.pickerupper);
-        toggleArms = new ToggleArms(BotSubsystems.pickerupper);
+        grabBall = new GrabBall(BotSubsystems.pickerupper);
+        dropBall = new DropBall(BotSubsystems.pickerupper);
+        raiseArms = new RaiseArms(BotSubsystems.pickerupper);
+        lowerArms = new LowerArms(BotSubsystems.pickerupper);
 
         // Shooter
         feedPistons = new FeedPistons(BotSubsystems.pistonShooter);

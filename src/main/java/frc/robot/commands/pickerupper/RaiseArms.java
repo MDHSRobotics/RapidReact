@@ -7,12 +7,12 @@ import frc.robot.consoles.Logger;
 import frc.robot.subsystems.PickerUpper;
 
 
-public class ToggleArms extends CommandBase {
+public class RaiseArms extends CommandBase {
 
     private PickerUpper m_pickup;
 
-    public ToggleArms(PickerUpper pickup) {
-        Logger.setup("Constructing Command: ToggleArms...");
+    public RaiseArms(PickerUpper pickup) {
+        Logger.setup("Constructing Command: RaiseArms...");
 
         // Add given subsystem requirements
         m_pickup = pickup;
@@ -21,14 +21,15 @@ public class ToggleArms extends CommandBase {
 
     @Override
     public void initialize() {
-        Logger.action("Initializing Command: ToggleArms...");
+        Logger.action("Initializing Command: RaiseArms...");
 
+        m_pickup.raiseArms();
     }
 
     //real code
     @Override
     public void execute() {
-       m_pickup.toggleArms();
+
     }
 
     // This command continues until it cycles through the set number of cycles
@@ -41,9 +42,9 @@ public class ToggleArms extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted) {
             System.out.println("--");
-            Logger.ending("Interrupting Command: ToggleArms...");
+            Logger.ending("Interrupting Command: RaiseArms...");
         } else {
-            Logger.ending("Ending Command: ToggleArms...");
+            Logger.ending("Ending Command: RaiseArms...");
         }
     }
 

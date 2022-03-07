@@ -14,11 +14,13 @@ public class ButtonBindings {
         BotControllers.xbox.btnA.whenPressed(BotCommands.driveBox);
 
         // Pickup
-        BotControllers.xbox.btnX.whileHeld(BotCommands.toggleGrabber);
-        BotControllers.xbox.btnY.whileHeld(BotCommands.toggleArms);
+        BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.grabBall);
+        BotControllers.xbox.btnDpadRight.whileHeld(BotCommands.dropBall);
+        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.raiseArms);
+        BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.lowerArms);
 
         // Shoot
-        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.togglePistons);
+        BotControllers.xbox.btnX.whileHeld(BotCommands.togglePistons);
     }
 
 }

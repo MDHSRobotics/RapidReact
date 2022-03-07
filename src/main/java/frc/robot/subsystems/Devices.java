@@ -25,9 +25,9 @@ public class Devices {
     public static DevTalonSRX talonSrxShooterTopWheel = new DevTalonSRX("talonSrxShooterTopWheel", 40);
 
     // Pickup
-    public static DevTalonSRX talonSrxPickupRight = new DevTalonSRX("talonSrxPickupRight", 10);
+    public static DevTalonSRX talonSrxPickupRight = new DevTalonSRX("talonSrxPickupRight", 6);
     public static DevTalonSRX talonSrxPickupLeft = new DevTalonSRX("talonSrxPickupLeft", 4);
-    public static DevTalonSRX talonSrxPickupGrabber = new DevTalonSRX("talonSrxPickupGrabber", 0);
+    public static DevTalonSRX talonSrxPickupGrabber = new DevTalonSRX("talonSrxPickupGrabber", 13);
 
     // Delivery
     public static DevTalonSRX talonSrxDeliveryRight = new DevTalonSRX("talonSrxDeliveryRight", 16);
@@ -45,8 +45,8 @@ public class Devices {
 
     // Pneumatics
     public static Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    public static Solenoid solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
-    public static Solenoid solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
+    public static Solenoid solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+    public static Solenoid solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
 
     // SwerveModule
     public static DevTalonFX talonFxSwerveDriveFL = new DevTalonFX("talonFxSwerveDriveWheelFrontLeft", 28);

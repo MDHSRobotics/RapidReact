@@ -6,12 +6,12 @@ import frc.robot.consoles.Logger;
 import frc.robot.subsystems.PickerUpper;
 
 
-public class ToggleGrabber extends CommandBase {
+public class DropBall extends CommandBase {
 
     private PickerUpper m_pickup;
 
-    public ToggleGrabber(PickerUpper pickup) {
-        Logger.setup("Constructing Command: ToggleGrabber...");
+    public DropBall(PickerUpper pickup) {
+        Logger.setup("Constructing Command: DropBall...");
 
         // Add given subsystem requirements
         m_pickup = pickup;
@@ -20,14 +20,15 @@ public class ToggleGrabber extends CommandBase {
 
     @Override
     public void initialize() {
-        Logger.action("Initializing Command: ToggleGrabber...");
+        Logger.action("Initializing Command: DropBall...");
 
+        m_pickup.dropBall();
     }
 
     //real code
     @Override
     public void execute() {
-       m_pickup.toggleGrabber();
+
     }
 
     // This command continues until it cycles through the set number of cycles
@@ -40,9 +41,9 @@ public class ToggleGrabber extends CommandBase {
     public void end(boolean interrupted) {
         if (interrupted) {
             System.out.println("--");
-            Logger.ending("Interrupting Command: ToggleGrabber...");
+            Logger.ending("Interrupting Command: DropBall...");
         } else {
-            Logger.ending("Ending Command: ToggleGrabber...");
+            Logger.ending("Ending Command: DropBall...");
         }
     }
 
