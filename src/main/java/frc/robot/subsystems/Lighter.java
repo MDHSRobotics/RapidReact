@@ -37,24 +37,33 @@ public class Lighter extends SubsystemBase {
 
     public void setLightsForAim(double heading, double frontDistance, double topDistance) {
         double h = heading;
-        double nwN = AimBrain.getNwHeadingMin();
-        double nwX = AimBrain.getNwHeadingMax();
-        double neN = AimBrain.getNeHeadingMin();
-        double neX = AimBrain.getNeHeadingMax();
-        double swN = AimBrain.getSwHeadingMin();
-        double swX = AimBrain.getSwHeadingMax();
-        double seN = AimBrain.getSeHeadingMin();
-        double seX = AimBrain.getSeHeadingMax();
+        // double nwN = AimBrain.getNwHeadingMin();
+        // double nwX = AimBrain.getNwHeadingMax();
+        // double neN = AimBrain.getNeHeadingMin();
+        // double neX = AimBrain.getNeHeadingMax();
+        // double swN = AimBrain.getSwHeadingMin();
+        // double swX = AimBrain.getSwHeadingMax();
+        // double seN = AimBrain.getSeHeadingMin();
+        // double seX = AimBrain.getSeHeadingMax();
+        double nwN = 0;
+        double nwX = 0;
+        double neN = 0;
+        double neX = 0;
+        double swN = 0;
+        double swX = 0;
+        double seN = 0;
+        double seX = 0;
         boolean headingInRange = (h >= nwN && h <= nwX) ||
                                  (h >= neN && h <= neX) ||
                                  (h >= swN && h <= swX) ||
                                  (h >= seN && h <= seX);
-        boolean frontInRange = (frontDistance >= AimBrain.getFrontDistanceMin() && frontDistance <= AimBrain.getFrontDistanceMax());
+        // boolean frontInRange = (frontDistance >= AimBrain.getFrontDistanceMin() && frontDistance <= AimBrain.getFrontDistanceMax());
+        boolean frontInRange = (frontDistance >= 0 && frontDistance <= 0);
 
         if (frontInRange) {
-            Logger.info("Lighter -> SetLightsForAim -> Distance: " + frontDistance + " -> Distance In Range!");
+            //Logger.info("Lighter -> SetLightsForAim -> Distance: " + frontDistance + " -> Distance In Range!");
             if (headingInRange) {
-                Logger.info("Lighter -> SetLightsForAim -> Heading: " + heading + " -> Heading In Range!");
+                //Logger.info("Lighter -> SetLightsForAim -> Heading: " + heading + " -> Heading In Range!");
                 turnOnBoth();
             }
             else {
