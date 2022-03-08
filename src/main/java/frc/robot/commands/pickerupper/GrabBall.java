@@ -34,7 +34,7 @@ public class GrabBall extends CommandBase {
     // This command continues until it cycles through the set number of cycles
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
