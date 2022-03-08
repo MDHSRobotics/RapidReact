@@ -20,22 +20,22 @@ public class AutoModeOne extends SequentialCommandGroup {
                 new TurnAround(),
 
                 // lower pickup arms
-                new ToggleArms(BotSubsystems.pickerupper),
+                new LowerArms(BotSubsystems.pickerupper),
 
                 // drive back to ball
                 new MoveAwayFromStart(),
 
                 // grab ball
-                new ToggleGrabber(BotSubsystems.pickerupper),
+                new GrabBall(BotSubsystems.pickerupper),
 
                 // lift ball
-                new ToggleArms(BotSubsystems.pickerupper),
+                new RaiseArms(BotSubsystems.pickerupper),
 
                 // drop ball
-                new ToggleGrabber(BotSubsystems.pickerupper),
+                new DropBall(BotSubsystems.pickerupper),
 
                 // lower arms
-                new ToggleArms(BotSubsystems.pickerupper),
+                new LowerArms(BotSubsystems.pickerupper),
 
                 // turn around to face goal
                 new TurnAround(),
