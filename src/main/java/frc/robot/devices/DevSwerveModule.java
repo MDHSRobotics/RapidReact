@@ -1,6 +1,5 @@
 package frc.robot.devices;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.subsystems.utils.EncoderTranslator;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -16,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.brains.SwerveDriverBrain;
 import frc.robot.subsystems.constants.SwerveConstants;
-import frc.robot.subsystems.utils.EncoderTranslator;
+
 
 public class DevSwerveModule {
 

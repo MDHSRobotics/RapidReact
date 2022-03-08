@@ -4,7 +4,7 @@ package frc.robot.consoles.tabs;
 import edu.wpi.first.wpilibj.shuffleboard.*;
 import java.util.Map;
 
-import frc.robot.brains.XboxBrain;
+import frc.robot.brains.AimBrain;
 
 import frc.robot.consoles.ShuffleLogger;
 
@@ -13,23 +13,28 @@ public class AimTab {
 
     // Tab & Layouts
     private ShuffleboardTab m_tab;
-    private ShuffleboardLayout m_controllersLayout;
 
-    private ShuffleboardLayout m_xboxLeftLayout;
-    private ShuffleboardLayout m_xboxRightLayout;
+    private ShuffleboardLayout m_distFrontLayout;
+    private ShuffleboardLayout m_distTopLayout;
+    private ShuffleboardLayout m_headingLayout;
 
+    // Distance Sensor - Front
+    private SimpleWidget m_frontDistanceMinWidget;
+    private SimpleWidget m_frontDistanceMaxWidget;
 
-    // Thumbstick Widget - Left
-    private SimpleWidget m_yLeftDeadZoneWidget;
-    private SimpleWidget m_xLeftDeadZoneWidget;
-    private SimpleWidget m_yLeftSensitivityWidget;
-    private SimpleWidget m_xLeftSensitivityWidget;
+    // Distance Sensor - Top
+    private SimpleWidget m_topDistanceMinWidget;
+    private SimpleWidget m_topDistanceMaxWidget;
 
-    // Thumbstick Widget - Right
-    private SimpleWidget m_yRightDeadZoneWidget;
-    private SimpleWidget m_xRightDeadZoneWidget;
-    private SimpleWidget m_yRightSensitivityWidget;
-    private SimpleWidget m_xRightSensitivityWidget;
+    // Gyro - Heading
+    private SimpleWidget nwHeadingMinWidget;
+    private SimpleWidget nwHeadingMaxWidget;
+    private SimpleWidget neHeadingMinWidget;
+    private SimpleWidget neHeadingMaxWidget;
+    private SimpleWidget swHeadingMinWidget;
+    private SimpleWidget swHeadingMaxWidget;
+    private SimpleWidget seHeadingMinWidget;
+    private SimpleWidget seHeadingMaxWidget;
 
     // Constructor
     public AimTab() {
@@ -37,65 +42,81 @@ public class AimTab {
 
         m_tab = Shuffleboard.getTab("Aim");
 
-        m_controllersLayout = m_tab.getLayout("Controllers", BuiltInLayouts.kGrid);
-        m_controllersLayout.withPosition(0, 0);
-        m_controllersLayout.withSize(3, 1);
-        m_controllersLayout.withProperties(Map.of("Number of columns", 1));
-        m_controllersLayout.withProperties(Map.of("Number of rows", 2));
-        m_controllersLayout.withProperties(Map.of("Label position", "LEFT"));
+        m_distFrontLayout = m_tab.getLayout("Front Distance Sensor", BuiltInLayouts.kGrid);
+        m_distFrontLayout.withPosition(0, 1);
+        m_distFrontLayout.withSize(3, 1);
+        m_distFrontLayout.withProperties(Map.of("Number of columns", 2));
+        m_distFrontLayout.withProperties(Map.of("Number of rows", 2));
+        m_distFrontLayout.withProperties(Map.of("Label position", "LEFT"));
 
+        m_distTopLayout = m_tab.getLayout("Top Distance Sensor", BuiltInLayouts.kGrid);
+        m_distTopLayout.withPosition(0, 2);
+        m_distTopLayout.withSize(3, 1);
+        m_distTopLayout.withProperties(Map.of("Number of columns", 2));
+        m_distTopLayout.withProperties(Map.of("Number of rows", 2));
+        m_distTopLayout.withProperties(Map.of("Label position", "LEFT"));
 
-        m_xboxLeftLayout = m_tab.getLayout("XBOX Left Thumbstick", BuiltInLayouts.kGrid);
-        m_xboxLeftLayout.withPosition(0, 1);
-        m_xboxLeftLayout.withSize(3, 1);
-        m_xboxLeftLayout.withProperties(Map.of("Number of columns", 2));
-        m_xboxLeftLayout.withProperties(Map.of("Number of rows", 2));
-        m_xboxLeftLayout.withProperties(Map.of("Label position", "LEFT"));
-
-        m_xboxRightLayout = m_tab.getLayout("XBOX Right Thumbstick", BuiltInLayouts.kGrid);
-        m_xboxRightLayout.withPosition(0, 2);
-        m_xboxRightLayout.withSize(3, 1);
-        m_xboxRightLayout.withProperties(Map.of("Number of columns", 2));
-        m_xboxRightLayout.withProperties(Map.of("Number of rows", 2));
-        m_xboxRightLayout.withProperties(Map.of("Label position", "LEFT"));
+        m_headingLayout = m_tab.getLayout("Gyro Heading", BuiltInLayouts.kGrid);
+        m_headingLayout.withPosition(0, 2);
+        m_headingLayout.withSize(3, 1);
+        m_headingLayout.withProperties(Map.of("Number of columns", 2));
+        m_headingLayout.withProperties(Map.of("Number of rows", 2));
+        m_headingLayout.withProperties(Map.of("Label position", "LEFT"));
     }
 
     // Create Brain Widgets
     public void preInitialize() {
 
-        // Thumbstick - Left
-        m_yLeftDeadZoneWidget = m_xboxLeftLayout.add("Y Left Dead Zone", XboxBrain.yLeftDeadZoneDefault);
-        XboxBrain.yLeftDeadZoneEntry = m_yLeftDeadZoneWidget.getEntry();
-        m_yLeftDeadZoneWidget.withWidget(BuiltInWidgets.kTextView);
+        // Distance Sensor - Front
+        m_frontDistanceMinWidget = m_distFrontLayout.add("Front Distance Min", AimBrain.frontDistanceMinDefault);
+        AimBrain.frontDistanceMinEntry = m_frontDistanceMinWidget.getEntry();
+        m_frontDistanceMinWidget.withWidget(BuiltInWidgets.kTextView);
 
-        m_xLeftDeadZoneWidget = m_xboxLeftLayout.add("X Left Dead Zone", XboxBrain.xLeftDeadZoneDefault);
-        XboxBrain.xLeftDeadZoneEntry = m_xLeftDeadZoneWidget.getEntry();
-        m_xLeftDeadZoneWidget.withWidget(BuiltInWidgets.kTextView);
+        m_frontDistanceMaxWidget = m_distFrontLayout.add("Front Distance Max", AimBrain.frontDistanceMaxDefault);
+        AimBrain.frontDistanceMaxEntry = m_frontDistanceMaxWidget.getEntry();
+        m_frontDistanceMaxWidget.withWidget(BuiltInWidgets.kTextView);
 
-        m_yLeftSensitivityWidget = m_xboxLeftLayout.add("Y Left Sensitivity", XboxBrain.yLeftSensitivityDefault);
-        XboxBrain.yLeftSensitivityEntry = m_yLeftSensitivityWidget.getEntry();
-        m_yLeftSensitivityWidget.withWidget(BuiltInWidgets.kTextView);
+        // Distance Sensor - Top
+        m_topDistanceMinWidget = m_distTopLayout.add("Top Distance Min", AimBrain.topDistanceMinDefault);
+        AimBrain.topDistanceMinEntry = m_topDistanceMinWidget.getEntry();
+        m_topDistanceMinWidget.withWidget(BuiltInWidgets.kTextView);
 
-        m_xLeftSensitivityWidget = m_xboxLeftLayout.add("X Left Sensitivity", XboxBrain.xLeftSensitivityDefault);
-        XboxBrain.xLeftSensitivityEntry = m_xLeftSensitivityWidget.getEntry();
-        m_xLeftSensitivityWidget.withWidget(BuiltInWidgets.kTextView);
+        m_topDistanceMaxWidget = m_distTopLayout.add("Top Distance Max", AimBrain.topDistanceMaxDefault);
+        AimBrain.topDistanceMaxEntry = m_topDistanceMaxWidget.getEntry();
+        m_topDistanceMaxWidget.withWidget(BuiltInWidgets.kTextView);
 
-        // Thumbstick - Right
-        m_yRightDeadZoneWidget = m_xboxRightLayout.add("Y Right Dead Zone", XboxBrain.yRightDeadZoneDefault);
-        XboxBrain.yRightDeadZoneEntry = m_yRightDeadZoneWidget.getEntry();
-        m_yRightDeadZoneWidget.withWidget(BuiltInWidgets.kTextView);
+        // Gyro - Heading
+        nwHeadingMinWidget = m_headingLayout.add("NW Heading Min", AimBrain.nwHeadingMinDefault);
+        AimBrain.nwHeadingMinEntry = nwHeadingMinWidget.getEntry();
+        nwHeadingMinWidget.withWidget(BuiltInWidgets.kTextView);
 
-        m_xRightDeadZoneWidget = m_xboxRightLayout.add("X Right Dead Zone", XboxBrain.xRightDeadZoneDefault);
-        XboxBrain.xRightDeadZoneEntry = m_xRightDeadZoneWidget.getEntry();
-        m_xRightDeadZoneWidget.withWidget(BuiltInWidgets.kTextView);
+        nwHeadingMaxWidget = m_headingLayout.add("NW Heading Max", AimBrain.nwHeadingMaxDefault);
+        AimBrain.nwHeadingMaxEntry = nwHeadingMaxWidget.getEntry();
+        nwHeadingMaxWidget.withWidget(BuiltInWidgets.kTextView);
 
-        m_yRightSensitivityWidget = m_xboxRightLayout.add("Y Right Sensitivity", XboxBrain.yRightSensitivityDefault);
-        XboxBrain.yRightSensitivityEntry = m_yRightSensitivityWidget.getEntry();
-        m_yRightSensitivityWidget.withWidget(BuiltInWidgets.kTextView);
+        neHeadingMinWidget = m_headingLayout.add("NE Heading Min", AimBrain.neHeadingMinDefault);
+        AimBrain.neHeadingMinEntry = neHeadingMinWidget.getEntry();
+        neHeadingMinWidget.withWidget(BuiltInWidgets.kTextView);
 
-        m_xRightSensitivityWidget = m_xboxRightLayout.add("X Right Sensitivity", XboxBrain.xRightSensitivityDefault);
-        XboxBrain.xRightSensitivityEntry = m_xRightSensitivityWidget.getEntry();
-        m_xRightSensitivityWidget.withWidget(BuiltInWidgets.kTextView);
+        neHeadingMaxWidget = m_headingLayout.add("NE Heading Max", AimBrain.neHeadingMaxDefault);
+        AimBrain.neHeadingMaxEntry = neHeadingMaxWidget.getEntry();
+        neHeadingMaxWidget.withWidget(BuiltInWidgets.kTextView);
+
+        swHeadingMinWidget = m_headingLayout.add("SW Heading Min", AimBrain.swHeadingMinDefault);
+        AimBrain.swHeadingMinEntry = swHeadingMinWidget.getEntry();
+        swHeadingMinWidget.withWidget(BuiltInWidgets.kTextView);
+
+        swHeadingMaxWidget = m_headingLayout.add("SW Heading Max", AimBrain.swHeadingMaxDefault);
+        AimBrain.swHeadingMaxEntry = swHeadingMaxWidget.getEntry();
+        swHeadingMaxWidget.withWidget(BuiltInWidgets.kTextView);
+
+        seHeadingMinWidget = m_headingLayout.add("SE Heading Min", AimBrain.seHeadingMinDefault);
+        AimBrain.seHeadingMinEntry = seHeadingMinWidget.getEntry();
+        seHeadingMinWidget.withWidget(BuiltInWidgets.kTextView);
+
+        seHeadingMaxWidget = m_headingLayout.add("SE Heading Max", AimBrain.seHeadingMaxDefault);
+        AimBrain.seHeadingMaxEntry = seHeadingMaxWidget.getEntry();
+        seHeadingMaxWidget.withWidget(BuiltInWidgets.kTextView);
     }
 
     // Create all other Widgets
