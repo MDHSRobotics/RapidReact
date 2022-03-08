@@ -28,6 +28,8 @@ public class PickerUpper extends SubsystemBase {
             TalonUtils.configureTalonWithEncoder(talonSrxPickupGrabber, false, false, PickerUpperConstants.PID_GRABBER_VALUES);
             TalonUtils.configureTalonWithEncoder(talonSrxPickupLeft, false, true, PickerUpperConstants.PID_ARM_VALUES);
             talonSrxPickupRight.follow(talonSrxPickupLeft);
+            talonSrxPickupGrabber.configClosedloopRamp(PickerUpperConstants.kGrabberRampTime);
+
         }
 
         GRABBER_ANGLE_IN_TICKS = m_encoderTranslator.degrees_to_ticks(PickerUpperConstants.GRABBER_ANGLE);
