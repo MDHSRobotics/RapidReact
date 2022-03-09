@@ -20,7 +20,7 @@ public class ButtonBindings {
         BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.lowerArms);
 
         // Shoot
-        BotControllers.xbox.btnX.whileHeld(BotCommands.togglePistons);
+        BotControllers.xbox.btnX.whenPressed(BotCommands.togglePistons);
     }
 
 }
