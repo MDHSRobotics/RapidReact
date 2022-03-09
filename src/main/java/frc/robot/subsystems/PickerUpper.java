@@ -29,6 +29,7 @@ public class PickerUpper extends SubsystemBase {
             TalonUtils.configureTalonWithEncoder(talonSrxPickupLeft, false, true, PickerUpperConstants.PID_ARM_VALUES);
             talonSrxPickupRight.follow(talonSrxPickupLeft);
             talonSrxPickupGrabber.configClosedloopRamp(PickerUpperConstants.kGrabberRampTime);
+            talonSrxPickupLeft.configClosedloopRamp(PickerUpperConstants.kArmRampTime);
 
         }
 
