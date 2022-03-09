@@ -8,7 +8,7 @@ import frc.robot.subsystems.constants.SwerveConstants;
 import edu.wpi.first.math.util.*;
 
 public class SwerveLeft extends SequentialCommandGroup {
-    double rotationInDegrees = 11.63; //we want the robot to rotate clockwise
+    double rotationInDegrees = AutoConstants.startingAngleFromLineBetweenPentagons - AutoConstants.angleFromBallToLineBetweenPentagons; //we want the robot to rotate clockwise
     double turnArcLengthMeters = Units.feetToMeters(2 * Math.PI * AutoConstants.radiusOfBalltoCenterMeters * (rotationInDegrees / 360));
     double turnDistanceVelocity = turnArcLengthMeters / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime);
 
