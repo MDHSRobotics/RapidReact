@@ -5,6 +5,7 @@ import frc.robot.commands.pickerupper.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedriver.*;
 import frc.robot.commands.auto.*;
+import frc.robot.commands.climber.*;
 import frc.robot.consoles.Logger;
 
 // Contains singleton instances of all the commands on the robot.
@@ -21,6 +22,11 @@ public class BotCommands {
     public static DropBall dropBall;
     public static RaiseArms raiseArms;
     public static LowerArms lowerArms;
+
+    //Climber
+    public static RaiseClaws raiseClaws;
+    public static LowerClaws lowerClaws;
+    public static StopClimber stopClimber;
 
     // Shooter
     public static FeedPistons feedPistons;
@@ -50,6 +56,11 @@ public class BotCommands {
         dropBall = new DropBall(BotSubsystems.pickerupper);
         raiseArms = new RaiseArms(BotSubsystems.pickerupper);
         lowerArms = new LowerArms(BotSubsystems.pickerupper);
+
+        // Climber
+        raiseClaws = new RaiseClaws(BotSubsystems.climber);
+        lowerClaws = new LowerClaws(BotSubsystems.climber);
+        stopClimber = new StopClimber(BotSubsystems.climber);
 
         // Shooter
         feedPistons = new FeedPistons(BotSubsystems.pistonShooter);

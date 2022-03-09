@@ -20,8 +20,8 @@ public class ButtonBindings {
         BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.lowerArms);
 
         //Climb
-        BotControllers.xbox.btnY.whileHeld(BotCommands.raiseArms);
-        BotControllers.xbox.btnA.whileHeld(BotCommands.lowerArms);
+        BotControllers.xbox.btnY.whileHeld(BotCommands.raiseClaws);
+        BotControllers.xbox.btnA.whileHeld(BotCommands.lowerClaws);
 
         // Shoot
         BotControllers.xbox.btnX.whileHeld(BotCommands.togglePistons);

@@ -31,13 +31,13 @@ public class Climber extends SubsystemBase {
    }
 
    // Spin the Pickup
-   public void raiseArms() {
-       talonSrxClimberRightMaster.set(0.3);
-       talonSrxClimberLeftMaster.set(-0.3);
+   public void raiseClaws() {
+       talonSrxClimberRightMaster.set(-0.6);
+       talonSrxClimberLeftMaster.set(0.6);
    }
 
-   public void lowerArms() {
-        talonSrxClimberRightMaster.set(-0.3);
-        talonSrxClimberLeftMaster.set(0.3);
+   public void lowerClaws() {
+        talonSrxClimberRightMaster.set(0.6);
+        talonSrxClimberLeftMaster.set(-0.6);
    }
 }

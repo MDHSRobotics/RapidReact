@@ -34,8 +34,8 @@ public class Devices {
     public static DevTalonSRX talonSrxDeliveryLeft = new DevTalonSRX("talonSrxDeliveryLeft", 7);
 
     //Climb
-    public static DevTalonSRX talonSrxClimberRightMaster = new DevTalonSRX("talonSrxClimberRight", 6);
-    public static DevTalonSRX talonSrxClimberRightFollower = new DevTalonSRX("talonSrxClimberRight", 8);
+    public static DevTalonSRX talonSrxClimberRightMaster = new DevTalonSRX("talonSrxClimberRight", 4);
+    public static DevTalonSRX talonSrxClimberRightFollower = new DevTalonSRX("talonSrxClimberRight", 5);
     public static DevTalonSRX talonSrxClimberLeftMaster = new DevTalonSRX("talonSrxClimberLeft", 11);
     public static DevTalonSRX talonSrxClimberLeftFollower = new DevTalonSRX("talonSrxClimberLeft", 14);
 
