@@ -11,13 +11,17 @@ public class ButtonBindings {
 
         // SwerveDrive
         BotControllers.xbox.btnStart.whenPressed(BotCommands.toggleDriverOrientation);
-        BotControllers.xbox.btnA.whenPressed(BotCommands.driveBox);
+        BotControllers.xbox.btnB.whenPressed(BotCommands.driveBox);
 
         // Pickup
         BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.grabBall);
         BotControllers.xbox.btnDpadRight.whileHeld(BotCommands.dropBall);
         BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.raiseArms);
         BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.lowerArms);
+
+        //Climb
+        BotControllers.xbox.btnY.whileHeld(BotCommands.raiseArms);
+        BotControllers.xbox.btnA.whileHeld(BotCommands.lowerArms);
 
         // Shoot
         BotControllers.xbox.btnX.whileHeld(BotCommands.togglePistons);
