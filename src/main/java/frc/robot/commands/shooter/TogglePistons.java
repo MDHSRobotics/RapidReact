@@ -9,6 +9,7 @@ import frc.robot.subsystems.PistonShooter;
 public class TogglePistons extends CommandBase {
 
     private PistonShooter m_pistonShooter;
+    private double msPassed = 0;
 
     public TogglePistons(PistonShooter pistonShooter) {
         Logger.setup("Constructing Command: TogglePistons...");
@@ -22,18 +23,23 @@ public class TogglePistons extends CommandBase {
     public void initialize() {
         Logger.action("Initializing Command: TogglePistons...");
 
-        m_pistonShooter.togglePistons();
+        m_pistonShooter.shootPistons();
     }
 
     @Override
     public void execute() {
-
+        msPassed += 200;
     }
 
     // This command continues until interrupted
     @Override
     public boolean isFinished() {
-        return true;
+        if (msPassed >= 1000) {
+            m_pistonShooter.retractPistons();
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

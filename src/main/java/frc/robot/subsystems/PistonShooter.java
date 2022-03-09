@@ -5,24 +5,20 @@ import static frc.robot.subsystems.Devices.*;
 
 public class PistonShooter extends SubsystemBase{
 
-    private boolean pistonState = false;
-
     public PistonShooter() {
         pcmCompressor.enableDigital();
         solenoidLeft.set(false);
         solenoidRight.set(false);
     }
 
-    public void togglePistons() {
-        if (pistonState) {
-            solenoidLeft.set(false);
-            solenoidRight.set(false);
-        } else {
-            solenoidLeft.set(true);
-            solenoidRight.set(true);
-        }
+    public void shootPistons() {
+        solenoidLeft.set(true);
+        solenoidRight.set(true);
+    }
 
-        pistonState = !pistonState;
+    public void retractPistons() {
+        solenoidLeft.set(false);
+        solenoidRight.set(false);
     }
 }
 
