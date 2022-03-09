@@ -71,9 +71,11 @@ public class RobotManager {
         autoCommandChooser.setDefaultOption("Auto Command One", BotCommands.autoCommandOne);
         autoCommandChooser.addOption("Auto Command Two", BotCommands.autoCommandTwo);
         autoCommandChooser.addOption("Auto Command Three", BotCommands.autoCommandThree);
-
+        autoCommandChooser.addOption("Auto Swerve Trajectory", BotCommands.autoSwerveTrajectory);
+        
         // Put the chooser on the dashboard
         SmartDashboard.putData("AutoMode", autoCommandChooser);
     }
+
 
 }

@@ -130,7 +130,7 @@ public class SwerveDriver extends SubsystemBase {
         rearRight.stop();
     }
 
-    private void setModuleStates(SwerveModuleState[] desiredStates) {
+    public void setModuleStates(SwerveModuleState[] desiredStates) {
         SmartDashboard.putString("05: Front Left Desired State", desiredStates[0].toString());
         SmartDashboard.putString("05: Front Right Desired State", desiredStates[1].toString());
         SmartDashboard.putString("05: Rear Left Desired State", desiredStates[2].toString());
