@@ -57,7 +57,7 @@ public class RobotManager {
 
         // Setup SmartDashboard
         setupSmartDashboard();
-        
+
         // Intialize and configure the Shuffler
         botShuffler.initialize();
         botShuffler.configure();

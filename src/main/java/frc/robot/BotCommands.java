@@ -31,9 +31,9 @@ public class BotCommands {
     public static LightByDistance lightByDistance;
 
     // Autonomous
-    public static AutoModeOne autoCommandOne;
-    public static AutoModeTwo autoCommandTwo;
-    public static AutoModeThree autoCommandThree;
+    public static AutoMode1 autoCommandOne;
+    public static AutoMode2 autoCommandTwo;
+    public static AutoMode3 autoCommandThree;
 
     // Initialize all robot commands
     public static void initializeCommands() {
@@ -60,9 +60,9 @@ public class BotCommands {
         lightByDistance = new LightByDistance(BotSubsystems.lighter);
 
         // Autonomous
-        autoCommandOne = new AutoModeOne();
-        autoCommandTwo = new AutoModeTwo();
-        autoCommandThree = new AutoModeThree();
+        autoCommandOne = new AutoMode1();
+        autoCommandTwo = new AutoMode2();
+        autoCommandThree = new AutoMode3();
     }
 
 }

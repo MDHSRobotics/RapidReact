@@ -10,4 +10,5 @@ public final class AutoConstants {
     public static final double optimalShootingDistanceMeters = Units.feetToMeters(2.0);
     public static final double radiusOfBalltoCenterMeters = Units.feetToMeters(12.75);
     public static final double timePerCommand = 1.;
+    public static final double robotOffsetDistance = Units.inchesToMeters(22);
 }
