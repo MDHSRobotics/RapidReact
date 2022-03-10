@@ -17,7 +17,7 @@ public class ButtonBindings {
         BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.grabBall);
         BotControllers.xbox.btnDpadRight.whileHeld(BotCommands.dropBall);
         BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.raiseArms);
-        BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.lowerArms);
+        BotControllers.xbox.btnDpadDown.whileHeld(BotCommands.lowerArms);
 
         // Shoot
         BotControllers.xbox.btnX.whileHeld(BotCommands.togglePistons);

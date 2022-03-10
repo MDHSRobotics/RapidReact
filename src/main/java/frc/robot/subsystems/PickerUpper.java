@@ -53,11 +53,11 @@ public class PickerUpper extends SubsystemBase {
 
     //moves the arms vertically
     public void raiseArms() {
-        talonSrxPickupLeft.set(ControlMode.Position, -ARM_ANGLE_IN_TICKS);
+        talonSrxPickupLeft.set(ControlMode.Position, ARM_ANGLE_IN_TICKS);
     }
 
     public void lowerArms() {
-        talonSrxPickupLeft.set(ControlMode.Position, ARM_ANGLE_IN_TICKS);
+        talonSrxPickupLeft.set(ControlMode.Position, -ARM_ANGLE_IN_TICKS);
     }
 
     public void stopPickup() {
