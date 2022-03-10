@@ -7,6 +7,7 @@ import frc.robot.subsystems.*;
 public class BotSubsystems {
 
     public static PickerUpper pickerupper;
+    public static Climber climber;
     public static SwerveDriver swerveDriver;
     public static PistonShooter pistonShooter;
     public static Lighter lighter;
@@ -17,6 +18,7 @@ public class BotSubsystems {
 
         swerveDriver = new SwerveDriver();
         pickerupper = new PickerUpper();
+        climber = new Climber();
         pistonShooter = new PistonShooter();
         lighter = new Lighter();
     }
@@ -31,6 +33,10 @@ public class BotSubsystems {
         // Pickup
         Logger.setup("PickerUpper Teleop Default Command -> StopPickup...");
         pickerupper.setDefaultCommand(BotCommands.stopPickup);
+
+        // Climber
+        Logger.setup("PickerUpper Teleop Default Command -> Climber...");
+        climber.setDefaultCommand(BotCommands.stopClimber);
 
         // Piston Shooter
         Logger.setup("PistonShooter Teleop Default Command -> FeedPistons ...");

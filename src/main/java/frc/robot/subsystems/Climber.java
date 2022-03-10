@@ -4,14 +4,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.consoles.Logger;
 
-import static frc.robot.subsystems.Devices.talonSrxClimberRight;
-import static frc.robot.subsystems.Devices.talonSrxClimberLeft;
+import static frc.robot.subsystems.Devices.talonSrxClimberRightMaster;
+import static frc.robot.subsystems.Devices.talonSrxClimberRightFollower;
+import static frc.robot.subsystems.Devices.talonSrxClimberLeftMaster;
+import static frc.robot.subsystems.Devices.talonSrxClimberLeftFollower;
 
 
 public class Climber extends SubsystemBase {
-   
+
    public Climber() {
         Logger.setup("Constructing Subsystem: Climb...");
+        talonSrxClimberRightFollower.follow(talonSrxClimberRightMaster);
+        talonSrxClimberLeftFollower.follow(talonSrxClimberLeftMaster);
    }
 
    @Override
@@ -21,19 +25,19 @@ public class Climber extends SubsystemBase {
 
    // Stop the Pickup
    public void stop() {
-       talonSrxClimberRight.stopMotor();
-       talonSrxClimberLeft.stopMotor();
+       talonSrxClimberRightMaster.stopMotor();
+       talonSrxClimberLeftMaster.stopMotor();
 
    }
 
    // Spin the Pickup
-   public void raiseArms() {
-       talonSrxClimberRight.set(0.3);
-       talonSrxClimberLeft.set(-0.3);
+   public void raiseClaws() {
+       talonSrxClimberRightMaster.set(-0.6);
+       talonSrxClimberLeftMaster.set(0.6);
    }
 
-   public void lowerArms() {
-        talonSrxClimberRight.set(-0.3);
-        talonSrxClimberLeft.set(0.3);
+   public void lowerClaws() {
+        talonSrxClimberRightMaster.set(0.6);
+        talonSrxClimberLeftMaster.set(-0.6);
    }
 }
