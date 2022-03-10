@@ -11,46 +11,46 @@ public class AutoMode1 extends SequentialCommandGroup {
 
             addCommands(
                 // lower pickup arms
-                new LowerArms(BotSubsystems.pickerupper, 0.6),
+                // new LowerArms(BotSubsystems.pickerupper, 0.6),
 
                 // shoot pre-loaded ball
                 new TogglePistons(BotSubsystems.pistonShooter),
 
                 // lift arm
-                new RaiseArms(BotSubsystems.pickerupper, 0.6),
+                // new RaiseArms(BotSubsystems.pickerupper, 0.6),
 
                 // turn around to face ball
                 new TurnAround(),
 
                 // lower pickup arms
-                new LowerArms(BotSubsystems.pickerupper, 0.6),
+                // new LowerArms(BotSubsystems.pickerupper, 0.6),
 
                 // open grabber
-                new DropBall(BotSubsystems.pickerupper, 0.6),
+                // new DropBall(BotSubsystems.pickerupper, 0.6),
 
                 // drive back to ball
-                new MoveToAndFromStart(),
+                new MoveToAndFromStart()
 
                 // grab ball
-                new GrabBall(BotSubsystems.pickerupper, 0.6),
+                // new GrabBall(BotSubsystems.pickerupper, 0.6),
 
                 // lift ball
-                new RaiseArms(BotSubsystems.pickerupper, 0.6),
+                // new RaiseArms(BotSubsystems.pickerupper, 0.6),
 
                 // drop ball
-                new DropBall(BotSubsystems.pickerupper, 0.6),
+                // new DropBall(BotSubsystems.pickerupper, 0.6),
 
                 // lower pickup arms
-                new LowerArms(BotSubsystems.pickerupper, 0.6),
+                // new LowerArms(BotSubsystems.pickerupper, 0.6),
 
                 // turn around to face goal
-                new TurnAround(),
+                // new TurnAround(),
 
                 // move back to shoot
-                new MoveToAndFromStart(),
+                // new MoveToAndFromStart(),
 
                 // shoot
-                new TogglePistons(BotSubsystems.pistonShooter)
+                // new TogglePistons(BotSubsystems.pistonShooter)
             );
     }
 
