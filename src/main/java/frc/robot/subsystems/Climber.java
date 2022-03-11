@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.constants.ClimberConstants;
 
 import frc.robot.consoles.Logger;
 
@@ -16,6 +17,8 @@ public class Climber extends SubsystemBase {
         Logger.setup("Constructing Subsystem: Climb...");
         talonSrxClimberRightFollower.follow(talonSrxClimberRightMaster);
         talonSrxClimberLeftFollower.follow(talonSrxClimberLeftMaster);
+        talonSrxClimberRightMaster.configOpenloopRamp(ClimberConstants.kClimberRampTime);
+        talonSrxClimberLeftMaster.configOpenloopRamp(ClimberConstants.kClimberRampTime);
    }
 
    @Override

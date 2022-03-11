@@ -28,8 +28,8 @@ public class PickerUpper extends SubsystemBase {
             TalonUtils.configureTalonWithEncoder(talonSrxPickupGrabber, false, false, PickerUpperConstants.PID_GRABBER_VALUES);
             TalonUtils.configureTalonWithEncoder(talonSrxPickupLeft, false, true, PickerUpperConstants.PID_ARM_VALUES);
             talonSrxPickupRight.follow(talonSrxPickupLeft);
-            talonSrxPickupGrabber.configClosedloopRamp(PickerUpperConstants.kGrabberRampTime);
-            talonSrxPickupLeft.configClosedloopRamp(PickerUpperConstants.kArmRampTime);
+            talonSrxPickupGrabber.configOpenloopRamp(PickerUpperConstants.kGrabberRampTime);
+            talonSrxPickupLeft.configOpenloopRamp(PickerUpperConstants.kArmRampTime);
 
         }
 
@@ -44,20 +44,20 @@ public class PickerUpper extends SubsystemBase {
 
     //moves the arms horizontally
     public void grabBall() {
-        talonSrxPickupGrabber.set(ControlMode.Position, GRABBER_ANGLE_IN_TICKS);
+        talonSrxPickupGrabber.set(0.5);
     }
 
     public void dropBall() {
-        talonSrxPickupGrabber.set(ControlMode.Position, -GRABBER_ANGLE_IN_TICKS);
+        talonSrxPickupGrabber.set(-0.35);
     }
 
     //moves the arms vertically
     public void raiseArms() {
-        talonSrxPickupLeft.set(ControlMode.Position, ARM_ANGLE_IN_TICKS);
+        talonSrxPickupLeft.set(0.35);
     }
 
     public void lowerArms() {
-        talonSrxPickupLeft.set(ControlMode.Position, -ARM_ANGLE_IN_TICKS);
+        talonSrxPickupLeft.set(-0.35);
     }
 
     public void stopPickup() {

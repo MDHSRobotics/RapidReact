@@ -1,15 +1,20 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.BotSubsystems;
 import frc.robot.commands.pickerupper.*;
 import frc.robot.commands.shooter.TogglePistons;
+import frc.robot.commands.swervedriver.TimedSwerve;
 
 public class AutoMode1 extends SequentialCommandGroup {
 
     public AutoMode1() {
 
             addCommands(
+                // charge pistons\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+                new WaitCommand(8),
+
                 // lower pickup arms
                 // new LowerArms(BotSubsystems.pickerupper, 0.6),
 
@@ -20,7 +25,7 @@ public class AutoMode1 extends SequentialCommandGroup {
                 // new RaiseArms(BotSubsystems.pickerupper, 0.6),
 
                 // turn around to face ball
-                new TurnAround(),
+                //new TurnAround(),
 
                 // lower pickup arms
                 // new LowerArms(BotSubsystems.pickerupper, 0.6),

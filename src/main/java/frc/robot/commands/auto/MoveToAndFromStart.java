@@ -9,11 +9,11 @@ import frc.robot.subsystems.constants.SwerveConstants;
 public class MoveToAndFromStart extends SequentialCommandGroup {
 
     public MoveToAndFromStart () {
-        double driveSpeedMPS = (AutoConstants.radiusOfBalltoCenterMeters - AutoConstants.optimalShootingDistanceMeters - AutoConstants.robotOffsetDistance) / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime);
+        double driveSpeedMPS = 0.3; //(AutoConstants.radiusOfBalltoCenterMeters - AutoConstants.optimalShootingDistanceMeters - AutoConstants.robotOffsetDistance) / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime);
 
         addCommands(
                 // drive to ball
-                new TimedSwerve(BotSubsystems.swerveDriver, driveSpeedMPS, 0.0, 0.0, AutoConstants.timePerCommand));
+                new TimedSwerve(BotSubsystems.swerveDriver, driveSpeedMPS, 0.0, 0.0, 0.25/*AutoConstants.timePerCommand*/));
     }
 
 }
