@@ -13,15 +13,16 @@ public class ButtonBindings {
         BotControllers.xbox.btnStart.whenPressed(BotCommands.toggleDriverOrientation);
         BotControllers.xbox.btnB.whenPressed(BotCommands.driveBox);
 
-        // Pickup
-        BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.grabBall);
-        BotControllers.xbox.btnDpadRight.whileHeld(BotCommands.dropBall);
-        BotControllers.xbox.btnDpadUp.whileHeld(BotCommands.raiseArms);
-        BotControllers.xbox.btnDpadDown.whileHeld(BotCommands.lowerArms);
 
         //Climb
-        BotControllers.xbox.btnY.whileHeld(BotCommands.raiseClaws);
-        BotControllers.xbox.btnA.whileHeld(BotCommands.lowerClaws);
+        BotControllers.xbox.btnBumperLeft.whileHeld(BotCommands.raiseClawsRight);
+        BotControllers.xbox.btnA.whileHeld(BotCommands.lowerClawsRight);
+        BotControllers.xbox.btnBumperRight.whileHeld(BotCommands.raiseClawsLeft);
+        BotControllers.xbox.btnY.whileHeld(BotCommands.lowerClawsLeft);
+        BotControllers.xbox.btnBumperLeft.whenReleased(BotCommands.stopLeftClimber);
+        BotControllers.xbox.btnBumperRight.whenReleased(BotCommands.stopRightClimber);
+        BotControllers.xbox.btnA.whenReleased(BotCommands.stopRightClimber);
+        BotControllers.xbox.btnY.whenReleased(BotCommands.stopLeftClimber);
 
         // Shoot
         BotControllers.xbox.btnX.whenPressed(BotCommands.togglePistons);

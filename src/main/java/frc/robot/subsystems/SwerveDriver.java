@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.BotSensors;
 import frc.robot.devices.DevSwerveModule;
 import frc.robot.subsystems.constants.SwerveConstants;
+import frc.robot.consoles.Logger;
+
 
 
 public class SwerveDriver extends SubsystemBase {
@@ -164,7 +166,7 @@ public class SwerveDriver extends SubsystemBase {
                     xSpeed, ySpeed, turningSpeed, getRotation2d());
         } else {
             // Relative to robot
-            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+            chassisSpeeds = new ChassisSpeeds(xSpeed, -ySpeed, turningSpeed);
         }
 
         SmartDashboard.putString("06: Chassis Speeeds", chassisSpeeds.toString());
@@ -175,4 +177,25 @@ public class SwerveDriver extends SubsystemBase {
         setModuleStates(moduleStates);
     }
 
-}
+    // // Drive to align the Robot to a detected line at the given yaw
+    // public void driveAlign(double targetYaw) {
+    //     Logger.setup("##");
+
+    //     // Get the correction yaw needed to align the Robot with the target yaw
+    //     double yaw = BotSensors.gyro.getYaw();
+    //     double correction = targetYaw - yaw;
+    //     if (correction > 180) correction = correction - 360;
+    //     if (correction < -180) correction = correction + 360;
+    //     Logger.info("SwerveDriver -> Gyro -> Target Yaw: " + targetYaw + "; Current Yaw: " + yaw + "; Correction: " + correction);
+
+    //     // Get the rotation speed to align the Robot with the target gyro yaw
+    //     double zRotation = (correction / 180) * 1.4;
+    //     boolean isCloseEnough = Math.abs(correction) < 10;
+    //     if (!isCloseEnough) {
+    //         if (0 < zRotation && zRotation < 0.25) zRotation = 0.25;
+    //         if (0 > zRotation && zRotation > -0.25) zRotation = -0.25;
+    //     }
+    //     setChassisSpeed(0, 0, zRotation);
+    //     Logger.ending("^^");
+    // }
+}   

@@ -1,7 +1,6 @@
 package frc.robot;
 
 import frc.robot.commands.lighter.*;
-import frc.robot.commands.pickerupper.*;
 import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedriver.*;
 import frc.robot.commands.auto.*;
@@ -16,17 +15,14 @@ public class BotCommands {
     public static ToggleDriverOrientation toggleDriverOrientation;
     public static DriveBox driveBox;
 
-    // PickerUpper
-    public static StopPickup stopPickup;
-    public static GrabBall grabBall;
-    public static DropBall dropBall;
-    public static RaiseArms raiseArms;
-    public static LowerArms lowerArms;
 
     //Climber
-    public static RaiseClaws raiseClaws;
-    public static LowerClaws lowerClaws;
-    public static StopClimber stopClimber;
+    public static RaiseClawsRight raiseClawsRight;
+    public static LowerClawsRight lowerClawsRight;
+    public static RaiseClawsLeft raiseClawsLeft;
+    public static LowerClawsLeft lowerClawsLeft;
+    public static StopRightClimber stopRightClimber;
+    public static StopLeftClimber stopLeftClimber;
 
     // Shooter
     public static FeedPistons feedPistons;
@@ -51,17 +47,14 @@ public class BotCommands {
         toggleDriverOrientation = new ToggleDriverOrientation(BotSubsystems.swerveDriver);
         driveBox = new DriveBox();
 
-        // Pickup
-        stopPickup = new StopPickup(BotSubsystems.pickerupper);
-        grabBall = new GrabBall(BotSubsystems.pickerupper);
-        dropBall = new DropBall(BotSubsystems.pickerupper);
-        raiseArms = new RaiseArms(BotSubsystems.pickerupper);
-        lowerArms = new LowerArms(BotSubsystems.pickerupper);
 
         // Climber
-        raiseClaws = new RaiseClaws(BotSubsystems.climber);
-        lowerClaws = new LowerClaws(BotSubsystems.climber);
-        stopClimber = new StopClimber(BotSubsystems.climber);
+        raiseClawsRight = new RaiseClawsRight(BotSubsystems.rightClimber);
+        lowerClawsRight = new LowerClawsRight(BotSubsystems.rightClimber);  
+        raiseClawsLeft = new RaiseClawsLeft(BotSubsystems.leftClimber);
+        lowerClawsLeft = new LowerClawsLeft(BotSubsystems.leftClimber);
+        stopRightClimber = new StopRightClimber(BotSubsystems.rightClimber);
+        stopLeftClimber = new StopLeftClimber(BotSubsystems.leftClimber);
 
         // Shooter
         feedPistons = new FeedPistons(BotSubsystems.pistonShooter);

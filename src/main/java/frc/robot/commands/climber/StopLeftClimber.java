@@ -4,13 +4,13 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.consoles.Logger;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.LeftClimber;
 
-public class StopClimber extends CommandBase {
+public class StopLeftClimber extends CommandBase {
 
-    private Climber m_climber; 
+    private LeftClimber m_climber; 
 
-    public StopClimber(Climber climber) {
+    public StopLeftClimber(LeftClimber climber) {
         Logger.setup("Constructing Command: StopClimber...");
 
         // Add given subsystem requirements

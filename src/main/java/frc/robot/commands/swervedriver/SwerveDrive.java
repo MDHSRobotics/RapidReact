@@ -61,7 +61,7 @@ public class SwerveDrive extends CommandBase {
         SmartDashboard.putString("08: Chassis velocity", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed3, ySpeed3, turningSpeed3));
 
         // 5. Output each module states to wheels
-        m_swerveDriver.setChassisSpeed(xSpeed3, ySpeed3, turningSpeed3);
+        m_swerveDriver.setChassisSpeed(xSpeed3, -ySpeed3, turningSpeed3);
     }
 
     @Override

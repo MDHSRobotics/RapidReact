@@ -4,18 +4,18 @@ package frc.robot.commands.climber;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.consoles.Logger;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.RightClimber;
 
-public class RaiseClaws extends CommandBase {
+public class RaiseClawsRight extends CommandBase {
 
-    private Climber m_climber; 
+    private RightClimber m_rightClimber; 
 
-    public RaiseClaws(Climber climber) {
+    public RaiseClawsRight(RightClimber climber) {
         Logger.setup("Constructing Command: RaiseArms...");
 
         // Add given subsystem requirements
-        m_climber = climber;
-        addRequirements(m_climber);
+        m_rightClimber = climber;
+        addRequirements(m_rightClimber);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class RaiseClaws extends CommandBase {
 
     @Override
     public void execute() {
-        m_climber.raiseClaws();
+        m_rightClimber.raiseClawsRight();
     }
 
     // This command continues until interrupted
@@ -42,7 +42,6 @@ public class RaiseClaws extends CommandBase {
         } else {
             Logger.ending("Ending Command: RaiseArms...");
         }
-        m_climber.stop();
-    }
+        }
 
 }

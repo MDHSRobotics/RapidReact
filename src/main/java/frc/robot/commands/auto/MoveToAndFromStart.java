@@ -13,7 +13,7 @@ public class MoveToAndFromStart extends SequentialCommandGroup {
 
         addCommands(
                 // drive to ball
-                new TimedSwerve(BotSubsystems.swerveDriver, driveSpeedMPS, 0.0, 0.0, 0.25/*AutoConstants.timePerCommand*/));
+                new TimedSwerve(BotSubsystems.swerveDriver, -driveSpeedMPS, 0.0, 0.0, 5/*AutoConstants.timePerCommand*/));
     }
 
 }
