@@ -26,7 +26,7 @@ public final class AutoConstants {
     // TODO find the actual shooting distance
     public static final double optimalShootingDistanceMeters = Units.feetToMeters(2.0);
     public static final double radiusOfBalltoCenterMeters = Units.feetToMeters(12.75);
-    public static final double timePerCommand = 1.;
+    public static final double timePerCommand = 4.0;
     public static final double robotOffsetDistance = Units.inchesToMeters(22);
     public static final double angleFromBallToLineBetweenPentagons = Math.asin((7.375 + 22.47) / 153);
     public static final double startingAngleFromLineBetweenPentagons = 22.5;

@@ -12,7 +12,7 @@ public class TurnAround extends SequentialCommandGroup {
 
         addCommands(
                 // turn around 180 degrees
-                new TimedSwerve(BotSubsystems.swerveDriver, 0.0, 0.0, Math.PI / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime), AutoConstants.timePerCommand)
+                new TimedSwerve(BotSubsystems.swerveDriver, 0.0, 0.0, (Math.PI) / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime), AutoConstants.timePerCommand)
         );
     }
 

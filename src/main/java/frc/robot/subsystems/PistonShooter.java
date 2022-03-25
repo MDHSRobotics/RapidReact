@@ -7,6 +7,7 @@ public class PistonShooter extends SubsystemBase{
 
     public PistonShooter() {
         pcmCompressor.enableDigital();
+        //pcmCompressor.disable();
         solenoidLeft.set(false);
         solenoidRight.set(false);
     }
