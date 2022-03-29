@@ -1,0 +1,38 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Lighter": "Subsystem",
+      "/LiveWindow/Module Front Left/Drive Motor": "Motor Controller",
+      "/LiveWindow/Module Front Left/Turning Motor": "Motor Controller",
+      "/LiveWindow/Module Front Right/Drive Motor": "Motor Controller",
+      "/LiveWindow/Module Front Right/Turning Motor": "Motor Controller",
+      "/LiveWindow/Module Rear Left/Drive Motor": "Motor Controller",
+      "/LiveWindow/Module Rear Left/Turning Motor": "Motor Controller",
+      "/LiveWindow/Module Rear Right/Drive Motor": "Motor Controller",
+      "/LiveWindow/Module Rear Right/Turning Motor": "Motor Controller",
+      "/LiveWindow/PickerUpper": "Subsystem",
+      "/LiveWindow/PistonShooter": "Subsystem",
+      "/LiveWindow/SwerveDriver": "Subsystem",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/LiveWindow/Ungrouped/Talon SRX [0]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [13]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [16]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [17]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [40]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [4]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [5]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [6]": "Motor Controller",
+      "/LiveWindow/Ungrouped/Talon SRX [7]": "Motor Controller",
+      "/LiveWindow/Ungrouped/navX-Sensor[4]": "Gyro",
+      "/Shuffleboard/Debug/Command Scheduler": "Scheduler",
+      "/Shuffleboard/Drive/Swerve Drive": "Subsystem",
+      "/Shuffleboard/Main/Auto Command": "String Chooser",
+      "/SmartDashboard/AutoMode": "String Chooser"
+    }
+  }
+}
