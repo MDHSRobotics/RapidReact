@@ -5,6 +5,8 @@ import frc.robot.commands.shooter.*;
 import frc.robot.commands.swervedriver.*;
 import frc.robot.commands.auto.*;
 import frc.robot.commands.climber.*;
+import frc.robot.commands.deliverer.*;
+import frc.robot.commands.pickupper.*;
 import frc.robot.consoles.Logger;
 
 // Contains singleton instances of all the commands on the robot.
@@ -28,6 +30,14 @@ public class BotCommands {
     public static FeedPistons feedPistons;
     public static TogglePistons togglePistons;
 
+    // Pickup
+    public static StopPickup stopPickup;
+    public static SpinPickup spinPickup;
+
+    // Delivery
+    public static StopDelivery stopDelivery;
+    public static SpinDelivery spinDelivery;
+
     // Lighter
     public static CycleLights cycleLights;
     public static LightByDistance lightByDistance;
@@ -47,7 +57,6 @@ public class BotCommands {
         toggleDriverOrientation = new ToggleDriverOrientation(BotSubsystems.swerveDriver);
         driveBox = new DriveBox();
 
-
         // Climber
         raiseClawsRight = new RaiseClawsRight(BotSubsystems.rightClimber);
         lowerClawsRight = new LowerClawsRight(BotSubsystems.rightClimber);  
@@ -59,6 +68,14 @@ public class BotCommands {
         // Shooter
         feedPistons = new FeedPistons(BotSubsystems.pistonShooter);
         togglePistons = new TogglePistons(BotSubsystems.pistonShooter);
+
+        // Pickup
+        stopPickup = new StopPickup(BotSubsystems.pickup);
+        spinPickup = new SpinPickup(BotSubsystems.pickup);
+
+        // Delivery
+        stopDelivery = new StopDelivery(BotSubsystems.delivery);
+        spinDelivery = new SpinDelivery(BotSubsystems.delivery);
 
         // Lighter
         cycleLights = new CycleLights(BotSubsystems.lighter);

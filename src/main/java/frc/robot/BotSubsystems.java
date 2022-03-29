@@ -10,6 +10,8 @@ public class BotSubsystems {
     public static LeftClimber leftClimber;
     public static SwerveDriver swerveDriver;
     public static PistonShooter pistonShooter;
+    public static Delivery delivery;
+    public static Pickup pickup;
     public static Lighter lighter;
 
     // Initialize all robot subsystems
@@ -20,6 +22,8 @@ public class BotSubsystems {
         rightClimber = new RightClimber();
         leftClimber = new LeftClimber();
         pistonShooter = new PistonShooter();
+        pickup = new Pickup();
+        delivery = new Delivery();
         lighter = new Lighter();
     }
 
@@ -40,6 +44,14 @@ public class BotSubsystems {
         // Piston Shooter
         Logger.setup("PistonShooter Teleop Default Command -> FeedPistons ...");
         pistonShooter.setDefaultCommand(BotCommands.feedPistons);
+
+        // Pickup
+        Logger.setup("PistonShooter Teleop Default Command -> StopPickup ...");
+        pickup.setDefaultCommand(BotCommands.stopPickup);
+
+        // Delivery
+        Logger.setup("PistonShooter Teleop Default Command -> StopDelivery ...");
+        delivery.setDefaultCommand(BotCommands.stopDelivery);
 
         // Lighter
         Logger.setup("Lighter Teleop Default Command -> LightByDistance ...");
