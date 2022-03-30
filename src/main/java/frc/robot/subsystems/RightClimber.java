@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.constants.ClimberConstants;
 import frc.robot.subsystems.utils.TalonUtils;
@@ -8,9 +7,6 @@ import frc.robot.consoles.Logger;
 
 import static frc.robot.subsystems.Devices.talonSrxClimberRightMaster;
 import static frc.robot.subsystems.Devices.talonSrxClimberRightFollower;
-import static frc.robot.subsystems.Devices.talonSrxClimberLeftMaster;
-import static frc.robot.subsystems.Devices.talonSrxClimberLeftFollower;
-
 
 public class RightClimber extends SubsystemBase {
 

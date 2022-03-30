@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.consoles.Logger;
 import frc.robot.subsystems.Delivery;
 
-// This command stops the delivery.
 public class StopDelivery extends CommandBase {
 
     private Delivery m_delivery;
@@ -26,7 +25,7 @@ public class StopDelivery extends CommandBase {
 
     @Override
     public void execute() {
-        m_delivery.stop();
+        m_delivery.stopDelivery();
     }
 
     // This command continues until interrupted
@@ -43,7 +42,7 @@ public class StopDelivery extends CommandBase {
         } else {
             Logger.ending("Ending Command: StopDelivery...");
         }
-        m_delivery.stop();
+        m_delivery.stopDelivery();
     }
 
 }

@@ -11,9 +11,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.BotSensors;
 import frc.robot.devices.DevSwerveModule;
 import frc.robot.subsystems.constants.SwerveConstants;
-import frc.robot.consoles.Logger;
-
-
 
 public class SwerveDriver extends SubsystemBase {
     private final DevSwerveModule frontLeft = new DevSwerveModule(

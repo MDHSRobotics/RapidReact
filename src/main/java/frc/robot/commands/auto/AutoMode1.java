@@ -1,10 +1,8 @@
 package frc.robot.commands.auto;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.BotSubsystems;
 import frc.robot.commands.shooter.TogglePistons;
-import frc.robot.commands.swervedriver.TimedSwerve;
 
 public class AutoMode1 extends SequentialCommandGroup {
 

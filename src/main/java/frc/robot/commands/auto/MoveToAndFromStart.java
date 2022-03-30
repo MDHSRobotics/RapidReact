@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.BotSubsystems;
 import frc.robot.commands.swervedriver.TimedSwerve;
 import frc.robot.subsystems.constants.AutoConstants;
-import frc.robot.subsystems.constants.SwerveConstants;
 
 public class MoveToAndFromStart extends SequentialCommandGroup {
 
