@@ -17,16 +17,17 @@ public class SwerveDrive extends CommandBase {
 
     private final SwerveDriver m_swerveDriver;
     private final XboxPositionAccessible m_controller;
-    private final SlewRateLimiter m_xLimiter, m_yLimiter, m_turningLimiter;
+    private final SlewRateLimiter m_forwardBackwardLimiter, m_sideToSideLimiter, m_rotationForwardBackLimiter, m_rotationSideToSideLimiter;
 
     public SwerveDrive (SwerveDriver swerveDriver, XboxPositionAccessible controller) {
         Logger.setup("Constructing Command: SwerveDrive...");
 
         m_swerveDriver = swerveDriver;
         m_controller = controller;
-        m_xLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-        m_yLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
-        m_turningLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
+        m_forwardBackwardLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        m_sideToSideLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        m_rotationForwardBackLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAccelerationUnitsPerSecond);
+        m_rotationSideToSideLimiter = new SlewRateLimiter(SwerveConstants.kTeleDriveMaxAngularAccelerationUnitsPerSecond);
 
         addRequirements(m_swerveDriver);
     }
@@ -40,28 +41,31 @@ public class SwerveDrive extends CommandBase {
     public void execute() {
         // 1. Get real-time joystick inputs
         SwerveMovement joystickMovement = SwerveMovement.getMovement(m_controller, false);
-        double xSpeed1 = joystickMovement.forwardBackwardSpeed;
-        double ySpeed1 = joystickMovement.sideToSideSpeed;
-        double turningSpeed1 = joystickMovement.rotationSpeed;
+        double forwardBackwardSpeed = joystickMovement.forwardBackwardSpeed;
+        double sideToSideSpeed = joystickMovement.sideToSideSpeed;
+        double rotationForwardBackwardSpeed = joystickMovement.rotationForwardBackwardSpeed;
+        double rotationSideToSideSpeed = joystickMovement.rotationSideToSideSpeed;
 
-        SmartDashboard.putString("10: Joystick input", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed1, ySpeed1, turningSpeed1));
+        SmartDashboard.putString("10: Joystick input", String.format("X = %.2f; Y = %.2f, Turn = %.2f", forwardBackwardSpeed, sideToSideSpeed, rotationForwardBackwardSpeed, rotationSideToSideSpeed));
 
         // 2. Apply deadband
-        double xSpeed2 = Math.abs(xSpeed1) > OIConstants.kDeadband ? xSpeed1 : 0.0;
-        double ySpeed2 = Math.abs(ySpeed1) > OIConstants.kDeadband ? ySpeed1 : 0.0;
-        double turningSpeed2 = Math.abs(turningSpeed1) > OIConstants.kDeadband ? turningSpeed1 : 0.0;
+        double forwardBackwardSpeed2 = Math.abs(forwardBackwardSpeed) > OIConstants.kDeadband ? forwardBackwardSpeed : 0.0;
+        double sideToSideSpeed2 = Math.abs(sideToSideSpeed) > OIConstants.kDeadband ? sideToSideSpeed : 0.0;
+        double rotationForwardBackwardSpeed2 = Math.abs(rotationForwardBackwardSpeed) > OIConstants.kDeadband ? rotationForwardBackwardSpeed : 0.0;
+        double rotationSideToSideSpeed2 = Math.abs(rotationSideToSideSpeed) > OIConstants.kDeadband ? rotationSideToSideSpeed : 0.0;
 
-        SmartDashboard.putString("09: Apply deadpan", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed2, ySpeed2, turningSpeed2));
+        SmartDashboard.putString("09: Apply deadpan", String.format("X = %.2f; Y = %.2f, Turn = %.2f", forwardBackwardSpeed2, sideToSideSpeed2, rotationSideToSideSpeed2));
 
         // 3. Make the driving smoother
-        double xSpeed3 = m_xLimiter.calculate(xSpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-        double ySpeed3 = m_yLimiter.calculate(ySpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
-        double turningSpeed3 = m_turningLimiter.calculate(turningSpeed2) * SwerveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
+        double forwardBackwardSpeed3 = m_forwardBackwardLimiter.calculate(forwardBackwardSpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        double sideToSideSpeed3 = m_sideToSideLimiter.calculate(sideToSideSpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        double rotationForwardBackwardSpeed3 = m_rotationForwardBackLimiter.calculate(rotationForwardBackwardSpeed2) * SwerveConstants.kTeleDriveMaxSpeedMetersPerSecond;
+        double rotationSideToSideSpeed3 = m_rotationSideToSideLimiter.calculate(rotationSideToSideSpeed2) * SwerveConstants.kTeleDriveMaxAngularSpeedRadiansPerSecond;
 
-        SmartDashboard.putString("08: Chassis velocity", String.format("X = %.2f; Y = %.2f, Turn = %.2f", xSpeed3, ySpeed3, turningSpeed3));
+        SmartDashboard.putString("08: Chassis velocity", String.format("X = %.2f; Y = %.2f, Turn = %.2f", forwardBackwardSpeed3, sideToSideSpeed3, rotationSideToSideSpeed3));
 
         // 5. Output each module states to wheels
-        m_swerveDriver.setChassisSpeed(xSpeed3, -ySpeed3, turningSpeed3);
+        m_swerveDriver.setChassisSpeed(forwardBackwardSpeed3, -sideToSideSpeed3, rotationSideToSideSpeed3);
     }
 
     @Override
