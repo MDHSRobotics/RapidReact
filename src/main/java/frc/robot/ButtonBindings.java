@@ -34,4 +34,29 @@ public class ButtonBindings {
 
     }
 
+    public static void configureJoystick() {
+        // SwerveDrive
+        BotControllers.jstick.jstickBtn7.whenPressed(BotCommands.toggleDriverOrientation);
+        BotControllers.jstick.jstickBtn8.whenPressed(BotCommands.driveBox);
+
+        //Climb
+        BotControllers.jstick.jstickBtn5.whileHeld(BotCommands.raiseClawsRight);
+        BotControllers.jstick.jstickBtn3.whileHeld(BotCommands.lowerClawsRight);
+        BotControllers.jstick.jstickBtn6.whileHeld(BotCommands.raiseClawsLeft);
+        BotControllers.jstick.jstickBtn4.whileHeld(BotCommands.lowerClawsLeft);
+        BotControllers.jstick.jstickBtn5.whenReleased(BotCommands.stopLeftClimber);
+        BotControllers.jstick.jstickBtn3.whenReleased(BotCommands.stopRightClimber);
+        BotControllers.jstick.jstickBtn6.whenReleased(BotCommands.stopRightClimber);
+        BotControllers.jstick.jstickBtn4.whenReleased(BotCommands.stopLeftClimber);
+
+        // Shoot
+        BotControllers.jstick.jstickBtn1.whenPressed(BotCommands.togglePistons);
+
+        // Pickup
+        BotControllers.jstick.jstickBtn9.whileHeld(BotCommands.spinPickup);
+
+        // Delivery
+        BotControllers.jstick.jstickBtn10.whileHeld(BotCommands.spinDelivery);
+    }
+
 }

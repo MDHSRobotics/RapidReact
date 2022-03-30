@@ -53,7 +53,7 @@ public class BotCommands {
         Logger.setup("Initializing BotCommands...");
 
         // SwerveDriver
-        swerveDrive = new SwerveDrive(BotSubsystems.swerveDriver, BotControllers.xbox);
+        swerveDrive = new SwerveDrive(BotSubsystems.swerveDriver, BotControllers.jstick);
         toggleDriverOrientation = new ToggleDriverOrientation(BotSubsystems.swerveDriver);
         driveBox = new DriveBox();
 

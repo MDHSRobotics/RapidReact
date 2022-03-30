@@ -12,7 +12,7 @@ public class RotateCounterClock90Deg extends SequentialCommandGroup {
 
         addCommands(
                 //rotate the robot (already facing backward) 90 degrees counter-clockwise
-                new TimedSwerve(BotSubsystems.swerveDriver, 0.0, 0.0, (Math.PI / 4) / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime), AutoConstants.timePerCommand));
+                new TimedSwerve(BotSubsystems.swerveDriver, 0.0, 0.0, -(Math.PI / 4) / (AutoConstants.timePerCommand - SwerveConstants.kDriveRampTime), AutoConstants.timePerCommand));
     }
 
 }
