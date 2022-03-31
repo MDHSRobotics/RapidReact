@@ -14,6 +14,7 @@ public class BotControllers {
     // Configure all the controllers
     public static void configure() {
         configureXbox();
+        configureJoystick();
         
     }
 

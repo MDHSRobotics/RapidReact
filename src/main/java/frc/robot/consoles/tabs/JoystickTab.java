@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.shuffleboard.*;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.brains.JoystickBrain;
 import frc.robot.consoles.ShuffleLogger;
+import java.util.Map;
 
 // The Shuffleboard Debug tab.
 public class JoystickTab {
@@ -32,7 +33,18 @@ public class JoystickTab {
         m_tab = Shuffleboard.getTab("Joystick");
 
         m_deadZoneLayout = m_tab.getLayout("Dead Zones", BuiltInLayouts.kGrid);
+        m_deadZoneLayout.withPosition(0, 2);
+        m_deadZoneLayout.withSize(3, 1);
+        m_deadZoneLayout.withProperties(Map.of("Number of columns", 2));
+        m_deadZoneLayout.withProperties(Map.of("Number of rows", 2));
+        m_deadZoneLayout.withProperties(Map.of("Label position", "LEFT"));
+
         m_sensitivitLayout = m_tab.getLayout("Sensitivity", BuiltInLayouts.kGrid);
+        m_sensitivitLayout.withPosition(0, 2);
+        m_sensitivitLayout.withSize(3, 1);
+        m_sensitivitLayout.withProperties(Map.of("Number of columns", 2));
+        m_sensitivitLayout.withProperties(Map.of("Number of rows", 2));
+        m_sensitivitLayout.withProperties(Map.of("Label position", "LEFT"));
     }
 
     // Create Brain Widgets

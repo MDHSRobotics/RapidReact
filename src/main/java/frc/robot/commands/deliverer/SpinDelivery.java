@@ -8,14 +8,14 @@ import frc.robot.subsystems.Delivery;
 
 public class SpinDelivery extends CommandBase {
 
-    private Delivery m_Delivery;
+    private Delivery m_delivery;
 
-    public SpinDelivery(Delivery Delivery) {
+    public SpinDelivery(Delivery delivery) {
         Logger.setup("Constructing Command: SpinDelivery...");
 
         // Add given subsystem requirements
-        m_Delivery = Delivery;
-        addRequirements(m_Delivery);
+        m_delivery = delivery;
+        addRequirements(m_delivery);
 
     }
 
@@ -26,7 +26,7 @@ public class SpinDelivery extends CommandBase {
 
     @Override
     public void execute() {
-        m_Delivery.spinDelivery();
+        m_delivery.spinDelivery();
     }
 
     // This command continues until interrupted
