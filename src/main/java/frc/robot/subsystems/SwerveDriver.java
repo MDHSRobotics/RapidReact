@@ -174,6 +174,10 @@ public class SwerveDriver extends SubsystemBase {
         setModuleStates(moduleStates);
     }
 
+    // to convert (x,y) to angle relative to y-axis, use arctan(y/x)
+    // preferably make a method to convert rotation speeds to angle
+    // create new method taking in angle as a parameter instead of speeds
+
     // // Drive to align the Robot to a detected line at the given yaw
     // public void driveAlign(double targetYaw) {
     //     Logger.setup("##");
