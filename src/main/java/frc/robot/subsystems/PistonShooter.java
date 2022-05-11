@@ -8,18 +8,23 @@ public class PistonShooter extends SubsystemBase{
     public PistonShooter() {
         pcmCompressor.enableDigital();
         //pcmCompressor.disable();
-        solenoidLeft.set(false);
-        solenoidRight.set(false);
+        solenoidOne.set(false);
+        solenoidTwo.set(false);
+        solenoidThree.set(false);
     }
 
     public void shootPistons() {
-        solenoidLeft.set(true);
-        solenoidRight.set(true);
+        solenoidOne.set(true);
+        solenoidTwo.set(true);
+        solenoidThree.set(true);
+
     }
 
     public void retractPistons() {
-        solenoidLeft.set(false);
-        solenoidRight.set(false);
+        solenoidOne.set(false);
+        solenoidTwo.set(false);
+        solenoidThree.set(false);
+
     }
 }
 

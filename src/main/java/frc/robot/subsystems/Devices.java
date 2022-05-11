@@ -45,8 +45,10 @@ public class Devices {
 
     // Pneumatics
     public static Compressor pcmCompressor = new Compressor(0, PneumaticsModuleType.CTREPCM);
-    public static Solenoid solenoidLeft = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
-    public static Solenoid solenoidRight = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+    public static Solenoid solenoidOne = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
+    public static Solenoid solenoidTwo = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
+    public static Solenoid solenoidThree = new Solenoid(PneumaticsModuleType.CTREPCM, 4);
+
 
     // SwerveModule
     public static DevTalonFX talonFxSwerveDriveFL = new DevTalonFX("talonFxSwerveDriveWheelFrontLeft", 28);
