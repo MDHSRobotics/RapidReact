@@ -32,6 +32,9 @@ public class ButtonBindings {
         // Delivery
         BotControllers.xbox.btnDpadLeft.whileHeld(BotCommands.spinDelivery);
 
+        //Test
+        BotControllers.xbox.btnDpadDown.whileHeld(BotCommands.test);
+
     }
 
 }

@@ -20,7 +20,7 @@ public class PistonShooter extends SubsystemBase{
 
     }
 
-    public void retractPistons() {
+    public void retractPistons() { 
         solenoidOne.set(false);
         solenoidTwo.set(false);
         solenoidThree.set(false);

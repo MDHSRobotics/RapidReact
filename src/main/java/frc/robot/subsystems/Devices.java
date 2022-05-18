@@ -3,6 +3,9 @@ package frc.robot.subsystems;
 import frc.robot.devices.*;
 
 import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Servo;
 
@@ -64,4 +67,9 @@ public class Devices {
     public static CANCoder canCoderFL = new CANCoder(2);
     public static CANCoder canCoderRR = new CANCoder(3);
     public static CANCoder canCoderRL = new CANCoder(1);
+
+    //Spark Maxes
+    public static CANSparkMax sparkMaxOne = new CANSparkMax(59, MotorType.kBrushless);
+    public static RelativeEncoder relativeEncoder = sparkMaxOne.getEncoder();
+
 }

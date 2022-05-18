@@ -13,6 +13,7 @@ public class BotSubsystems {
     public static Delivery delivery;
     public static Pickup pickup;
     public static Lighter lighter;
+    public static SparkMaxTester sparkMaxTester;
 
     // Initialize all robot subsystems
     public static void initializeSubsystems() {
@@ -25,6 +26,7 @@ public class BotSubsystems {
         pickup = new Pickup();
         delivery = new Delivery();
         lighter = new Lighter();
+        sparkMaxTester = new SparkMaxTester();
     }
 
     // Set all the subsystem "teleop" default commands

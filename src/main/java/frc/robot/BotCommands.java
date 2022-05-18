@@ -8,6 +8,7 @@ import frc.robot.commands.climber.*;
 import frc.robot.commands.deliverer.*;
 import frc.robot.commands.pickupper.*;
 import frc.robot.consoles.Logger;
+import frc.robot.commands.sparkmaxtester.*;
 
 // Contains singleton instances of all the commands on the robot.
 public class BotCommands {
@@ -48,6 +49,9 @@ public class BotCommands {
     public static AutoMode3 autoCommandThree;
     public static AutoSwerveTrajectory autoSwerveTrajectory;
 
+    // SparkMax
+    public static Test test;
+
     // Initialize all robot commands
     public static void initializeCommands() {
         Logger.setup("Initializing BotCommands...");
@@ -85,6 +89,9 @@ public class BotCommands {
         autoCommandOne = new AutoMode1();
         autoCommandTwo = new AutoMode2();
         autoCommandThree = new AutoMode3();
+
+        // SparkMax
+        test = new Test(BotSubsystems.sparkMaxTester);
         }
 
 }
